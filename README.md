@@ -1,4 +1,5 @@
-# sciCNV PIPELINE: _README FILE_ 
+# sciCNV PIPELINE 
+#_README FILE_ 
 
 ## This file provides an overview of the Tiedemann Lab scRNA-seq normalization and inferred CNV pipeline that includes: 
 - scRNA-seq RTAM data normalization
