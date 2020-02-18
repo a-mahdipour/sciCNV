@@ -54,10 +54,10 @@ CNV_htmp_gloc <- function(CNV.mat2,
       stop("Sorting can occur when clustering = FALSE.")
     }
   } else if (clustering == "FALSE"){
-    if ( (sorting == "TRUE") & Reduce("|", is.na(CNVscore)) ){
+    if ( (sorting == "TRUE") & Reduce("|", is.null(CNVscore)) ){
       stop("Please insert a list of CNV-scores")
     }
-    if ( (sorting == "FALSE") & Reduce("|", ! is.na(CNVscore)) ){
+    if ( (sorting == "FALSE") & Reduce("|", ! is.null(CNVscore)) ){
       stop("Please change sorting status to TRUE to sort data based on CNVscore vector.")
     }
   }
@@ -69,12 +69,9 @@ CNV_htmp_gloc <- function(CNV.mat2,
   if ( Reduce("|", is.null(cluster.lines)) ){
     cluster.lines <- c(0, nrow(CNV.mat2) - No.test, nrow(CNV.mat2))
   }
-  
-  if ( Reduce("|", is.null(break.gloc)) ){
-    break.gloc <- c(0, ncol(CNV.mat2))
+  if ( Reduce("|", is.null(break.glist)) ){
+    break.glist <- c(0, ncol(CNV.mat2))
   }
-  
-  
   
   ##### sorting of cells within clusters, based on tumor CNV scores, from the largest to the smallest (if applicable)
   
