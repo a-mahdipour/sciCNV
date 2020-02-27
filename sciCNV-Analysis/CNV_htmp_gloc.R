@@ -69,8 +69,8 @@ CNV_htmp_gloc <- function(CNV.mat2,
   if ( Reduce("|", is.null(cluster.lines)) ){
     cluster.lines <- c(0, nrow(CNV.mat2) - No.test, nrow(CNV.mat2))
   }
-  if ( Reduce("|", is.null(break.glist)) ){
-    break.glist <- c(0, ncol(CNV.mat2))
+  if ( Reduce("|", is.null(break.gloc)) ){
+    break.gloc <- c(0, ncol(CNV.mat2))
   }
   
   ##### sorting of cells within clusters, based on tumor CNV scores, from the largest to the smallest (if applicable)
