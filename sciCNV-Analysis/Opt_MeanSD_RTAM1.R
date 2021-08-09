@@ -135,14 +135,13 @@ Opt_MeanSD_RTAM1 <- function(Normalized_log,
   comm.expr <-   as.matrix(Scaled_Normalized_log[which(rowSums(Scaled_Normalized_log[ ,seq(1, ncol(AA), 1)]!=0) > 0.95*ncol(Scaled_Normalized_log) ), ] )
   
   MEAN_comm <- rep(0, ncol(AA))
-  for(j in 1:ncol(AA)){
-    
+  
+  for(j in 1:ncol(AA)){ 
     if( sum(comm.expr[j]) > 0){
       MEAN_comm[j] <- mean(comm.expr[j][comm.expr[j]>0]) 
     } else {
       MEAN_comm[j] <- 0
     }
-    
   }
   
   # Mean of A% common genes
