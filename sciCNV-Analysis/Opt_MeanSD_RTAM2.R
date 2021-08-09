@@ -135,8 +135,7 @@ Opt_MeanSD_RTAM2 <- function(Normalized_log,
       MEAN_comm[j] <- mean(comm.expr[j][comm.expr[j]>0]) 
     } else {
       MEAN_comm[j] <- 0
-    }
-    
+    }  
   }
   
   # Mean and standard deviation of A% common genes
