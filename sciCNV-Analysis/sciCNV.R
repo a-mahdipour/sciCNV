@@ -104,27 +104,68 @@ sciCNV <- function(norm.mat,
   
   
   
-  ## sciCNV for test cells  
-  V7Alt1 <- apply( as.matrix(MSC[ ,1:(No.test)]), 2, 
-            function(Vector){CNV_infer(ss.expr = as.matrix(Vector), 
-                                       mean.cntrl = mean.cntrl,  
-                                       sharpness = sharpness, 
-                                       baseline_adj = baseline_adj,
-                                       baseline = baseline,
-                                       new.genes = rownames(MSC1))}   )
-  
-  
-  ## sciCNV for control cells
-  V7Alt2 <- apply( as.matrix(MSC[ ,(No.test+1):(ncol(MSC)-1)]), 2, 
-            function(Vector){CNV_infer(ss.expr = as.matrix(Vector), 
-                                       mean.cntrl = mean.cntrl,
-                                       sharpness = sharpness, 
-                                       baseline_adj = baseline_adj,
-                                       baseline = 0,
-                                       new.genes = rownames(MSC1))}   )
+  ## sciCNV for test and control cells  
+  new.genes <- rownames(MSC1)
+  clmns <- ncol(norm.mat)
+  chr.n <- as.matrix( gen.Loc[which(as.matrix(gen.Loc[,1]) %in% new.genes), 2])
+  resolution <- nrow(MSC)/(50*sharpness)
+  P12 <- floor(resolution) 
+  row.n <- length(new.genes)
+  FF <- rep(0, row.n)
+  AW <- rep(0, row.n)
+  BD <- rep(0, row.n)
+  G <- as.matrix(seq(1,row.n,1))
+  FF[1] <- 1
+  AW[1] <- P12
+  BD[1] <- P12
   
 
-  V7Alt <- cbind(V7Alt1, V7Alt2)
+
+
+
+for(i in 2:row.n){
+  if( chr.n[i] == chr.n[i-1]){
+    FF[i] <-  FF[i-1] + 1
+  } else
+    FF[i] <-  1
+}
+
+
+for(i in 2:row.n){
+  if( chr.n[i] == chr.n[i-1]){
+    if( AW[i-1] >0 ){
+      AW[i] <-  AW[i-1] -1
+    } else
+      AW[i] <-  0
+  } else
+    AW[i] <-  P12
+}
+
+  for(i in seq(row.n-1,1,-1) ){
+    if( chr.n[i] == chr.n[i+1]){
+      if( BD[i+1] > 0 ){ BD[i] <-  BD[i+1] -1
+      } else { BD[i] <-  0}
+    } else { BD[i] <-  P12}
+  }
+
+  
+  mat.fab <- cbind(FF,AW, BD)
+  
+   
+  v7alt.fun <- function(i){ CNV_infer(ss.expr = as.matrix(MSC[ ,i]),
+                                        mean.ctrl = mean.ctrl,
+                                        gen.Loc = gen.Loc,
+                                        resolution = resolution,
+                                        baseline_adj = FALSE,
+                                        baseline = 0,
+                                        chr.n = chr.n,
+                                        P12 = P12,
+                                        mat.fab = mat.fab)}
+   
+   V7Alt11 <- parallel::mclapply( 1:clmns, v7alt.fun, mc.cores = 4)
+   V7Alt <- matrix(unlist(V7Alt11), ncol = clmns, byrow = FALSE)
+  
+
   colnames(V7Alt) <- colnames(MSC[,-ncol(MSC)])
   rownames(V7Alt) <- MSC1[ , 1]
 
