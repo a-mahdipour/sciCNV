@@ -22,7 +22,7 @@
 # Gen.Loc: Genomic Location matrix with list of genes, their associated chromosome numbers, start and end locations
 # CNVscore: is the tumor CNV score matrix for all cells (possibly ranked within clusters). Only used when sorting.clusters = TRUE.
 # cluster.lines: is a list of values which can be used to separate cell clusters within the population; only used if multiple clusters present
-# break.gloc: is a set of values each defines a vertical line that separates chromosomes
+# breakGloc: is a set of values each defines a vertical line that separates chromosomes
 # No.test: number of test cells included in the data; can be used to delineate the populations of test and control cells in the heatmap
 
 
@@ -32,7 +32,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
                           sorting = TRUE,            # TRUE or FALSE
                           CNVscore = NULL,                # Only exists when sorting = TRUE 
                           cluster.lines = NULL,   
-                          break.gloc, 
+                          breakGloc = breakGloc, 
                           No.test 
 ){
   
@@ -69,8 +69,8 @@ CNV_htmp_gloc <- function(CNV.mat2,
   if ( Reduce("|", is.null(cluster.lines)) ){
     cluster.lines <- c(0, nrow(CNV.mat2) - No.test, nrow(CNV.mat2))
   }
-  if ( Reduce("|", is.null(break.gloc)) ){
-    break.gloc <- c(0, ncol(CNV.mat2))
+  if ( Reduce("|", is.null(breakGloc)) ){
+    breakGloc <- c(0, ncol(CNV.mat2))
   }
   
   ##### sorting of cells within clusters, based on tumor CNV scores, from the largest to the smallest (if applicable)
@@ -336,10 +336,10 @@ CNV_htmp_gloc <- function(CNV.mat2,
   labels.call.gloc <- rep(NA, ncol(CNV.mat4))
   
   for(i in 1: 22){ 
-    labels.call.gloc[break.gloc[i]+10 ] <- as.matrix(labels.gloc[i])
+    labels.call.gloc[breakGloc[i]+10 ] <- as.matrix(labels.gloc[i])
   }
-  labels.call.gloc[break.gloc[23] ] <- as.matrix(labels.gloc[23])
-  labels.call.gloc[break.gloc[24] ] <- as.matrix(labels.gloc[24])
+  labels.call.gloc[breakGloc[23] ] <- as.matrix(labels.gloc[23])
+  labels.call.gloc[breakGloc[24] ] <- as.matrix(labels.gloc[24])
   
   
   rownames(CNV.mat5) <- ROWlist 
@@ -387,7 +387,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
            denscol = "grey",
            density.info = "density",
            rowsep= Separns,
-           add.expr =  abline(v=break.gloc)    
+           add.expr =  abline(v=breakGloc)    
       )
 
     } else {
@@ -421,13 +421,15 @@ CNV_htmp_gloc <- function(CNV.mat2,
              denscol = "grey",
              density.info = "density",
              rowsep = cluster.lines,
-             add.expr = abline(v=break.gloc) 
+             add.expr = abline(v=breakGloc) 
       )
   
   }
   
   
 }
+
+
 
 
 
