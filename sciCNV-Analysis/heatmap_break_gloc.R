@@ -1,16 +1,21 @@
 
 
-#################################################################################################
-######                             heatmap_break_gloc function                           ####### 
-###### Finding separating lines among diverse chromosomes to be used in sketching heatmap #######
-######  Tiedemann Lab - Princess Margaret Cancer centre, University of Toronto            #######
-######                            copyright@AliMahdipourShirayeh                          #######
-#################################################################################################
+#' heatmap_break_gloc function
+#'
+#' @description Finding separating lines among diverse chromosomes to be used in sketching heatmap
+#'
+#' @author Ali Mahdipour-Shirayeh, Princess Margaret Cancer centre, University of Toronto
+#'
+#' @return Calculates the seperation spots among chromosomes to sketch the heatmap of sciCNV matrix using CNV_htmp_gloc function
+#'
+#' @export
+
+
 
 heatmap_break_gloc <- function( ){
 
-M_origin <- read.table( "../sciCNV/Dataset/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep = '\t', header=TRUE)
-  
+M_origin <- read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep = '\t', header=TRUE)
+
 ## number of segments on the genome
 No_Intrvl <- 1000
 
@@ -18,7 +23,7 @@ No_Intrvl <- 1000
 minn <- matrix(0, ncol=24, nrow=1)
 maxx <- matrix(0, ncol=24, nrow=1)
 
-for(i in 1: 22){ 
+for(i in 1: 22){
   minn[1,i] <- as.numeric(min(M_origin[which(as.matrix(M_origin[, 2]) == i) , 3]) )
   maxx[1,i] <- as.numeric(max(M_origin[which(as.matrix(M_origin[, 2]) == i) , 3]) )
 }
@@ -28,7 +33,7 @@ maxx[1,23] <- as.numeric(max(M_origin[which(as.matrix(M_origin[, 2]) == "X") , 3
 minn[1,24] <- as.numeric(min(M_origin[which(as.matrix(M_origin[, 2]) == "Y") , 3]) )
 maxx[1,24] <- as.numeric(max(M_origin[which(as.matrix(M_origin[, 2]) == "Y") , 3]) )
 
-Total_length <- sum( (maxx[1,1:24]-minn[1,1:24]) + 1 ) 
+Total_length <- sum( (maxx[1,1:24]-minn[1,1:24]) + 1 )
 Seg_size <- ceiling( Total_length/No_Intrvl )
 
 ########
@@ -41,7 +46,7 @@ Min_chr[1] <- 0
 for(i in 1:24){
   StartEnd <- seq(minn[1,i] , maxx[1,i] , Seg_size)
   Intrvls[i, 1:length(StartEnd) ]  <-  t(as.matrix( StartEnd )) + Min_chr[i]
-  Min_chr[i+1]  <-  maxx[1,i]              
+  Min_chr[i+1]  <-  maxx[1,i]
 }
 
 
@@ -49,7 +54,7 @@ for(i in 1:24){
 break.gloc <- rep(0,24)
 break.gloc[1] <- 1
 
-for(i in 2: 24){ 
+for(i in 2: 24){
   break.gloc[i] <- length( Intrvls[1:(i-1),][ Intrvls[1:(i-1),] != 0])
 }
 

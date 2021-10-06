@@ -1,26 +1,27 @@
 
 
-#######################################################################################
-######                          CNV_htmp_glist function                         #######
-######   Generates a heatmap of single cell CNV profiles plotted by gene list   #######
-######  Tiedemann Lab - Princess Margaret Cancer Centre, University of Toronto  #######
-######                       copyright@AliMahdipourShirayeh                     #######
-#######################################################################################
+#' CNV_htmp_glist function
+#'
+#' @description Generates a heatmap of single cell CNV profiles plotted by gene list
+#'
+#' @param CNV.mat2 copy number variation matrix
+#' @param Gen.Loc Genomic Location matrix with list of genes, their associated chromosome numbers, starts and ends
+#' @param clustering a TRUE/FALSE variable specifying whether to cluster cells based on their CNV similarities. Default is "FALSE"
+#' @param clustering.type: variable specifying the method that will be used to cluster sciCNV profiles (cells), if enabled. Possible options are "pearson",
+#'        "euclidean", " spearman", ... "original" (retain the same cell order/clusters as original without further clustering).
+#'         Default is "pearson". However this is only enabled when clustering = "TRUE"
+#' @param sorting: a TRUE/FALSE variable that enables sorting of cells based on their tumor CNV score from the largest to smallest tumor scores. Default is FASLE.
+#' @param CNVscore: the CNV score matrix for all cells (optionally divided by pre-determined clusters). Used only when sorting.clusters = TRUE.
+#' @param cluster.lines: is an optional list of values demarcating clusters of cells within the population; only used if multiple
+#'        cell clusters exist beyond the simple division between test and control populations
+#' @param breakGlist: is a set of values each defines a vertical line that separates chromosomes
+#' @param No.test: the number of test cells included in the data; can be used to delineate distinct populations of
+#'       of test annd control cells in the heatmap
+#'
+#' @return The output is the heatmap of sciCNV matrix for test and control cells against list of genes
+#'
+#' @export
 
-# Definitions:
-# CNV.mat2: copy number variation matrix
-# Gen.Loc: Genomic Location matrix with list of genes, their associated chromosome numbers, starts and ends
-# clustering: a TRUE/FALSE variable specifying whether to cluster cells based on their CNV similarities. Default is "FALSE"
-# clustering.type: variable specifying the method that will be used to cluster sciCNV profiles (cells), if enabled. Possible options are "pearson",
-#        "euclidean", " spearman", ... "original" (retain the same cell order/clusters as original without further clustering).
-#         Default is "pearson". However this is only enabled when clustering = "TRUE"
-# sorting: a TRUE/FALSE variable that enables sorting of cells based on their tumor CNV score from the largest to smallest tumor scores. Default is FASLE.
-# CNVscore: the CNV score matrix for all cells (optionally divided by pre-determined clusters). Used only when sorting.clusters = TRUE.
-# cluster.lines: is an optional list of values demarcating clusters of cells within the population; only used if multiple
-#        cell clusters exist beyond the simple division between test and control populations
-# breakGlist: is a set of values each defines a vertical line that separates chromosomes
-# No.test: the number of test cells included in the data; can be used to delineate distinct populations of
-#       of test annd control cells in the heatmap
 
 CNV_htmp_glist <- function(CNV.mat2,
                            clustering = FALSE,            # TRUE or FALSE
