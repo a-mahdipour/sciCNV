@@ -192,7 +192,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
   require(Matrix)
   Length_POINTS <- rep(0,24)
   for(j in 1:24){
-    Length_POINTS[j] <- nnzero(POINTS[j, ])
+    Length_POINTS[j] <- Matrix::nnzero(POINTS[j, ])
   }
 
   ALL_POINTS <- length(which(POINTS != 0 ))
@@ -315,16 +315,16 @@ CNV_htmp_gloc <- function(CNV.mat2,
   for(j in 1:(length(LLength)-1)){
     NeighborNo <- min(20, floor((LLength[j+1]-LLength[j])/2))
     for(i in (LLength[j]+1):(LLength[j]+floor(NeighborNo))){
-      CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*colMedians( CNV.mat51[ setdiff(seq(LLength[j]+1,(i+NeighborNo),1),i),  ])
+      CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat51[ setdiff(seq(LLength[j]+1,(i+NeighborNo),1),i),  ])
     }
     if( (LLength[j]+NeighborNo+1) <= (LLength[j+1]-(NeighborNo))  ){
       for(i in (LLength[j]+NeighborNo+1):(LLength[j+1]-(NeighborNo) )){
-        CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*colMedians( CNV.mat51[ setdiff(seq(i-NeighborNo,i+NeighborNo,1),i),  ])
+        CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat51[ setdiff(seq(i-NeighborNo,i+NeighborNo,1),i),  ])
       }
     }
     if( (LLength[j+1]-NeighborNo+1) <= LLength[j+1] ){
       for(i in (LLength[j+1]-NeighborNo+1):LLength[j+1]){
-        CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*colMedians( CNV.mat51[setdiff(seq(i-NeighborNo,LLength[j+1], 1),i),  ])
+        CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat51[setdiff(seq(i-NeighborNo,LLength[j+1], 1),i),  ])
       }
     }
 

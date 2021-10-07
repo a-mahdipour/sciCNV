@@ -154,15 +154,15 @@ CNV_htmp_glist <- function(CNV.mat2,
     NeighborNo <- min(20, floor((LLength[j+1]-LLength[j])/2))
 
     for(i in (LLength[j]+1):(LLength[j]+floor(NeighborNo))){
-      CNV.mat3[i, ] <- CNV.mat31[i, ]*Orig + (1-Orig)*colMedians(CNV.mat31[ setdiff(seq(LLength[j]+1,(i+NeighborNo),1),i),  ])
+      CNV.mat3[i, ] <- CNV.mat31[i, ]*Orig + (1-Orig)*robustbase::colMedians(CNV.mat31[ setdiff(seq(LLength[j]+1,(i+NeighborNo),1),i),  ])
     }
     if( (LLength[j]+NeighborNo+1) <= (LLength[j+1]-(NeighborNo) )){
       for(i in (LLength[j]+NeighborNo+1):(LLength[j+1]-(NeighborNo) )){
-        CNV.mat3[i, ] <- CNV.mat31[i, ]*Orig + (1-Orig)*colMedians( CNV.mat31[ setdiff(seq(i-NeighborNo,i+NeighborNo,1),i),  ])
+        CNV.mat3[i, ] <- CNV.mat31[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat31[ setdiff(seq(i-NeighborNo,i+NeighborNo,1),i),  ])
       }
     }
     for(i in (LLength[j+1]-NeighborNo+1):LLength[j+1]){
-      CNV.mat3[i, ] <- CNV.mat31[i, ]*Orig + (1-Orig)*colMedians(CNV.mat31[setdiff(seq(i-NeighborNo,LLength[j+1], 1),i),  ])
+      CNV.mat3[i, ] <- CNV.mat31[i, ]*Orig + (1-Orig)*robustbase::colMedians(CNV.mat31[setdiff(seq(i-NeighborNo,LLength[j+1], 1),i),  ])
     }
 
   }
