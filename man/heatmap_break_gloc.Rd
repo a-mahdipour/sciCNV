@@ -7,8 +7,15 @@
 heatmap_break_gloc()
 }
 \value{
-The chromosome separation locations for the CNV heatmap against genomic location (CNV_heatmap_gloc)
+Calculates the seperation spots among chromosomes to sketch the heatmap of sciCNV matrix using CNV_htmp_gloc function
 }
 \description{
 Finding separating lines among diverse chromosomes to be used in sketching heatmap
+}
+\examples{
+breakpoints_heatmap <- heatmap_break_gloc()
+
+}
+\author{
+Ali Mahdipour-Shirayeh, Princess Margaret Cancer centre, University of Toronto
 }

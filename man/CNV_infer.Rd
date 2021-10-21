@@ -25,8 +25,7 @@ CNV_infer(
 
 \item{baseline_adj}{The baseline adjustment is only applied to test cells if it is TRUE. Default is FALSE.}
 
-\item{baseline}{An optional correction to adjust the CNV zero setpoint (copy number gain =0) which is otherwise the median CNV of all genes.
-Default = 0 and typical range is between -0.5 and 0.5.}
+\item{baseline}{An optional correction to adjust the CNV zero setpoint (copy number gain =0) which is otherwise the median CNV of all genes.}
 
 \item{chr.n}{List of chromosome numbers associated with the list of genes}
 
@@ -35,11 +34,18 @@ Default = 0 and typical range is between -0.5 and 0.5.}
 \item{mat.fab}{is a merged matrix of FF, AW, BD vectors per cell. These vectors are used to calculate the relative expression of test to control.}
 }
 \value{
-the inferred CNV curve at single-cell resolution
+The output is the sciCNV curve of each single-cell across entire genome
 }
 \description{
-For Single Cell Inferred Copy Number Variation (sciCNV)
+To infer copy number variation (sciCNV) at single-cell resolution
 }
 \note{
-Please refer to the reference and supplemental materials described in the README for additional details.
+Please see the reference and supplmental materials described in the README file for additional information.
+}
+\examples{
+iCNV_percell <- CNV_infer(ss.expr=norm_expr_percell, mean.ctrl, gen.Loc, resolution=50, chr.n, P12, mat.fab)
+
+}
+\author{
+Ali Mahdipour-Shirayeh, Princess Margaret Cancer centre, University of Toronto
 }

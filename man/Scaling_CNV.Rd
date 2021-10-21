@@ -9,16 +9,23 @@ Scaling_CNV(V7Alt, n.TestCells, scaling.factor)
 \arguments{
 \item{V7Alt}{preliminary CNV matrix egnerated by sciCNV function}
 
-\item{n.TestCells}{number of test cells}
+\item{Vn.TestCells}{number of test cells}
 
-\item{scaling.factor}{scaling factor to re-scale the preliminary CNV estimate}
+\item{Vscaling.factor}{scaling factor to re-scale the preliminary CNV estimate}
 }
 \value{
-The scaled sciCNV data to be matched with a benchmark (e.g. WES result)
+Scales sciCNV results to be matched with benchmark (e.g. WES result of the same test sample)
 }
 \description{
 To scale preliminary sciCNV-curves derived from scRNA-seq data
 }
 \note{
-Please refer to the reference and supplemental materials described in the README for additional details
+Please refer to the reference and supplemental materials described in the README for additional details.
+}
+\examples{
+scaled_sciCNV <- Scaling_CNV(V7Alt=sciCNV_mat, n.TestCells=100, scaling.factor=0.5)
+
+}
+\author{
+Ali Mahdipour-Shirayeh, Princess Margaret Cancer Centre, University of Toronto
 }

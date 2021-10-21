@@ -2,7 +2,7 @@
 % Please edit documentation in R/Opt_MeanSD_RTAM2.R
 \name{Opt_MeanSD_RTAM2}
 \alias{Opt_MeanSD_RTAM2}
-\title{Optimizing Function for RTAM2}
+\title{Optimizing Function in RTAM2}
 \usage{
 Opt_MeanSD_RTAM2(
   Normalized_log,
@@ -27,8 +27,18 @@ Opt_MeanSD_RTAM2(
 \item{gene_cutoff}{the cutoff to calculate the summation of top (nonzero) gene expressions}
 }
 \value{
-Calculates the CV (sd/mean) for the given nGene, Min_nGene and gene_cutoff applying RTAM2
+The output is the CV (sd/mean) of RTAM2 normalization for given nGene, Min_nGene and gene_cutoff
 }
 \description{
-An auxiliary function to detect the optimal number of top-expressed genes for scaling a data-set
+An auxiliary fucntion to detect the optimal number of top-expressed genes for scaling a data-set using RTAM2
+}
+\note{
+Please refer to the reference and supplemental materials described in the README for additional details.
+}
+\examples{
+CV_for_RTAM2 <- Opt_MeanSD_RTAM2(Normalized_log=normalized_data, Order_Matrix, nGene, Min_nGene=250, gene_cutoff=250)
+
+}
+\author{
+Ali Mahdipour-Shirayeh, Princess Margaret Cancer Centre, University of Toronto
 }

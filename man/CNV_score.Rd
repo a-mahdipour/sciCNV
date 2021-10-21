@@ -7,14 +7,23 @@
 CNV_score(M_nf)
 }
 \arguments{
-\item{M_NF}{is a matrix of sciCNV profiles, with an extra column that reflects the average sciCNV profile of all suspected tumor cells (test cells)}
+\item{M_nF}{is a matrix of sciCNV profiles, with an extra column that reflects the average
+sciCNV profile of all suspected tumor cells (test cells)}
 }
 \value{
-The tumor score (tumor likeness score) of each single-cell
+Calculates the tumor likeness score for each single-cell which is the similarity of sciCNV curve of each cell to average sciCNV of tet cells
 }
 \description{
-Calculates a score for each cell reflecting the similarity of its sciCNV profile to the mean CNV profile of all suspected tumor cells
+Calculates a score for each cell reflecting the similarity of its sciCNV
+profile to the mean CNV profile of all suspected tumor cells
 }
 \note{
-Please refer to the reference and supplemental materials described in the README for additional details.
+Please see the reference and supplmental materials described in the README file for additional information.
+}
+\examples{
+tumor_likeness_score <- CNV_score(M_nf=sciCNV_mat)
+
+}
+\author{
+Ali Mahdipour-Shirayeh, Princess Margaret Cancer centre, University of Toronto
 }

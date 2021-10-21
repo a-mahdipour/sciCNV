@@ -20,27 +20,31 @@ CNV_htmp_glist(
 
 \item{clustering}{a TRUE/FALSE variable specifying whether to cluster cells based on their CNV similarities. Default is "FALSE"}
 
-\item{clustering.type}{variable specifying the method that will be used to cluster sciCNV profiles (cells), if enabled. Possible options are "pearson",
+\item{Gen.Loc}{Genomic Location matrix with list of genes, their associated chromosome numbers, starts and ends}
+
+\item{clustering.type:}{variable specifying the method that will be used to cluster sciCNV profiles (cells), if enabled. Possible options are "pearson",
 "euclidean", " spearman", ... "original" (retain the same cell order/clusters as original without further clustering).
 Default is "pearson". However this is only enabled when clustering = "TRUE"}
 
-\item{sorting}{a TRUE/FALSE variable that enables sorting of cells based on their tumor CNV score from the largest to smallest tumor scores. Default is FASLE.}
+\item{sorting:}{a TRUE/FALSE variable that enables sorting of cells based on their tumor CNV score from the largest to smallest tumor scores. Default is FASLE.}
 
-\item{CNVscore}{the CNV score matrix for all cells (optionally divided by pre-determined clusters). Used only when sorting.clusters = TRUE.}
+\item{CNVscore:}{the CNV score matrix for all cells (optionally divided by pre-determined clusters). Used only when sorting.clusters = TRUE.}
 
-\item{cluster.lines}{is an optional list of values demarcating clusters of cells within the population; only used if multiple
+\item{cluster.lines:}{is an optional list of values demarcating clusters of cells within the population; only used if multiple
 cell clusters exist beyond the simple division between test and control populations}
 
-\item{breakGlist}{is a set of values each defines a vertical line that separates chromosomes}
+\item{breakGlist:}{is a set of values each defines a vertical line that separates chromosomes}
 
-\item{No.test}{the number of test cells included in the data; can be used to delineate distinct populations of
+\item{No.test:}{the number of test cells included in the data; can be used to delineate distinct populations of
 of test annd control cells in the heatmap}
-
-\item{Gen.Loc}{Genomic Location matrix with list of genes, their associated chromosome numbers, starts and ends}
 }
 \value{
-Heatmap of sciCNv curves against list of genes
+The output is the heatmap of sciCNV matrix for test and control cells against list of genes
 }
 \description{
 Generates a heatmap of single cell CNV profiles plotted by gene list
+}
+\examples{
+heatmap_genelist <- CNV_htmp_glist(CNV.mat2 = sciCNV_mat, sorting = FALSE, breakGlist = breakGlist, No.test=100)
+
 }

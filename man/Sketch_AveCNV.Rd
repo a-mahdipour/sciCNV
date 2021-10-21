@@ -10,8 +10,15 @@ Sketch_AveCNV(Ave.mat)
 \item{Ave.mat}{the average of sciCNV-curves of test cells}
 }
 \value{
-Sketched the average sciCNV of all cells (for instance that of tumor karyotype)
+Sketches the average sciCNV curve of all test cells; showing all CN gains/losses across entire genome
 }
 \description{
 Plots the average pre-sciCNV profile of test cells by genomic location
+}
+\examples{
+sketch_mean_sciCNV <- Sketch_AveCNV(Ave.mat=mean_sciCNV_mat)
+
+}
+\author{
+Ali Mahdipour-Shirayeh, Princess Margaret Cancer Centre, University of Toronto
 }
