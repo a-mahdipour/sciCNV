@@ -17,6 +17,11 @@
 #'
 #' @return The output is the CV (sd/mean) of RTAM2 normalization for given nGene, Min_nGene and gene_cutoff
 #'
+#' @examples
+#' CV_for_RTAM2 <- Opt_MeanSD_RTAM2(Normalized_log=normalized_data, Order_Matrix, nGene, Min_nGene=250, gene_cutoff=250)
+#'
+#' @import stats
+#'
 #' @export
 
 
@@ -144,7 +149,7 @@ Opt_MeanSD_RTAM2 <- function(Normalized_log,
 
   # Mean and standard deviation of A% common genes
   Mean_Aper <- as.matrix(mean(MEAN_comm))
-  Sd_Aper <- as.matrix( sd(MEAN_comm))
+  Sd_Aper <- as.matrix(stats::sd(MEAN_comm))
 
   return(Sd_Aper/Mean_Aper)
 }

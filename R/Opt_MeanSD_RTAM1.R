@@ -16,6 +16,11 @@
 #'
 #' @return The output is the CV (sd/mean) of RTAM1 normalization for given nGene, Min_nGene and gene_cutoff
 #'
+#' @examples
+#' CV_for_RTAM1 <- Opt_MeanSD_RTAM1(Normalized_log=normalized_data, Order_Matrix, nGene, Min_nGene=250, gene_cutoff=250)
+#'
+#' @import stats
+#'
 #' @export
 
 
@@ -46,8 +51,8 @@ Opt_MeanSD_RTAM1 <- function(Normalized_log,
 
   }
 
-  rownames(AA)<- rownames(matrix_log)
-  colnames(AA)<- colnames(general1)
+  
+  colnames(AA)<- colnames(Normalized_log)
 
   # ----------------------------------------------------------------
   # Step 2: RTAM1 main step, adjusting cellular gene expression
@@ -113,7 +118,7 @@ Opt_MeanSD_RTAM1 <- function(Normalized_log,
   for(j in 1:ncol(AA)){
 
     ratio[1 ,j] <- (MIN_intesnse - pSum[1,j])/( (gene_cutoff + 3/2)*log2(gene_cutoff + 3/2)
-                    - aaa/log(2)-3/2*log2(3/2))
+                    - gene_cutoff/log(2)-3/2*log2(3/2))
 
   }
 
@@ -130,7 +135,7 @@ Opt_MeanSD_RTAM1 <- function(Normalized_log,
   Scaled_Normalized_log <- matrix(0, ncol=ncol(AA), nrow=nrow(AA))
 
   for(j in 1:ncol(AA)){
-    Scaled_Normalized_log[ as.matrix(Order_Matrix[, j]) , j] <- LS[  , j]
+    Scaled_Normalized_log[ as.matrix(Order_Matrix[, j]) , j] <- LS1[  , j]
   }
 
 
@@ -149,7 +154,7 @@ Opt_MeanSD_RTAM1 <- function(Normalized_log,
 
   # Mean of A% common genes
   Mean_Aper <- as.matrix(mean(MEAN_comm))
-  Sd_Aper <- as.matrix( sd(MEAN_comm))
+  Sd_Aper <- as.matrix(stats::sd(MEAN_comm))
 
   return(Sd_Aper/Mean_Aper)
 }

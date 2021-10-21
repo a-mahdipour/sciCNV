@@ -8,13 +8,18 @@
 #'
 #' @return Calculates the seperation spots among chromosomes to sketch the heatmap of sciCNV matrix using CNV_htmp_gloc function
 #'
+#' @examples
+#' breakpoints_heatmap <- heatmap_break_gloc()
+#'
+#' @import utils
+#'
 #' @export
 
 
 
 heatmap_break_gloc <- function( ){
 
-M_origin <- read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep = '\t', header=TRUE)
+M_origin <- utils::read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep = '\t', header=TRUE)
 
 ## number of segments on the genome
 No_Intrvl <- 1000

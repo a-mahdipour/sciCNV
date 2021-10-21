@@ -16,6 +16,9 @@
 #'
 #' @return The output is RTAM1 or 2 normalzied data at higher sensitivity, specificity and acuracy for all transcriptions (at loqwe, intermediate and higher levels)
 #'
+#' @examples
+#' CV_for_RTAM1 <- RTAM_normalization(mat=raw_data, method="RTAM2", Min_nGn=250, Optimizing=FALSE)
+#'
 #' @export
 
 
@@ -26,16 +29,10 @@ RTAM_normalization <- function(mat,           # Raw scRNA-seq data
                                Optimizing     # True or FALSE options specify whether to run an optional optimization code
 ){
 
-  # argument validations
-  #if( is.na(mat) ){
-  #  stop("Error, the given matrix is not in the accurate format")
-  #}
-
   if( is.na(method) ){
     method <- c("RTAM2")
-    flog.info(sprintf("The considered normalization method is %s",method))
+    sprintf("The considered normalization method is %s", method)
   }
-
 
   if(! (method %in% c("RTAM1", "RTAM2")) ){
     stop( "The chosen normalization method is not valid.")
