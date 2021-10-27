@@ -22,7 +22,18 @@
 #'
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against genomic location
 #'
+#' @examples
+#' heatmap_genomiclocation <- CNV_htmp_gloc(CNV.mat2 = sciCNV_mat, sorting = FALSE, breakGlist = breakGlist, No.test=100)
+#'
+#' @import stats
+#' @import robustbase
+#' @import GMD
+#' @import dichromat
+#' @import graphics
+#' @import utils
+#'
 #' @export
+
 
 
 CNV_htmp_gloc <- function(CNV.mat2,
@@ -75,24 +86,24 @@ CNV_htmp_gloc <- function(CNV.mat2,
   ##### sorting of cells within clusters, based on tumor CNV scores, from the largest to the smallest (if applicable)
 
   if ( sorting == TRUE ){
-    tst.score <- sort(CNVscore[1, 1:No.test] , decreasing=TRUE)     #MMPCs
-    ctrl.score <- sort(CNVscore[1, (No.test+1):ncol(CNVscore)] , decreasing=TRUE)  #NBCs
+    tst.score <- base::sort(CNVscore[1, 1:No.test] , decreasing=TRUE)     #MMPCs
+    ctrl.score <- base::sort(CNVscore[1, (No.test+1):ncol(CNVscore)] , decreasing=TRUE)  #NBCs
     ranked.col <- as.matrix( c(colnames(t(as.matrix(ctrl.score))), colnames(t(as.matrix(tst.score))  )) )
     CNV.mat1 <- as.matrix( CNV.mat2[match(ranked.col, rownames(CNV.mat2)), ])
     rownames(CNV.mat1) <-  ranked.col
-    colnames(CNV.mat1) <- rownames(M_NF)
+    colnames(CNV.mat1) <- rownames(CNV.mat2)
 
   } else if ( clustering == TRUE ){
 
     if ( is.na(clustering.type) ){
       CNV.mat.tst <- as.matrix(CNV.mat2[1:No.test, ])
-      hclst <- hclust(as.dist(1-cor( t(CNV.mat.tst), method =  "pearson")), method = "ward.D2")
+      hclst <- stats::hclust(stats::as.dist(1-stats::cor( t(CNV.mat.tst), method =  "pearson")), method = "ward.D2")
       hclst.lables <- hclst$labels[hclst$order]
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
 
     } else if ( ! missing(clustering.type) ){
       CNV.mat.tst <- as.matrix(CNV.mat2[1:No.test, ])
-      hclst <- hclust(as.dist(1-cor( t(CNV.mat.tst), method = clustering.type)), method = "ward.D2")
+      hclst <- stats::hclust(stats::as.dist(1-stats::cor( t(CNV.mat.tst), method = clustering.type)), method = "ward.D2")
       hclst.lables <- hclst$labels[hclst$order]
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
     }
@@ -110,7 +121,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
   COLlist <- colnames(CNV.mat1)
 
   ## The original list of chromosomes associated with genes in iCNV-matrix
-  Gen.Loc <- read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep='\t', header=TRUE)
+  Gen.Loc <- utils::read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep='\t', header=TRUE)
   Specific_genes <- which( as.matrix(Gen.Loc)[, 1]   %in% colnames(CNV.mat2))
   M_sample <-  as.matrix(Gen.Loc[Specific_genes, ])
 
@@ -177,7 +188,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
   Start_End_Chr <- rbind(minn, maxx)
 
   ###########
-
+  nonzero <- function(x){x!=0}
   MaxNo_intervals <- ceiling(max((maxx[1,1:24]-minn[1,1:24])+ 1)/Seg_size)
   POINTS <- matrix(0, nrow = 24, ncol = MaxNo_intervals)
   Min_chr <- rep(0,25)
@@ -192,7 +203,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
   require(Matrix)
   Length_POINTS <- rep(0,24)
   for(j in 1:24){
-    Length_POINTS[j] <- nnzero(POINTS[j, ])
+    Length_POINTS[j] <- nonzero(POINTS[j, ])
   }
 
   ALL_POINTS <- length(which(POINTS != 0 ))
@@ -315,16 +326,16 @@ CNV_htmp_gloc <- function(CNV.mat2,
   for(j in 1:(length(LLength)-1)){
     NeighborNo <- min(20, floor((LLength[j+1]-LLength[j])/2))
     for(i in (LLength[j]+1):(LLength[j]+floor(NeighborNo))){
-      CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*colMedians( CNV.mat51[ setdiff(seq(LLength[j]+1,(i+NeighborNo),1),i),  ])
+      CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat51[ setdiff(seq(LLength[j]+1,(i+NeighborNo),1),i),  ])
     }
     if( (LLength[j]+NeighborNo+1) <= (LLength[j+1]-(NeighborNo))  ){
       for(i in (LLength[j]+NeighborNo+1):(LLength[j+1]-(NeighborNo) )){
-        CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*colMedians( CNV.mat51[ setdiff(seq(i-NeighborNo,i+NeighborNo,1),i),  ])
+        CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat51[ setdiff(seq(i-NeighborNo,i+NeighborNo,1),i),  ])
       }
     }
     if( (LLength[j+1]-NeighborNo+1) <= LLength[j+1] ){
       for(i in (LLength[j+1]-NeighborNo+1):LLength[j+1]){
-        CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*colMedians( CNV.mat51[setdiff(seq(i-NeighborNo,LLength[j+1], 1),i),  ])
+        CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat51[setdiff(seq(i-NeighborNo,LLength[j+1], 1),i),  ])
       }
     }
 
@@ -348,22 +359,21 @@ CNV_htmp_gloc <- function(CNV.mat2,
 
   COL_vec <- c( rep("steelblue",1), rep("white",2),rep("firebrick",1) )
 
-  COL_vec <- c( rep("steelblue",1), rep("white",2),rep("firebrick",1) )
 
   if(clustering == TRUE){
      require("GMD")
      require("cluster")
      Separns <- c(1,nrow(final.mat)-No.test,nrow(final.mat))
 
-     plot.new()
-     par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
-     heatmap.3( CNV.mat.clustered ,
+     graphics::plot.new()
+     graphics::par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
+     GMD::heatmap.3( CNV.mat.clustered ,
            main = "Heatmap of sciCNV profiles of test and control cells
            Thr 0.5 of 1",
            xlab="Genomic location of expressed genes",
            ylab= "Cells",
            breaks = seq(-LL, LL, length.out =16),
-           col = colorRampPalette(COL_vec, space = "rgb")(15),
+           col = dichromat::colorRampPalette(COL_vec, space = "rgb")(15),
            Colv = "NA",
            trace="none",
            treeheight_row = 0.2,
@@ -371,7 +381,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
            sepcolor = "black",
            scale= "none",
            labRaw = NA,
-           labCol = labels_call1,
+           labCol = labels.call.gloc,
            Rowv = TRUE,
            dendrogram = "row",
            cluster.by.row = TRUE,
@@ -386,22 +396,21 @@ CNV_htmp_gloc <- function(CNV.mat2,
            denscol = "grey",
            density.info = "density",
            rowsep= Separns,
-           add.expr =  abline(v=breakGloc)
+           add.expr =  graphics::abline(v=breakGloc)
       )
 
     } else {
 
 
-      graphics.off()
-      plot.new()
-      par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
-      heatmap.3( final.mat ,
+      graphics::plot.new()
+      graphics::par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
+      GMD::heatmap.3( final.mat ,
              main = paste("Heatmap of sciCNV profiles of test and control cells
                           Thr 0.5 of 1, ", NeighborNo ," nearst neighbors", sep="" ),
              xlab = "Genomic location of expressed genes",
              ylab= "Cells",
              breaks = seq(-LL, LL, length.out =16),
-             col = colorRampPalette(COL_vec, space = "rgb")(15),
+             col = dichromat::colorRampPalette(COL_vec, space = "rgb")(15),
              Rowv = FALSE,
              Colv = FALSE,
              trace ="none",
@@ -420,7 +429,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
              denscol = "grey",
              density.info = "density",
              rowsep = cluster.lines,
-             add.expr = abline(v=breakGloc)
+             add.expr = graphics::abline(v=breakGloc)
       )
 
   }

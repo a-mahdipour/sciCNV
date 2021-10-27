@@ -7,12 +7,15 @@
 #'
 #' @note Please see the reference and supplmental materials described in the README file for additional information.
 #
-#' @param M_NF is a matrix of sciCNV profiles, with an extra column that reflects the average
+#' @param M_nF is a matrix of sciCNV profiles, with an extra column that reflects the average
 #'       sciCNV profile of all suspected tumor cells (test cells)
 #'
 #' @author Ali Mahdipour-Shirayeh, Princess Margaret Cancer centre, University of Toronto
 #'
 #' @return Calculates the tumor likeness score for each single-cell which is the similarity of sciCNV curve of each cell to average sciCNV of tet cells
+#'
+#' @examples
+#' tumor_likeness_score <- CNV_score(M_nf=sciCNV_mat)
 #'
 #' @export
 

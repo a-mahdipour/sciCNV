@@ -25,6 +25,11 @@
 #'
 #' @return Provides the iCNV profile of all single-cells at higher sinsitivity, eficiency and accuracy
 #'
+#' @examples
+#' sciCNV_mat <- sciCNV(norm.mat=normlized_data, ave.ctrl=mean_control, gen.Loc, No.test=100)
+#'
+#' @import parallel
+#'
 #' @export
 
 
@@ -38,7 +43,6 @@ sciCNV <- function(norm.mat,
                    baseline = 0    # default is 0. Typical range -0.5 to +0.5.
 ){
 
-  source(file.path(path.code, "CNV_infer.R"))
 
   ## argument validation
   if (  is.na(No.test) ){
@@ -91,7 +95,7 @@ sciCNV <- function(norm.mat,
   V7Alt <- matrix(0, ncol = (ncol(MSC)-1), nrow = nrow(MSC))
 
   # Average gene expression of control cells
-  mean.cntrl <- as.matrix(as.numeric(MSC[, ncol(MSC)]) )
+  mean.ctrl <- as.matrix(as.numeric(MSC[, ncol(MSC)]) )
 
   ## sciCNV for test and control cells
   new.genes <- rownames(MSC1)
