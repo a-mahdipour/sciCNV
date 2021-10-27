@@ -20,8 +20,18 @@ Mito_umi_gn(mat, percent.mito.G, nUMI, nGene, No.test, drop.mads = 3)
 \item{drop.mads}{number of the median absolute deviation (MAD) to drop damaged cells using the percentage of mitochondrial expression level}
 }
 \value{
-Sketches mitochondrial expression level and nGenes vs nUMI detecting and presenting damaged cells w.r.t. the cutoff (in red color)
+The output represents damaged cells due to the given  for mitochondrial percentage cutoff
 }
 \description{
 Function to sketch mitochondrial transcript content, nUMI and nGene data at cellular level to detect damaged cells within the population
+}
+\note{
+Please refer to the reference and supplemental materials described in the README for additional details.
+}
+\examples{
+damaged_cells <- Mito_umi_gn(mat=raw_data, percent.mito.G, nUMI, nGene, No.test=100, drop.mads = 3)
+
+}
+\author{
+Ali Mahdipour-Shirayeh, Princess Margaret Cancer Centre, University of Toronto
 }

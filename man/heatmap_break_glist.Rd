@@ -10,8 +10,15 @@ heatmap_break_glist(CNV.mat2)
 \item{CNV.mat2}{the sciCNV matrix of test and controcl cells}
 }
 \value{
-The chromosome separation locations for the CNV heatmap against list of genes (CNV_heatmap_glist)
+Calculates the seperation spots among chromosomes to sketch the heatmap of sciCNV matrix using CNV_htmp_glist function
 }
 \description{
 Finding separating lines among diverse chromosomes to be used in sketching heatmap
+}
+\examples{
+breakpoints_heatmap <- heatmap_break_glist(CNV.mat2 = normalized_data)
+
+}
+\author{
+Ali Mahdipour-Shirayeh, Princess Margaret Cancer centre, University of Toronto
 }

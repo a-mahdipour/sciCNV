@@ -37,11 +37,18 @@ Default is "pearson". Only enabled when clustering = "TRUE"}
 \item{Gen.Loc}{Genomic Location matrix with list of genes, their associated chromosome numbers, start and end locations}
 }
 \value{
-Heatmap of sciCNv curves against genomic location
+The output is the heatmap of sciCNV matrix for test and control cells against genomic location
 }
 \description{
 Generates heatmap of sciCNV profiles, plotted by Genomic location (gloc)
 }
 \note{
 Please refer to the reference and supplemental materials described in the README for additional details.
+}
+\examples{
+heatmap_genomiclocation <- CNV_htmp_gloc(CNV.mat2 = sciCNV_mat, sorting = FALSE, breakGlist = breakGlist, No.test=100)
+
+}
+\author{
+Ali Mahdipour-Shirayeh, Princess Margaret Cancer Centre, University of Toronto
 }

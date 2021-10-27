@@ -18,8 +18,18 @@ RTAM_normalization(mat, method, Min_nGn, Optimizing)
 \item{OptNumGenes}{is the number of genes that when employed for RTAM normalization will optimally minimize the variance across cells of gene-set average expression}
 }
 \value{
-Normalized data at a higher accuracy for all transcription data levels
+The output is RTAM1 or 2 normalzied data at higher sensitivity, specificity and acuracy for all transcriptions (at loqwe, intermediate and higher levels)
 }
 \description{
-RTAM1/2 normalization function designed but not limited to normalize scRNA-seq data
+RTAM1/2 normalization designed for but not limited to scRNA-seq data
+}
+\note{
+Please refer to the reference and supplemental materials described in the README for additional details.
+}
+\examples{
+CV_for_RTAM1 <- RTAM_normalization(mat=raw_data, method="RTAM2", Min_nGn=250, Optimizing=FALSE)
+
+}
+\author{
+Ali Mahdipour-Shirayeh, Princess Margaret Cancer Centre, University of Toronto
 }
