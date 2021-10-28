@@ -22,6 +22,7 @@
 #'
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against genomic location
 #'
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
 #' @examples
 #' heatmap_genomiclocation <- CNV_htmp_gloc(CNV.mat2 = sciCNV_mat, sorting = FALSE, breakGlist = breakGlist, No.test=100)
 #'
@@ -34,6 +35,9 @@
 #'
 #' @export
 
+=======
+#' @export
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
 
 
 CNV_htmp_gloc <- function(CNV.mat2,
@@ -91,7 +95,11 @@ CNV_htmp_gloc <- function(CNV.mat2,
     ranked.col <- as.matrix( c(colnames(t(as.matrix(ctrl.score))), colnames(t(as.matrix(tst.score))  )) )
     CNV.mat1 <- as.matrix( CNV.mat2[match(ranked.col, rownames(CNV.mat2)), ])
     rownames(CNV.mat1) <-  ranked.col
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
     colnames(CNV.mat1) <- rownames(CNV.mat2)
+=======
+    colnames(CNV.mat1) <- rownames(M_NF)
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
 
   } else if ( clustering == TRUE ){
 
@@ -121,7 +129,11 @@ CNV_htmp_gloc <- function(CNV.mat2,
   COLlist <- colnames(CNV.mat1)
 
   ## The original list of chromosomes associated with genes in iCNV-matrix
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
   Gen.Loc <- utils::read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep='\t', header=TRUE)
+=======
+  Gen.Loc <- read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep='\t', header=TRUE)
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
   Specific_genes <- which( as.matrix(Gen.Loc)[, 1]   %in% colnames(CNV.mat2))
   M_sample <-  as.matrix(Gen.Loc[Specific_genes, ])
 
@@ -188,7 +200,11 @@ CNV_htmp_gloc <- function(CNV.mat2,
   Start_End_Chr <- rbind(minn, maxx)
 
   ###########
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
   nonzero <- function(x){x!=0}
+=======
+
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
   MaxNo_intervals <- ceiling(max((maxx[1,1:24]-minn[1,1:24])+ 1)/Seg_size)
   POINTS <- matrix(0, nrow = 24, ncol = MaxNo_intervals)
   Min_chr <- rep(0,25)
@@ -203,7 +219,11 @@ CNV_htmp_gloc <- function(CNV.mat2,
   require(Matrix)
   Length_POINTS <- rep(0,24)
   for(j in 1:24){
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
     Length_POINTS[j] <- nonzero(POINTS[j, ])
+=======
+    Length_POINTS[j] <- Matrix::nnzero(POINTS[j, ])
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
   }
 
   ALL_POINTS <- length(which(POINTS != 0 ))
@@ -357,23 +377,40 @@ CNV_htmp_gloc <- function(CNV.mat2,
 
   ## Sketching the heatmap
 
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
   COL_vec <- c( rep("steelblue",1), rep("white",2),rep("firebrick",1) )
 
 
+=======
+  COL_vec <- c( rep("steelblue",1), rep("white",2),rep("firebrick",1) )
+
+  COL_vec <- c( rep("steelblue",1), rep("white",2),rep("firebrick",1) )
+
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
   if(clustering == TRUE){
      require("GMD")
      require("cluster")
      Separns <- c(1,nrow(final.mat)-No.test,nrow(final.mat))
 
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
      graphics::plot.new()
      graphics::par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
      GMD::heatmap.3( CNV.mat.clustered ,
+=======
+     plot.new()
+     par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
+     heatmap.3( CNV.mat.clustered ,
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
            main = "Heatmap of sciCNV profiles of test and control cells
            Thr 0.5 of 1",
            xlab="Genomic location of expressed genes",
            ylab= "Cells",
            breaks = seq(-LL, LL, length.out =16),
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
            col = dichromat::colorRampPalette(COL_vec, space = "rgb")(15),
+=======
+           col = colorRampPalette(COL_vec, space = "rgb")(15),
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
            Colv = "NA",
            trace="none",
            treeheight_row = 0.2,
@@ -381,7 +418,11 @@ CNV_htmp_gloc <- function(CNV.mat2,
            sepcolor = "black",
            scale= "none",
            labRaw = NA,
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
            labCol = labels.call.gloc,
+=======
+           labCol = labels_call1,
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
            Rowv = TRUE,
            dendrogram = "row",
            cluster.by.row = TRUE,
@@ -396,21 +437,36 @@ CNV_htmp_gloc <- function(CNV.mat2,
            denscol = "grey",
            density.info = "density",
            rowsep= Separns,
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
            add.expr =  graphics::abline(v=breakGloc)
+=======
+           add.expr =  abline(v=breakGloc)
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
       )
 
     } else {
 
 
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
       graphics::plot.new()
       graphics::par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
       GMD::heatmap.3( final.mat ,
+=======
+      graphics.off()
+      plot.new()
+      par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
+      heatmap.3( final.mat ,
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
              main = paste("Heatmap of sciCNV profiles of test and control cells
                           Thr 0.5 of 1, ", NeighborNo ," nearst neighbors", sep="" ),
              xlab = "Genomic location of expressed genes",
              ylab= "Cells",
              breaks = seq(-LL, LL, length.out =16),
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
              col = dichromat::colorRampPalette(COL_vec, space = "rgb")(15),
+=======
+             col = colorRampPalette(COL_vec, space = "rgb")(15),
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
              Rowv = FALSE,
              Colv = FALSE,
              trace ="none",
@@ -429,7 +485,11 @@ CNV_htmp_gloc <- function(CNV.mat2,
              denscol = "grey",
              density.info = "density",
              rowsep = cluster.lines,
+<<<<<<< HEAD:R/CNV_htmp_gloc.R
              add.expr = graphics::abline(v=breakGloc)
+=======
+             add.expr = abline(v=breakGloc)
+>>>>>>> upstream/master:R/CNV_htmp_gloc.R
       )
 
   }

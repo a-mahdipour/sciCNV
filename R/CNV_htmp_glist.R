@@ -20,6 +20,7 @@
 #'
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against list of genes
 #'
+<<<<<<< HEAD:R/CNV_htmp_glist.R
 #' @examples
 #' heatmap_genelist <- CNV_htmp_glist(CNV.mat2 = sciCNV_mat, sorting = FALSE, breakGlist = breakGlist, No.test=100)
 #'
@@ -29,6 +30,8 @@
 #' @import dichromat
 #' @import graphics
 #'
+=======
+>>>>>>> upstream/master:R/CNV_htmp_glist.R
 #' @export
 
 

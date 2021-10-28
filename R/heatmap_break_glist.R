@@ -10,18 +10,25 @@
 #'
 #' @return Calculates the seperation spots among chromosomes to sketch the heatmap of sciCNV matrix using CNV_htmp_glist function
 #'
+<<<<<<< HEAD
 #' @examples
 #' breakpoints_heatmap <- heatmap_break_glist(CNV.mat2 = normalized_data)
 #'
 #' @import utils
 #'
+=======
+>>>>>>> upstream/master
 #' @export
 
 
 
 heatmap_break_glist <- function(CNV.mat2){
 
+<<<<<<< HEAD
   gen.loc <- utils::read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep = '\t', header=TRUE)
+=======
+  gen.loc <- read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep = '\t', header=TRUE)
+>>>>>>> upstream/master
   gene.list <- which( as.matrix(gen.loc)[,1] %in% as.matrix(colnames(CNV.mat2)))
   assoc.chr <-  as.matrix(gen.loc[ gene.list, 2]) # as.matrix(mapply( as.matrix(gen.loc[ gene.list, 2]), FUN = as.numeric) )
 

@@ -7,7 +7,11 @@
 CNV_score(M_nf)
 }
 \arguments{
+<<<<<<< HEAD
 \item{M_nF}{is a matrix of sciCNV profiles, with an extra column that reflects the average
+=======
+\item{M_NF}{is a matrix of sciCNV profiles, with an extra column that reflects the average
+>>>>>>> upstream/master
 sciCNV profile of all suspected tumor cells (test cells)}
 }
 \value{
@@ -20,10 +24,13 @@ profile to the mean CNV profile of all suspected tumor cells
 \note{
 Please see the reference and supplmental materials described in the README file for additional information.
 }
+<<<<<<< HEAD
 \examples{
 tumor_likeness_score <- CNV_score(M_nf=sciCNV_mat)
 
 }
+=======
+>>>>>>> upstream/master
 \author{
 Ali Mahdipour-Shirayeh, Princess Margaret Cancer centre, University of Toronto
 }

@@ -15,10 +15,13 @@ Calculates the seperation spots among chromosomes to sketch the heatmap of sciCN
 \description{
 Finding separating lines among diverse chromosomes to be used in sketching heatmap
 }
+<<<<<<< HEAD
 \examples{
 breakpoints_heatmap <- heatmap_break_glist(CNV.mat2 = normalized_data)
 
 }
+=======
+>>>>>>> upstream/master
 \author{
 Ali Mahdipour-Shirayeh, Princess Margaret Cancer centre, University of Toronto
 }

@@ -20,6 +20,7 @@
 #'
 #' @return The output is the sciCNV curve of each single-cell across entire genome
 #'
+<<<<<<< HEAD:R/CNV_infer.R
 #' @examples
 #' iCNV_percell <- CNV_infer(ss.expr=norm_expr_percell, mean.ctrl, gen.Loc, resolution=50, chr.n, P12, mat.fab)
 #'
@@ -30,6 +31,12 @@
 
 
 CNV_infer  <- function( ss.expr,
+=======
+#' @export
+
+
+CNV_infer  <- function( ss.expr ,
+>>>>>>> upstream/master:R/CNV_infer.R
                         mean.ctrl,
                         gen.Loc ,
                         resolution,
@@ -98,7 +105,11 @@ CNV_infer  <- function( ss.expr,
   #---------------------- V: ma-Wratio (weighted disparity score comparing gene expression in test and control cells within the chromosome segment defined by the moving averages)
   V <- (TT - U)/(TT + U + Lambda )
 
+<<<<<<< HEAD:R/CNV_infer.R
   P100 <- stats::quantile( as.matrix(V)[seq(1,row_n,1)], 0.5 - BLC )
+=======
+  P100 <- quantile( as.matrix(V)[seq(1,row_n,1)], 0.5 - BLC )
+>>>>>>> upstream/master:R/CNV_infer.R
   WW <- V - P100
 
 
@@ -118,7 +129,11 @@ CNV_infer  <- function( ss.expr,
   #-----------------------AA: median normalized Z. AB: Linearized solution of AA from quadratic equation (aka W-lin)
   Z <- (X - Y)/(X + Y + Lambda)
 
+<<<<<<< HEAD:R/CNV_infer.R
   P101 <- stats::median( Z[seq(1,row_n,1) ])
+=======
+  P101 <- median( Z[seq(1,row_n,1) ])
+>>>>>>> upstream/master:R/CNV_infer.R
   AA <- Z - P101
   AB <- 3.3222*(AA)^4 + 5.6399*(AA)^3 + 4.2189*(AA)^2 + 3.8956*(AA)
 
@@ -173,46 +188,76 @@ CNV_infer  <- function( ss.expr,
       aaa <- seq(i - P31 ,i + P31,1)
       aaa <- aaa[! is.na(DH[aaa])]
       Ya <- as.matrix(DH[aaa])
+<<<<<<< HEAD:R/CNV_infer.R
       summary(lmResult <- stats::lm(Ya~aaa))
       DI[i] <- as.matrix(stats::coef(lmResult)["aaa"][[1]])
+=======
+      summary(lmResult <- lm(Ya~aaa))
+      DI[i] <- as.matrix(coef(lmResult)["aaa"][[1]])
+>>>>>>> upstream/master:R/CNV_infer.R
 
     } else if( (BD[i] < P31) && (AW[i] >= P31) ){
       if(  (AW[i] - P12) < P31 ){
         aaa <- seq(i + AW[i] - P12, i + P31 , 1)
         aaa <- aaa[! is.na(DH[aaa])]
         Ya <- as.matrix(DH[aaa])
+<<<<<<< HEAD:R/CNV_infer.R
         summary(lmResult <- stats::lm(Ya~aaa))
         DI[i] <- as.matrix(stats::coef(lmResult)["aaa"][[1]])
+=======
+        summary(lmResult <- lm(Ya~aaa))
+        DI[i] <- as.matrix(coef(lmResult)["aaa"][[1]])
+>>>>>>> upstream/master:R/CNV_infer.R
 
       } else
         aaa <- seq(i + AW[i] - P12, i + P31 , -1)
       aaa <- aaa[! is.na(DH[aaa])]
       Ya <- as.matrix(DH[aaa])
+<<<<<<< HEAD:R/CNV_infer.R
       summary(lmResult <- stats::lm(Ya~aaa))
       DI[i] <- as.matrix(stats::coef(lmResult)["aaa"][[1]])
+=======
+      summary(lmResult <- lm(Ya~aaa))
+      DI[i] <- as.matrix(coef(lmResult)["aaa"][[1]])
+>>>>>>> upstream/master:R/CNV_infer.R
 
     } else if( (BD[i] >= P31) && (AW[i] < P31)  ){
       if( ( - P31) < ( P12 - BD[i]) ){
         aaa <- seq(i - P31, i + P12 - BD[i] , 1)
         aaa <- aaa[! is.na(DH[aaa])]
         Ya <- as.matrix(DH[aaa])
+<<<<<<< HEAD:R/CNV_infer.R
         summary(lmResult <- stats::lm(Ya~aaa))
         DI[i] <- as.matrix(stats::coef(lmResult)["aaa"][[1]])
+=======
+        summary(lmResult <- lm(Ya~aaa))
+        DI[i] <- as.matrix(coef(lmResult)["aaa"][[1]])
+>>>>>>> upstream/master:R/CNV_infer.R
 
       } else
         aaa <- seq(i - P31, i + P12 - BD[i] , -1)
       aaa <- aaa[! is.na(DH[aaa])]
       Ya <- as.matrix(DH[aaa])
+<<<<<<< HEAD:R/CNV_infer.R
       summary(lmResult <- stats::lm(Ya~aaa))
       DI[i] <- as.matrix(stats::coef(lmResult)["aaa"][[1]])
+=======
+      summary(lmResult <- lm(Ya~aaa))
+      DI[i] <- as.matrix(coef(lmResult)["aaa"][[1]])
+>>>>>>> upstream/master:R/CNV_infer.R
 
     } else if( (BD[i] >= P31) && (AW[i] >= P31)  ){
       if( (P12 - BD[i]) < (AW[i] -P12) ){
         aaa <- seq(i + P12 - BD[i], i + AW[i] -P12 , 1)
         aaa <- aaa[! is.na(DH[aaa])]
         Ya <- as.matrix(DH[aaa])
+<<<<<<< HEAD:R/CNV_infer.R
         summary(lmResult <- stats::lm(Ya~aaa))
         DI[i] <- as.matrix(stats::coef(lmResult)["aaa"][[1]])
+=======
+        summary(lmResult <- lm(Ya~aaa))
+        DI[i] <- as.matrix(coef(lmResult)["aaa"][[1]])
+>>>>>>> upstream/master:R/CNV_infer.R
 
       } else if( (P12 - BD[i]) == (AW[i] - P12) ){
         DI[i] <- 0

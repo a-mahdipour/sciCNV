@@ -22,10 +22,13 @@ To scale preliminary sciCNV-curves derived from scRNA-seq data
 \note{
 Please refer to the reference and supplemental materials described in the README for additional details.
 }
+<<<<<<< HEAD
 \examples{
 scaled_sciCNV <- Scaling_CNV(V7Alt=sciCNV_mat, n.TestCells=100, scaling.factor=0.5)
 
 }
+=======
+>>>>>>> upstream/master
 \author{
 Ali Mahdipour-Shirayeh, Princess Margaret Cancer Centre, University of Toronto
 }

@@ -28,10 +28,13 @@ Function to sketch mitochondrial transcript content, nUMI and nGene data at cell
 \note{
 Please refer to the reference and supplemental materials described in the README for additional details.
 }
+<<<<<<< HEAD
 \examples{
 damaged_cells <- Mito_umi_gn(mat=raw_data, percent.mito.G, nUMI, nGene, No.test=100, drop.mads = 3)
 
 }
+=======
+>>>>>>> upstream/master
 \author{
 Ali Mahdipour-Shirayeh, Princess Margaret Cancer Centre, University of Toronto
 }
