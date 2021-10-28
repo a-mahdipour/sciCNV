@@ -17,19 +17,12 @@
 #'
 #' @return The output represents damaged cells due to the given  for mitochondrial percentage cutoff
 #'
-#' @examples
-#' damaged_cells <- Mito_umi_gn(mat=raw_data, percent.mito.G, nUMI, nGene, No.test=100, drop.mads = 3)
-#'
-#' @import stats
-#' @import graphics
-#' @import scales
-#'
 #' @export
 
 
-Mito_umi_gn <- function( mat,
-                         percent.mito.G,
-                         nUMI,
+Mito_umi_gn <- function( mat ,
+                         percent.mito.G ,
+                         nUMI ,
                          nGene,
                          No.test,
                          drop.mads = 3
@@ -48,31 +41,31 @@ Mito_umi_gn <- function( mat,
     drop.mads <- 3
   }
 
-  threshold <- max(0.05, mean(percent.mito.G) + (drop.mads)*(stats::mad(percent.mito.G)) )
+  threshold <- max(0.05, mean(percent.mito.G) + (drop.mads)*(mad(percent.mito.G)) )
 
-  graphics::layout(matrix(c(2,1,0,3,5,4,0,6),2,4) ,c(4.5,1,4.5,1),c(1,5), respect = TRUE)
-  graphics::par(mar=c(3,3,0,0),mgp=2:0)
-  graphics::plot(percent.mito.G ~ t(as.matrix(nUMI[1:No.test])), col=scales::alpha("black",0.2),  pch=16, cex=1.2,
+  layout(matrix(c(2,1,0,3,5,4,0,6),2,4) ,c(4.5,1,4.5,1),c(1,5), respect = TRUE)
+  par(mar=c(3,3,0,0),mgp=2:0)
+  plot(percent.mito.G ~ t(as.matrix(nUMI[1:No.test])), col=scales::alpha("black",0.2),  pch=16, cex=1.2,
        xlab="nUMI", ylab="Mitochondrial expression (%)",
        cex.lab=1.5,cex.lim=1.5,cex.axis=1.5
   )
-  with(mat, graphics::abline(h = threshold, lwd = 2, lty = 2, col = scales::alpha("red", 0.8)))
-  graphics::legend("topright", bty = "n", lty = 2, col = scales::alpha("red", 0.8), pt.bg = scales::alpha("red", 0.8),
+  with(mat, abline(h = threshold, lwd = 2, lty = 2, col = scales::alpha("red", 0.8)))
+  legend("topright", bty = "n", lty = 2, col = scales::alpha("red", 0.8), pt.bg = scales::alpha("red", 0.8),
          legend=paste(drop.mads, "MADs above mean :", threshold))
 
-  graphics::par(mar=c(0,3,1,0))
-  HST <- graphics::hist(t(as.matrix(nUMI[1:No.test])) ,breaks=100,col="grey",main=NULL,xaxt="n")
+  par(mar=c(0,3,1,0))
+  HST <- hist(t(as.matrix(nUMI[1:No.test])) ,breaks=100,col="grey",main=NULL,xaxt="n")
   MTPLR <- HST$counts / HST$density
-  Dnsty <- stats::density(nUMI)
+  Dnsty <- density(nUMI)
   Dnsty$y <- Dnsty$y * MTPLR[1]
-  graphics::lines(Dnsty,col=scales::alpha("blue",0.7))
+  lines(Dnsty,col=scales::alpha("blue",0.7))
 
-  graphics::par(mar=c(3,0,0,1))
-  Dnsty <-  stats::density(as.matrix(percent.mito.G))
-  HST <- graphics::hist(percent.mito.G ,breaks=100,plot=FALSE)
-  BAR <- graphics::barplot(HST$density,horiz=TRUE,space=0,col="grey",main=NULL,xlab="Density")
+  par(mar=c(3,0,0,1))
+  Dnsty <-  density(as.matrix(percent.mito.G))
+  HST <- hist(percent.mito.G ,breaks=100,plot=F)
+  BAR <- barplot(HST$density,horiz=T,space=0,col="grey",main=NULL,xlab="Density")
   SLOPE <- (max(BAR) - min(BAR)) / (max(HST$mids) - min(HST$mids))
-  graphics::lines(y=Dnsty$x * SLOPE + (min(BAR) - min(HST$mids) * SLOPE),
+  lines(y=Dnsty$x * SLOPE + (min(BAR) - min(HST$mids) * SLOPE),
         x=Dnsty$y,lwd=2,col=scales::alpha("blue",0.7))
 
 
@@ -80,35 +73,35 @@ Mito_umi_gn <- function( mat,
   damaged_cells <- NULL
   damaged_cells <- as.matrix(which(percent.mito.G > threshold) )
 
-  graphics::par(mar=c(3,3,0,0),mgp=2:0)
-  graphics::plot( t(as.matrix(nGene))[1:No.test] ~ t(as.matrix(nUMI))[1:No.test],
+  par(mar=c(3,3,0,0),mgp=2:0)
+  plot( t(as.matrix(nGene))[1:No.test] ~ t(as.matrix(nUMI))[1:No.test],
         col=scales::alpha("black",0.2),
         pch=16, cex=1.2, xlab="nUMI", ylab="nGene",
         cex.lab=1.5,cex.lim=1.5,cex.axis=1.5)
-  graphics::points( t(as.matrix(nGene))[damaged_cells] ~ t(as.matrix(nUMI))[damaged_cells] ,
+  points( t(as.matrix(nGene))[damaged_cells] ~ t(as.matrix(nUMI))[damaged_cells] ,
           pch=21,cex=1.2,col=scales::alpha("red",0.5),bg=scales::alpha("red",0.3))
-  graphics::legend("topleft",bty="n",pch=21,col=scales::alpha("red",0.8),pt.bg=scales::alpha("red",0.8),
+  legend("topleft",bty="n",pch=21,col=scales::alpha("red",0.8),pt.bg=scales::alpha("red",0.8),
          legend="Damaged cells")
 
 
-  graphics::par(mar=c(0,3,1,0))
-  HST <- graphics::hist(t(as.matrix(nUMI))[1:No.test],breaks=100,col="grey",main=NULL,xaxt="n")
+  par(mar=c(0,3,1,0))
+  HST <- hist(t(as.matrix(nUMI))[1:No.test],breaks=100,col="grey",main=NULL,xaxt="n")
   MTPLR <- HST$counts / HST$density
-  Dnsty <- stats::density(nUMI)
+  Dnsty <- density(nUMI)
   Dnsty$y <- Dnsty$y * MTPLR[1]
-  graphics::lines(Dnsty,col=scales::alpha("blue",0.7))
+  lines(Dnsty,col=scales::alpha("blue",0.7))
 
 
-  graphics::par(mar=c(3,0,0,1))
-  Dnsty <-  stats::density(as.matrix(nGene[1:No.test]))
-  HST <- graphics::hist( nGene ,breaks=100,plot=FALSE)
-  BAR <- graphics::barplot(HST$density,horiz=TRUE,space=0,col="grey",main=NULL,xlab="Density")
+  par(mar=c(3,0,0,1))
+  Dnsty <-  density(as.matrix(nGene[1:No.test]))
+  HST <- hist( nGene ,breaks=100,plot=F)
+  BAR <- barplot(HST$density,horiz=T,space=0,col="grey",main=NULL,xlab="Density")
   SLOPE <- (max(BAR) - min(BAR)) / (max(HST$mids) - min(HST$mids))
-  graphics::lines(y=Dnsty$x * SLOPE + (min(BAR) - min(HST$mids) * SLOPE),
+  lines(y=Dnsty$x * SLOPE + (min(BAR) - min(HST$mids) * SLOPE),
         x=Dnsty$y,lwd=2,col=scales::alpha("blue",0.7))
 
 
-  graphics::title("Detecting damaged cells based on mitochonrial expression level",
+  title("Detecting damaged cells based on mitochonrial expression level",
         outer = TRUE, line = -2,
         cex.main = 2, col.main ="brown")
 
