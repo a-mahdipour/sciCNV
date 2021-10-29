@@ -15,13 +15,10 @@ Sketches the average sciCNV curve of all test cells; showing all CN gains/losses
 \description{
 Plots the average pre-sciCNV profile of test cells by genomic location
 }
-<<<<<<< HEAD
 \examples{
 sketch_mean_sciCNV <- Sketch_AveCNV(Ave.mat=mean_sciCNV_mat)
 
 }
-=======
->>>>>>> upstream/master
 \author{
 Ali Mahdipour-Shirayeh, Princess Margaret Cancer Centre, University of Toronto
 }

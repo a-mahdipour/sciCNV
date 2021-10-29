@@ -26,13 +26,10 @@ RTAM1/2 normalization designed for but not limited to scRNA-seq data
 \note{
 Please refer to the reference and supplemental materials described in the README for additional details.
 }
-<<<<<<< HEAD
 \examples{
 CV_for_RTAM1 <- RTAM_normalization(mat=raw_data, method="RTAM2", Min_nGn=250, Optimizing=FALSE)
 
 }
-=======
->>>>>>> upstream/master
 \author{
 Ali Mahdipour-Shirayeh, Princess Margaret Cancer Centre, University of Toronto
 }

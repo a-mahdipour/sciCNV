@@ -42,13 +42,10 @@ To infer copy number variation (sciCNV) at single-cell resolution
 \note{
 Please see the reference and supplmental materials described in the README file for additional information.
 }
-<<<<<<< HEAD
 \examples{
 iCNV_percell <- CNV_infer(ss.expr=norm_expr_percell, mean.ctrl, gen.Loc, resolution=50, chr.n, P12, mat.fab)
 
 }
-=======
->>>>>>> upstream/master
 \author{
 Ali Mahdipour-Shirayeh, Princess Margaret Cancer centre, University of Toronto
 }

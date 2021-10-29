@@ -45,13 +45,10 @@ Generates heatmap of sciCNV profiles, plotted by Genomic location (gloc)
 \note{
 Please refer to the reference and supplemental materials described in the README for additional details.
 }
-<<<<<<< HEAD
 \examples{
 heatmap_genomiclocation <- CNV_htmp_gloc(CNV.mat2 = sciCNV_mat, sorting = FALSE, breakGlist = breakGlist, No.test=100)
 
 }
-=======
->>>>>>> upstream/master
 \author{
 Ali Mahdipour-Shirayeh, Princess Margaret Cancer Centre, University of Toronto
 }
