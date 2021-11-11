@@ -1,6 +1,6 @@
 Package: sciCNV
 Title: sciCNV
-Version: 0.99.1
+Version: 0.99.2
 Authors@R: 
     c(person("Ali","Mahdipour-Shirayeh", 
     email = "amahdipo@uhnresearch.ca", 
@@ -21,7 +21,6 @@ Imports:
     stats,
     graphics,
     robustbase,
-    GMD,
     dichromat,
     utils,
     scales,

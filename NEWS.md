@@ -1,3 +1,6 @@
+modified the version to 0.99.2 (2021-11-11)
++ pushed changes to git@git.bioconductor.org
+
 modified the version to 0.99.1 (2021-10-19)
 + pushed changes to git@git.bioconductor.org
 
