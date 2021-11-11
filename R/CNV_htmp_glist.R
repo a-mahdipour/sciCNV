@@ -25,7 +25,6 @@
 #'
 #' @import stats
 #' @import robustbase
-#' @import GMD
 #' @import dichromat
 #' @import graphics
 #'
@@ -204,13 +203,12 @@ CNV_htmp_glist <- function(CNV.mat2,
   COL_vec <- c( rep("steelblue",1), rep("white",2),rep("firebrick",1) )
 
    if(clustering == TRUE){
-     require("GMD")
-     require("cluster")
+
      Separns <- c(1,nrow(final.mat)-No.test,nrow(final.mat))
 
      graphics::plot.new()
      graphics::par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
-     GMD::heatmap.3( CNV.mat.clustered ,
+     heatmap.3( CNV.mat.clustered ,
            main = "Heatmap of sciCNV profiles of test and control cells
            Thr 0.5 of 1",
            xlab="Genomic location of expressed genes",
@@ -248,7 +246,7 @@ CNV_htmp_glist <- function(CNV.mat2,
 
      graphics::plot.new()
      graphics::par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
-     GMD::heatmap.3( final.mat ,
+     heatmap.3( final.mat ,
              main = paste("Heatmap of sciCNV profiles of test and control cells
                           Thr 0.5 of 1, ", NeighborNo ," nearst neighbors", sep="" ),
              xlab = "Genomic location of expressed genes",
