@@ -62,13 +62,13 @@ source(file.path(path.code, "heatmap_break_gloc.R"))
 Reading raw data with a list of genes on the first column
 
 ```{r}
-raw.data1 <- read.table( "../Dataset/Sample_100_CPCs__with__100_NPCs.txt", sep = '\t',header = TRUE) 
+raw.data1 <- read.table( "../Dataset/Sample_20_CPCs__with__20_NPCs.txt", sep = '\t',header = TRUE) 
 raw.data2 <- as.matrix(raw.data1[ , -1])
 rownames(raw.data2) <- raw.data1[ , 1]
 colnames(raw.data2) <- colnames(raw.data1[ , -1])
 ##
 W <- ncol(raw.data2)
-No.test <- 100                     # Number of test cells
+No.test <- 20                     # Number of test cells
 No.control <- ncol(raw.data2) - No.test# Number of control cells
 Col_Sum <- t(as.numeric(colSums(raw.data2)))
 ```
@@ -86,7 +86,7 @@ Calcuation of mitochondrial transcript content per cell
 nUMI <- t(as.numeric(colSums(raw.data2)))
 colnames(nUMI) <- colnames(raw.data2)
 
-mito.genes1 <- read.table( "../Dataset/Sample_100_CPCs___Mitochondrial.txt", sep = '\t',header = TRUE)
+mito.genes1 <- read.table( "../Dataset/Sample_20_CPCs___Mitochondrial.txt", sep = '\t',header = TRUE)
 mito.genes <- as.matrix(mito.genes1[,-1])
 percent.mito.G <- t(as.matrix(colSums(mito.genes)))/ ( Col_Sum[1:No.test] + colSums(mito.genes))
 
