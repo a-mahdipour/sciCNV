@@ -68,8 +68,8 @@ rownames(raw.data2) <- raw.data1[ , 1]
 colnames(raw.data2) <- colnames(raw.data1[ , -1])
 ##
 W <- ncol(raw.data2)
-No.test <- 20                     # Number of test cells
-No.control <- ncol(raw.data2) - No.test# Number of control cells
+No.test <- 20                             # Number of test cells
+No.control <- ncol(raw.data2) - No.test   # Number of control cells
 Col_Sum <- t(as.numeric(colSums(raw.data2)))
 ```
 
