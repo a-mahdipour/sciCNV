@@ -91,8 +91,6 @@ Scaling_CNV <-  function(V7Alt,
        pch=16,
        cex=0.5,
        ylim=c(-2,2),
-       cex.lab=2,
-       cex.axis=2,
        xlab="Genomic location",
        ylab="Preliminary CNV estimate"
   )

@@ -32,8 +32,6 @@ Sketch_AveCNV <- function(Ave.mat, Assoc.Chr){
         xlim=c(-nrow(as.matrix(Ave.mat))*.02,nrow(as.matrix(Ave.mat))*1.02),
         ylim=c(-2,2),
         cex=1,
-        cex.lab=2,
-        cex.axis=2,
         xlab="Genomic location",
         ylab="Preliminary CNV estimate")
   graphics::abline(h=0, col="black")
@@ -70,7 +68,7 @@ Sketch_AveCNV <- function(Ave.mat, Assoc.Chr){
         col = "white", cex = 1.2)
 
 
-  graphics::title("Average pre-sciCNV profile of test cells relative to control cells", cex.main=2, col.main="brown")
+  graphics::title("Average pre-sciCNV profile of test cells relative to control cells")
 
 }
 

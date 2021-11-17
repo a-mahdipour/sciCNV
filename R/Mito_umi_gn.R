@@ -53,8 +53,7 @@ Mito_umi_gn <- function( mat,
   graphics::layout(matrix(c(2,1,0,3,5,4,0,6),2,4) ,c(4.5,1,4.5,1),c(1,5), respect = TRUE)
   graphics::par(mar=c(3,3,0,0),mgp=2:0)
   graphics::plot(percent.mito.G ~ t(as.matrix(nUMI[1:No.test])), col=scales::alpha("black",0.2),  pch=16, cex=1.2,
-       xlab="nUMI", ylab="Mitochondrial expression (%)",
-       cex.lab=1.5,cex.lim=1.5,cex.axis=1.5
+       xlab="nUMI", ylab="Mitochondrial expression (%)"
   )
   with(mat, graphics::abline(h = threshold, lwd = 2, lty = 2, col = scales::alpha("red", 0.8)))
   graphics::legend("topright", bty = "n", lty = 2, col = scales::alpha("red", 0.8), pt.bg = scales::alpha("red", 0.8),
@@ -83,8 +82,7 @@ Mito_umi_gn <- function( mat,
   graphics::par(mar=c(3,3,0,0),mgp=2:0)
   graphics::plot( t(as.matrix(nGene))[1:No.test] ~ t(as.matrix(nUMI))[1:No.test],
         col=scales::alpha("black",0.2),
-        pch=16, cex=1.2, xlab="nUMI", ylab="nGene",
-        cex.lab=1.5,cex.lim=1.5,cex.axis=1.5)
+        pch=16, cex=1.2, xlab="nUMI", ylab="nGene")
   graphics::points( t(as.matrix(nGene))[damaged_cells] ~ t(as.matrix(nUMI))[damaged_cells] ,
           pch=21,cex=1.2,col=scales::alpha("red",0.5),bg=scales::alpha("red",0.3))
   graphics::legend("topleft",bty="n",pch=21,col=scales::alpha("red",0.8),pt.bg=scales::alpha("red",0.8),
