@@ -19,11 +19,8 @@
 #' @export
 
 
-Sketch_AveCNV <- function(Ave.mat){
+Sketch_AveCNV <- function(Ave.mat, Assoc.Chr){
 
-  Gen.loc <- utils::read.table("../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep = ',', header=TRUE)
-  Specific_genes <- which( as.matrix(Gen.loc)[, 1]   %in% rownames(as.matrix(Ave.mat)))
-  Assoc.Chr <-  as.matrix(Gen.loc[Specific_genes, 2])
 
   graphics::plot.new()
   graphics::par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))

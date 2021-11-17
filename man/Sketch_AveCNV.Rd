@@ -4,7 +4,7 @@
 \alias{Sketch_AveCNV}
 \title{Sketch_AveCNV function}
 \usage{
-Sketch_AveCNV(Ave.mat)
+Sketch_AveCNV(Ave.mat, Assoc.Chr)
 }
 \arguments{
 \item{Ave.mat}{the average of sciCNV-curves of test cells}

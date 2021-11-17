@@ -90,7 +90,6 @@ CNV_htmp_gloc <- function(CNV.mat2,
     ranked.col <- as.matrix( c(colnames(t(as.matrix(ctrl.score))), colnames(t(as.matrix(tst.score))  )) )
     CNV.mat1 <- as.matrix( CNV.mat2[match(ranked.col, rownames(CNV.mat2)), ])
     rownames(CNV.mat1) <-  ranked.col
-    colnames(CNV.mat1) <- rownames(CNV.mat2)
 
   } else if ( clustering == TRUE ){
 
@@ -109,7 +108,6 @@ CNV_htmp_gloc <- function(CNV.mat2,
 
     CNV.mat1 <- rbind( as.matrix(CNV.mat2[(No.test+1):nrow(CNV.mat2), ]) ,   as.matrix(CNV.mat.clustered)  )
     rownames(CNV.mat1) <-  c(rownames(as.matrix(CNV.mat2[(No.test+1):nrow(CNV.mat2), ])), hclst.lables)
-    colnames(CNV.mat1) <- colnames(CNV.mat2)
 
   } else if ( (clustering == "FALSE" ) & ( sorting == "FALSE")){
     CNV.mat1 <- rbind(as.matrix(CNV.mat2[(No.test):nrow(CNV.mat2), ]) , as.matrix(CNV.mat2[1:No.test, ]) )
@@ -120,9 +118,9 @@ CNV_htmp_gloc <- function(CNV.mat2,
   COLlist <- colnames(CNV.mat1)
 
   ## The original list of chromosomes associated with genes in iCNV-matrix
-  Gen.Loc <- utils::read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep='\t', header=TRUE)
-  Specific_genes <- which( as.matrix(Gen.Loc)[, 1]   %in% colnames(CNV.mat2))
-  M_sample <-  as.matrix(Gen.Loc[Specific_genes, ])
+  # Gen.Loc <- utils::read.table( "./data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep='\t', header=TRUE)
+  # Specific_genes <- which( as.matrix(Gen.Loc)[, 1]   %in% colnames(CNV.mat2))
+  M_sample <-  Gen.Loc[Specific_genes, ]
 
   ## expanding expressions towrds 0 or 1 providing their expression is less than or bigger to 0.5
   LL1 <- 0.5
@@ -145,7 +143,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
   }
   #-------
   LL <- 1
-  TT <- 0.5
+  TT <- 0.2
   CNV.mat1[which(CNV.mat11 >  LL)] <-  LL
   CNV.mat1[which( (CNV.mat11 <  TT) & (CNV.mat11 >  -TT) )] <- 0.0
   CNV.mat1[which(CNV.mat11 <  -LL)] <-  -LL
@@ -199,10 +197,9 @@ CNV_htmp_gloc <- function(CNV.mat2,
     Min_chr[i+1]  <-  maxx[1,i]
   }
 
-  require(Matrix)
   Length_POINTS <- rep(0,24)
   for(j in 1:24){
-    Length_POINTS[j] <- nonzero(POINTS[j, ])
+    Length_POINTS[j] <- length(POINTS[j,nonzero(POINTS[j, ])]) #nonzero(POINTS[j, ])
   }
 
   ALL_POINTS <- length(which(POINTS != 0 ))
@@ -315,7 +312,6 @@ CNV_htmp_gloc <- function(CNV.mat2,
 
 
   ###########################################
-  require(robustbase)
 
   CNV.mat51 <- as.matrix(CNV.mat4)
   CNV.mat5 <- matrix(0, ncol=ncol(CNV.mat51), nrow=nrow(CNV.mat51)) # (ceiling(LLL/10)))
@@ -364,13 +360,13 @@ CNV_htmp_gloc <- function(CNV.mat2,
 
      graphics::plot.new()
      graphics::par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
-     heatmap.3( CNV.mat.clustered ,
+     heatmap.3( final.mat,
            main = "Heatmap of sciCNV profiles of test and control cells
            Thr 0.5 of 1",
            xlab="Genomic location of expressed genes",
            ylab= "Cells",
            breaks = seq(-LL, LL, length.out =16),
-           col = dichromat::colorRampPalette(COL_vec, space = "rgb")(15),
+           col = colorRampPalette(COL_vec, space = "rgb")(15),
            Colv = "NA",
            trace="none",
            treeheight_row = 0.2,
@@ -406,7 +402,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
              xlab = "Genomic location of expressed genes",
              ylab= "Cells",
              breaks = seq(-LL, LL, length.out =16),
-             col = dichromat::colorRampPalette(COL_vec, space = "rgb")(15),
+             col = colorRampPalette(COL_vec, space = "rgb")(15),
              Rowv = FALSE,
              Colv = FALSE,
              trace ="none",

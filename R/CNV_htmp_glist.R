@@ -87,7 +87,6 @@ CNV_htmp_glist <- function(CNV.mat2,
     ranked.col <- as.matrix( c(colnames(t(as.matrix(ctrl.score))), colnames(t(as.matrix(tst.score))  )) )
     CNV.mat1 <- as.matrix( CNV.mat2[match(ranked.col, rownames(CNV.mat2)), ])
     rownames(CNV.mat1) <-  ranked.col
-    colnames(CNV.mat1) <- rownames(CNV.mat2)
 
   } else if ( clustering == TRUE ){
 
@@ -106,8 +105,7 @@ CNV_htmp_glist <- function(CNV.mat2,
 
     CNV.mat1 <- rbind( as.matrix(CNV.mat2[(No.test+1):nrow(CNV.mat2), ]) ,   as.matrix(CNV.mat.clustered)  )
     rownames(CNV.mat1) <-  c(rownames(as.matrix(CNV.mat2[(No.test+1):nrow(CNV.mat2), ])), hclst.lables)
-    colnames(CNV.mat1) <- colnames(CNV.mat2)
-
+    
   } else if ( (clustering == "FALSE" ) & ( sorting == "FALSE")){
     CNV.mat1 <- rbind(as.matrix(CNV.mat2[(No.test+1):nrow(CNV.mat2), ]) , as.matrix(CNV.mat2[1:No.test, ]) )
     rownames(CNV.mat1) <-  c(rownames(as.matrix(CNV.mat2[(No.test+1):nrow(CNV.mat2), ])), rownames(as.matrix(CNV.mat2[1:No.test, ]))  )
@@ -214,7 +212,7 @@ CNV_htmp_glist <- function(CNV.mat2,
            xlab="Genomic location of expressed genes",
            ylab= "Cells",
            breaks = seq(-LL, LL, length.out =16),
-           col = dichromat::colorRampPalette(COL_vec, space = "rgb")(15),
+           col = colorRampPalette(COL_vec, space = "rgb")(15),
            Colv = "NA",
            trace="none",
            treeheight_row = 0.2,
@@ -252,7 +250,7 @@ CNV_htmp_glist <- function(CNV.mat2,
              xlab = "Genomic location of expressed genes",
              ylab= "Cells",
              breaks = seq(-LL, LL, length.out =16),
-             col = dichromat::colorRampPalette(COL_vec, space = "rgb")(15),
+             col = colorRampPalette(COL_vec, space = "rgb")(15),
              Rowv = FALSE,
              Colv = FALSE,
              trace ="none",
@@ -263,7 +261,6 @@ CNV_htmp_glist <- function(CNV.mat2,
              labCol = label.call.glist,
              cexCol = 1,
              srtCol = 90,
-             #cutree_rows = 2,
              hieght = 50,
              width = 400,
              legend = TRUE,
@@ -272,8 +269,7 @@ CNV_htmp_glist <- function(CNV.mat2,
              denscol = "grey",
              density.info = "density",
              rowsep = cluster.lines ,
-             add.expr = graphics::abline(v = breakGlist)
-      )
+             add.expr = graphics::abline(v = breakGlist))
 
   }
 

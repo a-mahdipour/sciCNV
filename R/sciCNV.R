@@ -140,6 +140,7 @@ sciCNV <- function(norm.mat,
 
 
   mat.fab <- cbind(FF,AW, BD)
+  n.cores <- detectCores(all.tests = FALSE, logical = TRUE)
 
   v7alt.fun <- function(i){ CNV_infer(ss.expr = as.matrix(MSC[ ,i]),
                                       mean.ctrl = mean.ctrl,
@@ -150,7 +151,7 @@ sciCNV <- function(norm.mat,
                                       chr.n = chr.n,
                                       P12 = P12,
                                       mat.fab = mat.fab)}
-  V7Alt11 <- parallel::mclapply( 1:clmns, v7alt.fun, mc.cores = 4)
+  V7Alt11 <- parallel::mclapply( 1:clmns, v7alt.fun, mc.cores = n.cores )
   V7Alt <- matrix(unlist(V7Alt11), ncol = clmns, byrow = FALSE)
 
   colnames(V7Alt) <- colnames(MSC[,-ncol(MSC)])
