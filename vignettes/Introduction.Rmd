@@ -177,8 +177,7 @@ plot(matrix(1,ncol=1,nrow=nrow(as.matrix(norm.data[,1][norm.data[,1]>0]))),
      col="darkgray" ,
      xlim=c(-ncol(norm.data)*.01, ncol(norm.data)*1.01),
      ylim=c(0,  4.2), xlab = "Cells (ranked by UMI)",
-     ylab = expression("Normalized gene expression ("*Log[2]*"(.+1 ))"), 
-     cex.lab = 2, cex.axis = 2, cex.main=2)
+     ylab = expression("Normalized gene expression ("*Log[2]*"(.+1 ))"))
 
 for(i in 2:ncol(norm.data)){
   par(new=TRUE)
@@ -187,7 +186,7 @@ for(i in 2:ncol(norm.data)){
            col="darkgray")
 }
 title( paste("Sample1, RTAM2-normalization, cutoff ", 250," nGene ",250,sep=""), 
-       col.main = "brown", cex.main = 2)
+       col.main = "brown")
 ```
 
 
@@ -208,8 +207,7 @@ plot(matrix(1,ncol=1,nrow=nrow(as.matrix(norm.data[,1][norm.data[,1]>0]))),
      col="darkgray" ,
      xlim=c(-ncol(norm.data)*.01, ncol(norm.data)*1.01),
      ylim=c(0,  4.2), xlab = "Cells (ranked by UMI)",
-     ylab = expression("Normalized gene expression ("*Log[2]*"(.+1 ))"), 
-     cex.lab = 2, cex.axis = 2, cex.main=2)
+     ylab = expression("Normalized gene expression ("*Log[2]*"(.+1 ))"))
 
 for(i in 2:ncol(norm.data)){
   par(new=TRUE)
@@ -221,7 +219,7 @@ for(j in 1:ncol(norm.data)){
   par( new=TRUE)
   points(matrix(j,ncol=1,nrow=1),
          log2(mean(as.matrix(Common.mat[,j][Common.mat[,j]>0])) + 1 ) ,
-         axis = FALSE , col="red" , pch=15, cex =0.5      
+         col="red" , pch=15, cex =0.5      
   )
 } 
 legend(0,0.75,bty="n",pch=16,col=c("red",NA), cex=1.5, legend=paste("Mean of commonly-expressed genes"))
@@ -250,8 +248,7 @@ plot(matrix(1,ncol=1,nrow=nrow(as.matrix(norm.data[,1][norm.data[,1]>0]))),
      col="darkgray" ,
      xlim=c(-ncol(norm.data)*.01, ncol(norm.data)*1.01),
      ylim=c(0,  4.2), xlab = "Cells (ranked by UMI)",
-     ylab = expression("Normalized gene expression ("*Log[2]*"(.+1 ))"), 
-     cex.lab = 2, cex.axis = 2, cex.main=2)
+     ylab = expression("Normalized gene expression ("*Log[2]*"(.+1 ))"))
 
 for(i in 2:ncol(norm.data)){
   par(new=TRUE)

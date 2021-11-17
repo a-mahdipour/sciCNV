@@ -1,3 +1,12 @@
+modified the version to 0.99.5 (2021-11-11)
++ pushed changes to git@git.bioconductor.org
+
+modified the version to 0.99.4 (2021-11-11)
++ pushed changes to git@git.bioconductor.org
+
+modified the version to 0.99.3 (2021-11-11)
++ pushed changes to git@git.bioconductor.org
+
 modified the version to 0.99.2 (2021-11-11)
 + pushed changes to git@git.bioconductor.org
 
