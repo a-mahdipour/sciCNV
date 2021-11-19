@@ -49,11 +49,6 @@ CNV_infer  <- function( ss.expr,
     baseline_adj = FALSE
   }
 
-  if (is.na(sharpness)){
-    sharpness <-  1.0
-  } else if( (sharpness > 1.4) || (sharpness < 0.6)){
-    stop("Sharpness is not in the range [0.6, 1.4].")
-  }
 
   # argument correction for Baseline Correction (BLC)
   if ( baseline_adj == "TRUE" ){

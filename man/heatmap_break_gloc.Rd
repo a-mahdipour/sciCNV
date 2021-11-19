@@ -4,7 +4,10 @@
 \alias{heatmap_break_gloc}
 \title{heatmap_break_gloc function}
 \usage{
-heatmap_break_gloc()
+heatmap_break_gloc(CNV.mat2)
+}
+\arguments{
+\item{CNV.mat2}{copy number variation matrix}
 }
 \value{
 Calculates the seperation spots among chromosomes to sketch the heatmap of sciCNV matrix using CNV_htmp_gloc function

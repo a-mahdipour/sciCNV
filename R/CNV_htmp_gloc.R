@@ -12,7 +12,6 @@
 #'         Default is "pearson". Only enabled when clustering = "TRUE"
 #' @param sorting TRUE/FALSE variable specifying whether to sort cells based on their tumor CNV score from the largest to smallest tumor scores. Default is FALSE.
 #' @param CNV.mat2 copy number variation matrix
-#' @param Gen.Loc Genomic Location matrix with list of genes, their associated chromosome numbers, start and end locations
 #' @param CNVscore is the tumor CNV score matrix for all cells (possibly ranked within clusters). Only used when sorting.clusters = TRUE.
 #' @param cluster.lines is a list of values which can be used to separate cell clusters within the population; only used if multiple clusters present
 #' @param breakGloc is a set of values each defines a vertical line that separates chromosomes
@@ -37,11 +36,11 @@
 
 CNV_htmp_gloc <- function(CNV.mat2,
                           clustering = FALSE,        # TRUE or FALSE option
-                          clustering.type = c("pearson", "kendall", "spearman"),   # "pearson", "kendalln", "spearman", default: "pearson"
+                          clustering.type = NA,     #c("pearson", "kendall", "spearman"),   # "pearson", "kendalln", "spearman", default: "pearson"
                           sorting = TRUE,            # TRUE or FALSE
                           CNVscore = NULL,                # Only exists when sorting = TRUE
                           cluster.lines = NULL,
-                          breakGloc = breakGloc,
+                          breakGloc,
                           No.test
 ){
 
@@ -117,10 +116,8 @@ CNV_htmp_gloc <- function(CNV.mat2,
   ROWlist <- rownames(CNV.mat1)
   COLlist <- colnames(CNV.mat1)
 
-  ## The original list of chromosomes associated with genes in iCNV-matrix
-  # Gen.Loc <- utils::read.table( "./data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep='\t', header=TRUE)
-  # Specific_genes <- which( as.matrix(Gen.Loc)[, 1]   %in% colnames(CNV.mat2))
-  M_sample <-  Gen.Loc[Specific_genes, ]
+  
+  
 
   ## expanding expressions towrds 0 or 1 providing their expression is less than or bigger to 0.5
   LL1 <- 0.5
@@ -156,11 +153,9 @@ CNV_htmp_gloc <- function(CNV.mat2,
   ##################################################
 
   # Uploading the largest list of genes with chr number, start and end
-  MM <- Gen.Loc
-  MM1 <- data.frame(MM[,-1]); rownames(MM1) <- MM[,1]
-
-  ############ Finding the length of each Chromosome
-  M_origin <- MM
+  Specific_genes <- which( as.matrix(genLoc1)[, 1]   %in% colnames(CNV.mat2))
+  M_origin <- genLoc1[Specific_genes, ]
+  M_sample <-  genLoc1[Specific_genes, ]
 
   ## number of segments on the genome
   No_Intrvl <- 1000
@@ -171,14 +166,22 @@ CNV_htmp_gloc <- function(CNV.mat2,
   maxx <- matrix(0, ncol=24, nrow=1)
 
   for(i in 1: 22){
-    minn[1,i] <- as.numeric(min(M_origin[which(as.matrix(M_origin[, 2]) == i) , 3]) )
-    maxx[1,i] <- as.numeric(max(M_origin[which(as.matrix(M_origin[, 2]) == i) , 3]) )
+    chrinfo <- M_origin[which(as.matrix(M_origin[, 2]) == i) , 3]
+    minn[1,i] <- as.numeric(min(chrinfo ) )
+    maxx[1,i] <- as.numeric(max(chrinfo ) )
   }
-  minn[1,23] <- as.numeric(min(M_origin[which(M_origin[, 2] == "X") , 3]) )
-  maxx[1,23] <- as.numeric(max(M_origin[which(as.matrix(M_origin[, 2]) == "X") , 3]) )
-
-  minn[1,24] <- as.numeric(min(M_origin[which(as.matrix(M_origin[, 2]) == "Y") , 3]) )
-  maxx[1,24] <- as.numeric(max(M_origin[which(as.matrix(M_origin[, 2]) == "Y") , 3]) )
+  
+  chr23 <- M_origin[which(M_origin[, 2] == "X") , 3]
+  if(length(chr23) > 0){
+  minn[1,23] <- as.numeric(min(chr23) )
+  maxx[1,23] <- as.numeric(max(chr23) )
+  }
+    
+  chr24 <- M_origin[which(as.matrix(M_origin[, 2]) == "Y") , 3]
+  if(length(chr24)>0){
+  minn[1,24] <- as.numeric(min(chr24) )
+  maxx[1,24] <- as.numeric(max(chr24) )
+  }
 
   Total_length <- sum( (maxx[1,1:24]-minn[1,1:24]) + 1 )
   Seg_size <- ceiling( Total_length/No_Intrvl )
@@ -338,7 +341,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
 
   ########## Defining separating lines
   labels.gloc <- t(as.matrix(c(paste("Chr", 1:22, sep = ""),"ChrX", "ChrY")))
-  labels.call.gloc <- rep(NA, ncol(CNV.mat4))
+  labels.call.gloc <- rep(NA, ncol(CNV.mat5))
 
   for(i in 1: 22){
     labels.call.gloc[breakGloc[i]+10 ] <- as.matrix(labels.gloc[i])
@@ -421,8 +424,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
              denscol = "grey",
              density.info = "density",
              rowsep = cluster.lines,
-             add.expr = graphics::abline(v=breakGloc)
-      )
+             add.expr = graphics::abline(v=breakGloc))
 
   }
 

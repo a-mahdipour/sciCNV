@@ -11,7 +11,7 @@ CNV_htmp_glist(
   sorting = FALSE,
   CNVscore = NULL,
   cluster.lines = NULL,
-  breakGlist = breakGlist,
+  breakGlist,
   No.test
 )
 }

@@ -140,7 +140,7 @@ sciCNV <- function(norm.mat,
 
 
   mat.fab <- cbind(FF,AW, BD)
-  n.cores <- detectCores(all.tests = FALSE, logical = TRUE)
+  n.cores <- 1 # detectCores(all.tests = FALSE, logical = TRUE)
 
   v7alt.fun <- function(i){ CNV_infer(ss.expr = as.matrix(MSC[ ,i]),
                                       mean.ctrl = mean.ctrl,

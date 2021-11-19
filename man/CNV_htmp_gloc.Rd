@@ -7,11 +7,11 @@
 CNV_htmp_gloc(
   CNV.mat2,
   clustering = FALSE,
-  clustering.type = c("pearson", "kendall", "spearman"),
+  clustering.type = NA,
   sorting = TRUE,
   CNVscore = NULL,
   cluster.lines = NULL,
-  breakGloc = breakGloc,
+  breakGloc,
   No.test
 )
 }
@@ -33,8 +33,6 @@ Default is "pearson". Only enabled when clustering = "TRUE"}
 \item{breakGloc}{is a set of values each defines a vertical line that separates chromosomes}
 
 \item{No.test}{number of test cells included in the data; can be used to delineate the populations of test and control cells in the heatmap}
-
-\item{Gen.Loc}{Genomic Location matrix with list of genes, their associated chromosome numbers, start and end locations}
 }
 \value{
 The output is the heatmap of sciCNV matrix for test and control cells against genomic location

@@ -37,7 +37,7 @@ CNV_htmp_glist <- function(CNV.mat2,
                            sorting = FALSE,               # TRUE or FALSE
                            CNVscore = NULL,               # Only used when sorting = TRUE
                            cluster.lines = NULL,
-                           breakGlist = breakGlist,     # separation lines for chromosomes
+                           breakGlist,     # separation lines for chromosomes
                            No.test
 ){
 

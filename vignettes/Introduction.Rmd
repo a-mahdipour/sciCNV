@@ -301,9 +301,10 @@ Running the sciCNV function to derive CNV profiles for single cells from RTAM-no
 tst.index  <- seq(1, No.test , 1)                      # No of test cells
 ctrl.index <- seq(No.test+1,No.test+No.control , 1) 
 
-gen.Loc <- read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep = '\t', header=TRUE)
-Spec.genes <- which(as.matrix(gen.Loc[,1]) %in% as.matrix(rownames(norm.data)))
-gen.Loc <-  gen.Loc[Spec.genes, c(1,2)]
+genLoc <- read.table( "../data/10XGenomics_gen_pos_GRCh38-1.2.0.txt", sep = '\t', header=TRUE)
+genLoc1 <- genLoc 
+Spec.genes <- which(as.matrix(genLoc[,1]) %in% as.matrix(rownames(norm.data)))
+genLoc <-  genLoc[Spec.genes, c(1,2)]
 
 
 Ave_NCs <- as.matrix(rowMeans(as.matrix(norm.data[ , ctrl.index ]) ))
@@ -315,7 +316,7 @@ Generating infered-CNV data for (test and/or control) cells
 CNV.data <- sciCNV(norm.mat = norm.data, 
                    ave.ctrl = Ave_NCs,
                    No.test = No.test, 
-                   gen.Loc = gen.Loc,
+                   gen.Loc = genLoc,
                    sharpness  = 1,
                    baseline_adj = FALSE, 
                    baseline = 0)
@@ -382,16 +383,16 @@ colnames(M_NF) <- c(colnames(CNV.data.scaled)[-length(colnames(CNV.data.scaled))
 Assigning chromosome number to each gene sorted based on chromosome number, starts and ends to sketch the average sciCNV curve of test cells
 
 ```{r}
-Specific_genes <- which( Gen.loc[, 1] %in% rownames(CNV.data.scaled))
-Assoc.Chr <-  Gen.loc[Specific_genes, 2]
+Specific_genes <- which( genLoc[, 1] %in% rownames(CNV.data.scaled))
+Assoc.Chr <-  genLoc[Specific_genes, 2]
 #Assoc.Chr <-  apply(Assoc.Chr, 2, as.numeric)
 ```
 
 Finalizing the sciCNV-matrix by attaching gene-name and chromosome number lists
 
 ```{r}
-M_NF1 <- cbind(as.matrix(Gen.loc[Specific_genes, 1]), 
-               as.matrix(Gen.loc[Specific_genes, 2]), 
+M_NF1 <- cbind(as.matrix(genLoc[Specific_genes, 1]), 
+               as.matrix(genLoc[Specific_genes, 2]), 
                M_NF)
 colnames(M_NF1) <- c("Genes", "Chromosomes", colnames(norm.data), "Ave test")
 M_NF2 <- as.matrix(M_NF1)
@@ -455,15 +456,16 @@ rownames(CNV.matrix) <- colnames(M_NF[, -ncol(M_NF)])
 colnames(CNV.matrix) <- rownames(CNV.data)
 
 ## ## Heatmap of sciCNV plotted against list of genes
-break.glist <- rep(0, 24)
-break.glist <- heatmap_break_glist(CNV.mat2 = CNV.matrix )
+breakGlist <- rep(0, 24)
+breakGlist <- heatmap_break_glist(CNV.mat2 = CNV.matrix )
 
 ##
 CNV_htmp_glist( CNV.mat2 = CNV.matrix,
                 clustering = FALSE,        
                 sorting = TRUE,        
                 CNVscore = TotScore,
-                breakGlist = break.glist,
+                cluster.lines = NULL,
+                breakGlist = breakGlist,
                 No.test = No.test 
                 )
 ```
@@ -471,15 +473,16 @@ CNV_htmp_glist( CNV.mat2 = CNV.matrix,
 Heatmap of sciCNV plotted against genomic location
 
 ```{r}
-break.gloc <- rep(0, 24)
-break.gloc <- heatmap_break_gloc()
+breakGloc <- rep(0, 24)
+breakGloc <- heatmap_break_gloc(CNV.mat2 = CNV.matrix)
 
 CNV_htmp_gloc( CNV.mat2 = CNV.matrix,
                clustering = FALSE,
                sorting = TRUE,        
                CNVscore = TotScore,
-               breakGloc = break.gloc,
-               No.test = No.test )
+               cluster.lines = NULL,
+               breakGloc = breakGloc,
+               No.test = No.test)
 
 ```
 
