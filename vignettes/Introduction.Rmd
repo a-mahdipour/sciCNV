@@ -456,18 +456,18 @@ rownames(CNV.matrix) <- colnames(M_NF[, -ncol(M_NF)])
 colnames(CNV.matrix) <- rownames(CNV.data)
 
 ## ## Heatmap of sciCNV plotted against list of genes
-breakGlist <- rep(0, 24)
-breakGlist <- heatmap_break_glist(CNV.mat2 = CNV.matrix )
+#breakGlist <- rep(0, 24)
+#breakGlist <- heatmap_break_glist(CNV.mat2 = CNV.matrix )
 
 ##
-heatmap1 <- CNV_htmp_glist( CNV.mat2 = CNV.matrix,
-                clustering = FALSE,        
-                sorting = TRUE,        
-                CNVscore = TotScore,
-                cluster.lines = NULL,
-                breakGlist = breakGlist,
-                No.test = No.test 
-                )
+#heatmap1 <- CNV_htmp_glist( CNV.mat2 = CNV.matrix,
+#                clustering = FALSE,        
+#                sorting = TRUE,        
+#                CNVscore = TotScore,
+#                cluster.lines = NULL,
+#                breakGlist = breakGlist,
+#                No.test = No.test 
+#                )
 ```
 
 Heatmap of sciCNV plotted against genomic location
