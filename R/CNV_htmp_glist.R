@@ -21,7 +21,7 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against list of genes
 #'
 #' @examples
-#' heatmap <- CNV_htmp_glist(CNV.mat2, sorting = FALSE, breakGlist, No.test=100)
+#' heatmap <- CNV_htmp_glist(CNV.mat2=CNV.mat2, sorting = FALSE, breakGlist=breakGlist, No.test=100)
 #'
 #' @import stats
 #' @import robustbase
