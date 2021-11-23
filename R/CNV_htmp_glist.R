@@ -41,7 +41,7 @@ CNV_htmp_glist <- function(CNV.mat2,
                            No.test
 ){
 
-
+  CNV.mat2 <- as.matrix(CNV.mat2)
   ## argument validation
   if ( missing(sorting) ){
     sorting <- FALSE
