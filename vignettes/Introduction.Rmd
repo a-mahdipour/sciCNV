@@ -476,7 +476,7 @@ Heatmap of sciCNV plotted against genomic location
 # breakGloc <- rep(0, 24)
 # breakGloc <- heatmap_break_gloc(CNV.mat2 = CNV.matrix)
 # 
-# heatmap2 <- CNV_htmp_gloc( CNV.mat2 = CNV.matrix,
+# CNV_htmp_gloc( CNV.mat2 = CNV.matrix,
 #                clustering = FALSE,
 #                sorting = TRUE,        
 #                CNVscore = TotScore,

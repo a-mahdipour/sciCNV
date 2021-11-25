@@ -22,7 +22,7 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against genomic location
 #'
 #' @examples
-#' heatmap <- CNV_htmp_gloc(CNV.mat2, sorting = FALSE, breakGlist=c(1,1003,9374,9976,9976), No.test=100)
+#' heatmap <- CNV_htmp_gloc(CNV.mat2=CNV.mat, sorting = FALSE, breakGlist=c(1,1003,9374,9976,9976), No.test=100)
 #'
 #' @import stats
 #' @import robustbase
