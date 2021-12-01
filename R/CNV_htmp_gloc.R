@@ -23,7 +23,7 @@
 #'
 #' @examples
 #' CNV.mat <- read.csv(file.choose(), header=TRUE)
-#' breakGloc <- heatmap_break_gloc(CNV.mat2 = CNV.mat)
+#' breakGloc <- read.csv(file.choose(), header=TRUE)
 #' heatmap <- CNV_htmp_gloc(CNV.mat2=CNV.mat, sorting = FALSE, breakGloc=breakGloc, No.test=100)
 #'
 #' @import stats
