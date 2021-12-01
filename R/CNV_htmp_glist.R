@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' CNV.mat <- read.csv(file.choose(), header=TRUE)
-#' breakGlist <- c(1,1003,1713,2289,2635,3057,3546,4024,4374,4767,5134,5707,6251,6404,6777,7093,7549,8155,8289,9006,9264,9374,9976,9976)
+#' breakGlist <- heatmap_break_glist(CNV.mat2 = CNV.mat)
 #' CNV_htmp_glist(CNV.mat2=CNV.mat, sorting = FALSE, breakGlist=breakGlist, No.test=100)
 #'
 #' @import stats

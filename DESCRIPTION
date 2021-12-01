@@ -1,6 +1,6 @@
 Package: sciCNV
 Title: sciCNV
-Version: 0.99.28
+Version: 0.99.29
 Authors@R: 
     c(person("Ali","Mahdipour-Shirayeh", 
     email = "amahdipo@uhnresearch.ca", 
