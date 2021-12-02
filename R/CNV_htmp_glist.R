@@ -21,8 +21,9 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against list of genes
 #'
 #' @examples
-#' CNV.mat <- read.csv(file.choose(), header=TRUE)
-#' CNV_htmp_glist(CNV.mat2=CNV.mat, sorting = FALSE,  No.test=100)
+#' CNV.mat <- utils::read.table(file.choose(), header=TRUE)
+#' breakGlist <- utils::read.table(file.choose(), header=TRUE)
+#' CNV_htmp_glist(CNV.mat2=CNV.mat, breakGlist=breakGlist, sorting = FALSE,  No.test=100)
 #'
 #' @import stats
 #' @import robustbase

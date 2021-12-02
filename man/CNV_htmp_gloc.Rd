@@ -44,8 +44,9 @@ Generates heatmap of sciCNV profiles, plotted by Genomic location (gloc)
 Please refer to the reference and supplemental materials described in the README for additional details.
 }
 \examples{
-CNV.mat <- read.csv(file.choose(), header=TRUE)
-heatmap <- CNV_htmp_gloc(CNV.mat2=CNV.mat, sorting = FALSE,  No.test=100)
+CNV.mat <- utils::read.table(file.choose(), header=TRUE)
+breakGloc <- utils::read.table(file.choose(), header=TRUE)
+heatmap <- CNV_htmp_gloc(CNV.mat2=CNV.mat, breakGloc=breakGloc, sorting = FALSE,  No.test=100)
 
 }
 \author{
