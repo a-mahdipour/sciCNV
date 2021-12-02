@@ -46,7 +46,6 @@ Generates a heatmap of single cell CNV profiles plotted by gene list
 }
 \examples{
 CNV.mat <- read.csv(file.choose(), header=TRUE)
-breakGlist <- read.csv(file.choose(), header=TRUE)
-CNV_htmp_glist(CNV.mat2=CNV.mat, sorting = FALSE, breakGlist=breakGlist, No.test=100)
+CNV_htmp_glist(CNV.mat2=CNV.mat, sorting = FALSE,  No.test=100)
 
 }

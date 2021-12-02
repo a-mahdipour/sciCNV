@@ -45,8 +45,7 @@ Please refer to the reference and supplemental materials described in the README
 }
 \examples{
 CNV.mat <- read.csv(file.choose(), header=TRUE)
-breakGloc <- read.csv(file.choose(), header=TRUE)
-heatmap <- CNV_htmp_gloc(CNV.mat2=CNV.mat, sorting = FALSE, breakGloc=breakGloc, No.test=100)
+heatmap <- CNV_htmp_gloc(CNV.mat2=CNV.mat, sorting = FALSE,  No.test=100)
 
 }
 \author{
