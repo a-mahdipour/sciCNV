@@ -45,8 +45,11 @@ The output is the heatmap of sciCNV matrix for test and control cells against li
 Generates a heatmap of single cell CNV profiles plotted by gene list
 }
 \examples{
-CNV.mat <- utils::read.table(file.choose(), header=TRUE)
-breakGlist <- utils::read.table(file.choose(), header=TRUE)
-CNV_htmp_glist(CNV.mat2=CNV.mat, breakGlist=breakGlist, sorting = FALSE,  No.test=100)
+CNV.mat1 <- utils::read.table("./Dataset/Sample_CNV_matrix.txt", header=TRUE, sep="\t")
+CNV.mat <- CNV.mat1[,-1]
+rownames(CNV.mat) <- CNV.mat1[,1]
+breakGlist1 <- utils::read.table("./Dataset/Sample_breakGlist.txt", header=TRUE, sep="\t")
+breakGlist <- as.matrix(breakGlist1)
+CNV_htmp_glist(CNV.mat2=CNV.mat, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
 
 }
