@@ -21,10 +21,10 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against list of genes
 #'
 #' @examples
-#' CNV.mat1 <- read.table("/Dataset/Sample_CNV_matrix.txt", sep = '\t', header=TRUE)
+#' CNV.mat1 <- utils::read.table(file="../Dataset/Sample_CNV_matrix.txt", sep = '\t', header=TRUE)
 #' CNV.mat <- CNV.mat1[,-1]
 #' rownames(CNV.mat) <- CNV.mat1[,1]
-#' breakGlist1 <- read.table("/Dataset/Sample_breakGlist.txt", header=TRUE, sep="\t")
+#' breakGlist1 <- utils::read.table(file="../Dataset/Sample_breakGlist.txt", header=TRUE, sep="\t")
 #' breakGlist <- as.matrix(breakGlist1)
 #' CNV_htmp_glist(CNV.mat2=CNV.mat, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
 #'
