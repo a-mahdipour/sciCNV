@@ -62,7 +62,7 @@ source(file.path(path.code, "heatmap_break_gloc.R"))
 Reading raw data with a list of genes on the first column
 
 ```{r}
-raw.data1 <- read.table( "../Dataset/Sample_20_CPCs__with__20_NPCs.txt", sep = '\t',header = TRUE) 
+raw.data1 <- read.table( "../ins/extdata/Sample_20_CPCs__with__20_NPCs.txt", sep = '\t',header = TRUE) 
 raw.data2 <- as.matrix(raw.data1[ , -1])
 rownames(raw.data2) <- raw.data1[ , 1]
 colnames(raw.data2) <- colnames(raw.data1[ , -1])
@@ -86,7 +86,7 @@ Calcuation of mitochondrial transcript content per cell
 nUMI <- t(as.numeric(colSums(raw.data2)))
 colnames(nUMI) <- colnames(raw.data2)
 
-mito.genes1 <- read.table( "../Dataset/Sample_20_CPCs___Mitochondrial.txt", sep = '\t',header = TRUE)
+mito.genes1 <- read.table( "../ins/extdata/Sample_20_CPCs___Mitochondrial.txt", sep = '\t',header = TRUE)
 mito.genes <- as.matrix(mito.genes1[,-1])
 percent.mito.G <- t(as.matrix(colSums(mito.genes)))/ ( Col_Sum[1:No.test] + colSums(mito.genes))
 
@@ -456,33 +456,33 @@ rownames(CNV.matrix) <- colnames(M_NF[, -ncol(M_NF)])
 colnames(CNV.matrix) <- rownames(CNV.data)
 
 ## ## Heatmap of sciCNV plotted against list of genes
-#breakGlist <- rep(0, 24)
-#breakGlist <- heatmap_break_glist(CNV.mat2 = CNV.matrix )
+breakGlist <- rep(0, 24)
+breakGlist <- heatmap_break_glist(CNV.mat2 = CNV.matrix )
 
 ##
-#CNV_htmp_glist( CNV.mat2 = CNV.matrix,
-#                clustering = FALSE,        
-#                sorting = TRUE,        
-#                CNVscore = TotScore,
-#                cluster.lines = NULL,
-#                breakGlist = breakGlist,
-#                No.test = No.test 
-#                )
+CNV_htmp_glist( CNV.mat2 = CNV.matrix,
+               clustering = FALSE,
+               sorting = TRUE,
+               CNVscore = TotScore,
+               cluster.lines = NULL,
+               breakGlist = breakGlist,
+               No.test = No.test
+               )
 ```
 
 Heatmap of sciCNV plotted against genomic location
 
 ```{r}
-# breakGloc <- rep(0, 24)
-# breakGloc <- heatmap_break_gloc(CNV.mat2 = CNV.matrix)
+breakGloc <- rep(0, 24)
+breakGloc <- heatmap_break_gloc(CNV.mat2 = CNV.matrix)
 # 
-# CNV_htmp_gloc( CNV.mat2 = CNV.matrix,
-#                clustering = FALSE,
-#                sorting = TRUE,        
-#                CNVscore = TotScore,
-#                cluster.lines = NULL,
-#                breakGloc = breakGloc,
-#                No.test = No.test)
+CNV_htmp_gloc( CNV.mat2 = CNV.matrix,
+               clustering = FALSE,
+               sorting = TRUE,
+               CNVscore = TotScore,
+               cluster.lines = NULL,
+               breakGloc = breakGloc,
+               No.test = No.test)
 
 ```
 
