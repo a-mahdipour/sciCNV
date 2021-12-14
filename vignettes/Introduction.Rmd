@@ -62,7 +62,7 @@ source(file.path(path.code, "heatmap_break_gloc.R"))
 Reading raw data with a list of genes on the first column
 
 ```{r}
-raw.data1 <- read.table( "../ins/extdata/Sample_20_CPCs__with__20_NPCs.txt", sep = '\t',header = TRUE) 
+raw.data1 <- read.table( "../inst/extdata/Sample_20_CPCs__with__20_NPCs.txt", sep = '\t',header = TRUE) 
 raw.data2 <- as.matrix(raw.data1[ , -1])
 rownames(raw.data2) <- raw.data1[ , 1]
 colnames(raw.data2) <- colnames(raw.data1[ , -1])
@@ -86,7 +86,7 @@ Calcuation of mitochondrial transcript content per cell
 nUMI <- t(as.numeric(colSums(raw.data2)))
 colnames(nUMI) <- colnames(raw.data2)
 
-mito.genes1 <- read.table( "../ins/extdata/Sample_20_CPCs___Mitochondrial.txt", sep = '\t',header = TRUE)
+mito.genes1 <- read.table( "../inst/extdata/Sample_20_CPCs___Mitochondrial.txt", sep = '\t',header = TRUE)
 mito.genes <- as.matrix(mito.genes1[,-1])
 percent.mito.G <- t(as.matrix(colSums(mito.genes)))/ ( Col_Sum[1:No.test] + colSums(mito.genes))
 
@@ -143,10 +143,10 @@ Sorting of cells by UMI (from largest to smallest)
 
 ```{r}
 if(No.control > 0){
-raw.data <- raw.data2[, c(colnames(sort(as.data.frame(nUMI)[1:No.test], decreasing=TRUE))
-                          ,colnames(sort(as.data.frame(nUMI)[(No.test+1):ncol(raw.data)],                              decreasing=TRUE))), drop=FALSE]
+raw.data <- raw.data2[, c(colnames(nUMI)[order(as.data.frame(nUMI)[1:No.test], decreasing=TRUE)]
+                        ,colnames(nUMI)[No.test+order(as.data.frame(nUMI)[(No.test+1):ncol(raw.data2)],                              decreasing=TRUE)]), drop=FALSE]
 } else {
-  raw.data <- raw.data2[, colnames(sort(data.frame(nUMI)[1, ], decreasing=TRUE)), drop=FALSE]
+  raw.data <- raw.data2[, colnames(nUMI)[order(as.data.frame(nUMI)[1, ], decreasing=TRUE)], drop=FALSE]
 }
 raw.data <- as.matrix(raw.data)
 rownames(raw.data) <- rownames(raw.data2) 
