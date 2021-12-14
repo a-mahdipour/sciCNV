@@ -44,11 +44,8 @@ Generates heatmap of sciCNV profiles, plotted by Genomic location (gloc)
 Please refer to the reference and supplemental materials described in the README for additional details.
 }
 \examples{
-CNV.mat1 <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
-CNV.mat <- CNV.mat1[,-1]
-rownames(CNV.mat) <- CNV.mat1[,1]
-breakGloc1 <- system.file("extdata", "Sample_breakGloc.txt", package = "sciCNV")
-breakGloct <- as.matrix(breakGloc1)
+CNV.mat <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
+breakGloc <- system.file("extdata", "Sample_breakGloc.txt", package = "sciCNV")
 CNV_htmp_gloc(CNV.mat2=CNV.mat, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
 
 }
