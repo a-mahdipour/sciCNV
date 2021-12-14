@@ -460,14 +460,14 @@ breakGlist <- rep(0, 24)
 breakGlist <- heatmap_break_glist(CNV.mat2 = CNV.matrix )
 
 ##
-CNV_htmp_glist( CNV.mat2 = CNV.matrix,
-               clustering = FALSE,
-               sorting = TRUE,
-               CNVscore = TotScore,
-               cluster.lines = NULL,
-               breakGlist = breakGlist,
-               No.test = No.test
-               )
+# CNV_htmp_glist( CNV.mat2 = CNV.matrix,
+#                clustering = FALSE,
+#                sorting = TRUE,
+#                CNVscore = TotScore,
+#                cluster.lines = NULL,
+#                breakGlist = breakGlist,
+#                No.test = No.test
+#                )
 ```
 
 Heatmap of sciCNV plotted against genomic location
@@ -475,14 +475,14 @@ Heatmap of sciCNV plotted against genomic location
 ```{r}
 breakGloc <- rep(0, 24)
 breakGloc <- heatmap_break_gloc(CNV.mat2 = CNV.matrix)
-# 
-CNV_htmp_gloc( CNV.mat2 = CNV.matrix,
-               clustering = FALSE,
-               sorting = TRUE,
-               CNVscore = TotScore,
-               cluster.lines = NULL,
-               breakGloc = breakGloc,
-               No.test = No.test)
+#
+# CNV_htmp_gloc( CNV.mat2 = CNV.matrix,
+#                clustering = FALSE,
+#                sorting = TRUE,
+#                CNVscore = TotScore,
+#                cluster.lines = NULL,
+#                breakGloc = breakGloc,
+#                No.test = No.test)
 
 ```
 
