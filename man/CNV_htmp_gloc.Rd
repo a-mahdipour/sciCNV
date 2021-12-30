@@ -46,7 +46,7 @@ Please refer to the reference and supplemental materials described in the README
 \examples{
 CNV.mat21 <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
 breakGloc <- system.file("extdata", "Sample_breakGloc.txt", package = "sciCNV")
-CNV_htmp_gloc(CNV.mat21, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
+CNV_htmp_gloc(CNV.mat2, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
 
 }
 \author{

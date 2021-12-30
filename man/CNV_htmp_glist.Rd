@@ -5,7 +5,7 @@
 \title{CNV_htmp_glist function}
 \usage{
 CNV_htmp_glist(
-  CNV.mat21,
+  CNV.mat2,
   clustering = FALSE,
   clustering.type = c("pearson", "kendall", "spearman"),
   sorting = FALSE,
@@ -16,9 +16,9 @@ CNV_htmp_glist(
 )
 }
 \arguments{
-\item{clustering}{a TRUE/FALSE variable specifying whether to cluster cells based on their CNV similarities. Default is "FALSE"}
-
 \item{CNV.mat2}{copy number variation matrix}
+
+\item{clustering}{a TRUE/FALSE variable specifying whether to cluster cells based on their CNV similarities. Default is "FALSE"}
 
 \item{Gen.Loc}{Genomic Location matrix with list of genes, their associated chromosome numbers, starts and ends}
 
@@ -47,6 +47,6 @@ Generates a heatmap of single cell CNV profiles plotted by gene list
 \examples{
 CNV.mat21 <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
 breakGlist <- system.file("extdata", "Sample_breakGlist.txt", package = "sciCNV")
-CNV_htmp_glist(CNV.mat21, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
+CNV_htmp_glist(CNV.mat2, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
 
 }

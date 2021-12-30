@@ -24,7 +24,7 @@
 #' @examples
 #' CNV.mat21 <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
 #' breakGloc <- system.file("extdata", "Sample_breakGloc.txt", package = "sciCNV")
-#' CNV_htmp_gloc(CNV.mat21, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
+#' CNV_htmp_gloc(CNV.mat2, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
 #'
 #' @import stats
 #' @import robustbase
@@ -46,9 +46,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
                           No.test
 ){
 
-  CNV.mat2 <- CNV.mat21[,-1]
-  rownames(CNV.mat2) <- CNV.mat21[,1]
-  
+
   ## argument validation
   if ( missing(sorting) ){
     sorting <- FALSE

@@ -23,7 +23,7 @@
 #' @examples
 #' CNV.mat21 <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
 #' breakGlist <- system.file("extdata", "Sample_breakGlist.txt", package = "sciCNV")
-#' CNV_htmp_glist(CNV.mat21, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
+#' CNV_htmp_glist(CNV.mat2, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
 #'
 #' @import stats
 #' @import robustbase
@@ -33,7 +33,7 @@
 #' @export
 
 
-CNV_htmp_glist <- function(CNV.mat21,
+CNV_htmp_glist <- function(CNV.mat2,
                            clustering = FALSE,            # TRUE or FALSE
                            clustering.type = c("pearson", "kendall", "spearman"),   # "pearson", "kendalln", " spearman", defualt: "pearson"
                            sorting = FALSE,               # TRUE or FALSE
@@ -44,8 +44,8 @@ CNV_htmp_glist <- function(CNV.mat21,
 ){
 
   
-  CNV.mat2 <- CNV.mat21[,-1]
-  rownames(CNV.mat2) <- CNV.mat21[,1]
+  CNV.mat2 <- CNV.mat21[,-CNV.mat21$genes]
+  rownames(CNV.mat2) <- CNV.mat21$genes
   
   ## argument validation
   if ( missing(sorting) ){
