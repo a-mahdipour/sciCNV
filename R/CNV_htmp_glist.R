@@ -21,7 +21,7 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against list of genes
 #'
 #' @examples
-#' CNV.mat21 <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
+#' CNV.mat2 <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
 #' breakGlist <- system.file("extdata", "Sample_breakGlist.txt", package = "sciCNV")
 #' CNV_htmp_glist(CNV.mat2, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
 #'
@@ -44,8 +44,6 @@ CNV_htmp_glist <- function(CNV.mat2,
 ){
 
   
-  CNV.mat2 <- CNV.mat21[,-CNV.mat21$genes]
-  rownames(CNV.mat2) <- CNV.mat21$genes
   
   ## argument validation
   if ( missing(sorting) ){
