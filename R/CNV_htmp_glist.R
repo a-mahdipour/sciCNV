@@ -21,9 +21,9 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against list of genes
 #'
 #' @examples
-#' CNV.mat <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
+#' CNV.mat21 <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
 #' breakGlist <- system.file("extdata", "Sample_breakGlist.txt", package = "sciCNV")
-#' CNV_htmp_glist(CNV.mat2=CNV.mat, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
+#' CNV_htmp_glist(CNV.mat21, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
 #'
 #' @import stats
 #' @import robustbase
@@ -33,7 +33,7 @@
 #' @export
 
 
-CNV_htmp_glist <- function(CNV.mat2,
+CNV_htmp_glist <- function(CNV.mat21,
                            clustering = FALSE,            # TRUE or FALSE
                            clustering.type = c("pearson", "kendall", "spearman"),   # "pearson", "kendalln", " spearman", defualt: "pearson"
                            sorting = FALSE,               # TRUE or FALSE
@@ -43,7 +43,10 @@ CNV_htmp_glist <- function(CNV.mat2,
                            No.test
 ){
 
-  CNV.mat2 <- as.matrix(CNV.mat2)
+  
+  CNV.mat2 <- CNV.mat21[,-1]
+  rownames(CNV.mat2) <- CNV.mat21[,1]
+  
   ## argument validation
   if ( missing(sorting) ){
     sorting <- FALSE
@@ -181,6 +184,7 @@ CNV_htmp_glist <- function(CNV.mat2,
 
   label.glist <- t(as.matrix(c(paste("Chr", 1:22, sep = ""),"ChrX", "ChrY")))
   label.call.glist <- rep(NA, ncol(CNV.mat2))
+  breakGlist <- unlist(as.list(t(breakGlist)))
 
   for(i in 1: 22){
     if( breakGlist[i] <  ncol(CNV.mat2) - 10){
