@@ -11,7 +11,7 @@
 #'        "euclidean", " spearman", ... "original" (retains the original cell order without unsupervised clustering).
 #'         Default is "pearson". Only enabled when clustering = "TRUE"
 #' @param sorting TRUE/FALSE variable specifying whether to sort cells based on their tumor CNV score from the largest to smallest tumor scores. Default is FALSE.
-#' @param CNV.mat2 copy number variation matrix
+#' @param CNVmat copy number variation matrix
 #' @param CNVscore is the tumor CNV score matrix for all cells (possibly ranked within clusters). Only used when sorting.clusters = TRUE.
 #' @param cluster.lines is a list of values which can be used to separate cell clusters within the population; only used if multiple clusters present
 #' @param breakGloc is a set of values each defines a vertical line that separates chromosomes
@@ -22,9 +22,9 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against genomic location
 #'
 #' @examples
-#' CNV.mat2 <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
+#' CNVmat <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
 #' breakGloc <- system.file("extdata", "Sample_breakGloc.txt", package = "sciCNV")
-#' CNV_htmp_gloc(CNV.mat2, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
+#' CNV_htmp_gloc(CNVmat, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
 #'
 #' @import stats
 #' @import robustbase
@@ -36,7 +36,7 @@
 
 
 
-CNV_htmp_gloc <- function(CNV.mat2,
+CNV_htmp_gloc <- function(CNVmat,
                           clustering = FALSE,        # TRUE or FALSE option
                           clustering.type = NA,     #c("pearson", "kendall", "spearman"),   # "pearson", "kendalln", "spearman", default: "pearson"
                           sorting = TRUE,            # TRUE or FALSE
@@ -78,42 +78,42 @@ CNV_htmp_gloc <- function(CNV.mat2,
   }
 
   if ( Reduce("|", is.null(cluster.lines)) ){
-    cluster.lines <- c(0, nrow(CNV.mat2) - No.test, nrow(CNV.mat2))
+    cluster.lines <- c(0, nrow(CNVmat) - No.test, nrow(CNVmat))
   }
   if ( Reduce("|", is.null(breakGloc)) ){
-    breakGloc <- c(0, ncol(CNV.mat2))
+    breakGloc <- c(0, ncol(CNVmat))
   }
 
   ##### sorting of cells within clusters, based on tumor CNV scores, from the largest to the smallest (if applicable)
-  nr <- base::nrow(CNV.mat2)
+  nr <- 40 #nrow(CNVmat)
   seq1 <- seq_len(No.test)
   seq2 <- No.test + seq_len(nr - No.test)
   if ( sorting == TRUE ){
     tst.score <- base::sort(CNVscore[1, seq1] , decreasing=TRUE)     #MMPCs
     ctrl.score <- base::sort(CNVscore[1, seq2] , decreasing=TRUE)  #NBCs
     ranked.col <- as.matrix( c(colnames(t(as.matrix(ctrl.score))), colnames(t(as.matrix(tst.score))  )) )
-    CNV.mat1 <- as.matrix( CNV.mat2[match(ranked.col, rownames(CNV.mat2)), ])
+    CNV.mat1 <- as.matrix( CNVmat[match(ranked.col, rownames(CNVmat)), ])
     rownames(CNV.mat1) <-  ranked.col
 
   } else if ( clustering == TRUE ){
     if ( is.na(clustering.type) ){
-      CNV.mat.tst <- as.matrix(CNV.mat2[seq1, ])
+      CNV.mat.tst <- as.matrix(CNVmat[seq1, ])
       hclst <- stats::hclust(stats::as.dist(1-stats::cor( t(CNV.mat.tst), method =  "pearson")), method = "ward.D2")
       hclst.lables <- hclst$labels[hclst$order]
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
 
     } else if ( ! missing(clustering.type) ){
-      CNV.mat.tst <- as.matrix(CNV.mat2[seq1, ])
+      CNV.mat.tst <- as.matrix(CNVmat[seq1, ])
       hclst <- stats::hclust(stats::as.dist(1-stats::cor( t(CNV.mat.tst), method = clustering.type)), method = "ward.D2")
       hclst.lables <- hclst$labels[hclst$order]
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
     }
 
-    CNV.mat1 <- rbind( as.matrix(CNV.mat2[seq2, ]) ,   as.matrix(CNV.mat.clustered)  )
-    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNV.mat2[seq2, ])), hclst.lables)
+    CNV.mat1 <- rbind( as.matrix(CNVmat[seq2, ]) ,   as.matrix(CNV.mat.clustered)  )
+    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNVmat[seq2, ])), hclst.lables)
 
   } else if ( (clustering == "FALSE" ) & ( sorting == "FALSE")){
-    CNV.mat1 <- rbind(as.matrix(CNV.mat2[seq2, ]) , as.matrix(CNV.mat2[seq1, ]) )
+    CNV.mat1 <- rbind(as.matrix(CNVmat[seq2, ]) , as.matrix(CNVmat[seq1, ]) )
 
   }
 
@@ -157,7 +157,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
   ##################################################
 
   # Uploading the largest list of genes with chr number, start and end
-  Specific_genes <- which( as.matrix(genLoc1)[, 1]   %in% colnames(CNV.mat2))
+  Specific_genes <- which( as.matrix(genLoc1)[, 1]   %in% colnames(CNVmat))
   M_origin <- genLoc1[Specific_genes, ]
   M_sample <-  genLoc1[Specific_genes, ]
 

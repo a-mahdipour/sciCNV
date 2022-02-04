@@ -4,7 +4,7 @@
 #'
 #' @description Generates a heatmap of single cell CNV profiles plotted by gene list
 #'
-#' @param CNV.mat2 copy number variation matrix
+#' @param CNVmat copy number variation matrix
 #' @param Gen.Loc Genomic Location matrix with list of genes, their associated chromosome numbers, starts and ends
 #' @param clustering a TRUE/FALSE variable specifying whether to cluster cells based on their CNV similarities. Default is "FALSE"
 #' @param clustering.type: variable specifying the method that will be used to cluster sciCNV profiles (cells), if enabled. Possible options are "pearson",
@@ -21,9 +21,9 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against list of genes
 #'
 #' @examples
-#' CNV.mat2 <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
-#' breakGlist <- system.file("extdata", "Sample_breakGlist.txt", package = "sciCNV")
-#' CNV_htmp_glist(CNV.mat2, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
+#' CNVmat <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
+#' breakGlist <- system.file("extdata", "Sample_breakGlist.txt", package ="sciCNV")
+#' CNV_htmp_glist(CNVmat, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
 #'
 #' @import stats
 #' @import robustbase
@@ -33,7 +33,7 @@
 #' @export
 
 
-CNV_htmp_glist <- function(CNV.mat2,
+CNV_htmp_glist <- function(CNVmat,
                            clustering = FALSE,            # TRUE or FALSE
                            clustering.type = c("pearson", "kendall", "spearman"),   # "pearson", "kendalln", " spearman", defualt: "pearson"
                            sorting = FALSE,               # TRUE or FALSE
@@ -76,45 +76,45 @@ CNV_htmp_glist <- function(CNV.mat2,
   }
 
   if ( Reduce("|", is.null(cluster.lines)) ){
-    cluster.lines <- c(0, nrow(CNV.mat2) - No.test, nrow(CNV.mat2))
+    cluster.lines <- c(0, nrow(CNVmat) - No.test, nrow(CNVmat))
   }
   if ( Reduce("|", is.null(breakGlist)) ){
-    breakGlist <- c(0, ncol(CNV.mat2))
+    breakGlist <- c(0, ncol(CNVmat))
   }
 
   ##### sorting of cells within each cluster by CNV-score, from the largest to the smallest (if applicable)
-  nr <- base::nrow(CNV.mat2)
+  nr <- 40 #nrow(CNVmat)
   seq1 <- seq_len(No.test)
   seq2 <- No.test + seq_len(nr - No.test)
   if ( sorting == TRUE ){
-    tst.score <- base::sort(CNVscore[1, 1:No.test] , decreasing=TRUE)     #MMPCs
-    ctrl.score <- base::sort(CNVscore[1, (No.test+1):ncol(CNVscore)] , decreasing=TRUE)  #NBCs
+    tst.score <- base::sort(CNVscore[1, seq1] , decreasing=TRUE)     #MMPCs
+    ctrl.score <- base::sort(CNVscore[1, seq2] , decreasing=TRUE)  #NBCs
     ranked.col <- as.matrix( c(colnames(t(as.matrix(ctrl.score))), colnames(t(as.matrix(tst.score))  )) )
-    CNV.mat1 <- as.matrix( CNV.mat2[match(ranked.col, rownames(CNV.mat2)), ])
+    CNV.mat1 <- as.matrix( CNVmat[match(ranked.col, rownames(CNVmat)), ])
     rownames(CNV.mat1) <-  ranked.col
 
   } else if ( clustering == TRUE ){
     
     if ( is.na(clustering.type) ){
-      CNV.mat.tst <- as.matrix(CNV.mat2[seq1, ])
+      CNV.mat.tst <- as.matrix(CNVmat[seq1, ])
       hclst <- stats::hclust(stats::as.dist(1-stats::cor( t(CNV.mat.tst), method =  "pearson")), method = "ward.D2")
       hclst.lables <- hclst$labels[hclst$order]
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
 
     } else if ( ! missing(clustering.type) ){
-      CNV.mat.tst <- as.matrix(CNV.mat2[seq1, ])
+      CNV.mat.tst <- as.matrix(CNVmat[seq1, ])
       hclst <- stats::hclust(stats::as.dist(1-stats::cor( t(CNV.mat.tst), method = clustering.type)), method = "ward.D2")
       hclst.lables <- hclst$labels[hclst$order]
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
     }
 
-    CNV.mat1 <- rbind( as.matrix(CNV.mat2[seq2, ]) ,   as.matrix(CNV.mat.clustered)  )
-    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNV.mat2[seq2, ])), hclst.lables)
+    CNV.mat1 <- rbind( as.matrix(CNVmat[seq2, ]) ,   as.matrix(CNV.mat.clustered)  )
+    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNVmat[seq2, ])), hclst.lables)
     
   } else if ( (clustering == "FALSE" ) & ( sorting == "FALSE")){
-    CNV.mat1 <- rbind(as.matrix(CNV.mat2[seq2, ]) , as.matrix(CNV.mat2[seq1, ]) )
-    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNV.mat2[seq2, ])), rownames(as.matrix(CNV.mat2[seq1, ]))  )
-    colnames(CNV.mat1) <- colnames(CNV.mat2)
+    CNV.mat1 <- rbind(as.matrix(CNVmat[seq2, ]) , as.matrix(CNVmat[seq1, ]) )
+    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNVmat[seq2, ])), rownames(as.matrix(CNVmat[seq1, ]))  )
+    colnames(CNV.mat1) <- colnames(CNVmat)
   }
 
 
@@ -183,16 +183,16 @@ CNV_htmp_glist <- function(CNV.mat2,
   ## Assigning x-axis location to gene-centered data based on genomic location rank
 
   label.glist <- t(as.matrix(c(paste("Chr", 1:22, sep = ""),"ChrX", "ChrY")))
-  label.call.glist <- rep(NA, ncol(CNV.mat2))
+  label.call.glist <- rep(NA, ncol(CNVmat))
   breakGlist <- unlist(as.list(t(breakGlist)))
 
   for(i in seq_len(22)){
-    if( breakGlist[i] <  ncol(CNV.mat2) - 10){
+    if( breakGlist[i] <  ncol(CNVmat) - 10){
       label.call.glist[breakGlist[i]+10 ] <- as.matrix(label.glist[i])
     }
   }
 
-  if( breakGlist[23] <  ncol(CNV.mat2)  ){
+  if( breakGlist[23] <  ncol(CNVmat)  ){
     label.call.glist[breakGlist[23] ] <- as.matrix(label.glist[23])
     label.call.glist[breakGlist[24] ] <- as.matrix(label.glist[24])
   } else {

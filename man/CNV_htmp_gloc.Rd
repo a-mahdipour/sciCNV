@@ -5,7 +5,7 @@
 \title{CNV_htmp_gloc function}
 \usage{
 CNV_htmp_gloc(
-  CNV.mat2,
+  CNVmat,
   clustering = FALSE,
   clustering.type = NA,
   sorting = TRUE,
@@ -16,7 +16,7 @@ CNV_htmp_gloc(
 )
 }
 \arguments{
-\item{CNV.mat2}{copy number variation matrix}
+\item{CNVmat}{copy number variation matrix}
 
 \item{clustering}{TRUE/FALSE variable specifying whether to cluster cells based on their CNV similarities. Default is "FALSE"}
 
@@ -44,9 +44,9 @@ Generates heatmap of sciCNV profiles, plotted by Genomic location (gloc)
 Please refer to the reference and supplemental materials described in the README for additional details.
 }
 \examples{
-CNV.mat2 <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
+CNVmat <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
 breakGloc <- system.file("extdata", "Sample_breakGloc.txt", package = "sciCNV")
-CNV_htmp_gloc(CNV.mat2, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
+CNV_htmp_gloc(CNVmat, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
 
 }
 \author{
