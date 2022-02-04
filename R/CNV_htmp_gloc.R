@@ -87,32 +87,37 @@ CNV_htmp_gloc <- function(CNV.mat2,
   ##### sorting of cells within clusters, based on tumor CNV scores, from the largest to the smallest (if applicable)
 
   if ( sorting == TRUE ){
-    tst.score <- base::sort(CNVscore[1, 1:No.test] , decreasing=TRUE)     #MMPCs
-    ctrl.score <- base::sort(CNVscore[1, (No.test+1):ncol(CNVscore)] , decreasing=TRUE)  #NBCs
+    seq1 <- seq_len(No.test)
+    seq2 <- No.test + seq_len(nrow(CNV.mat2)-No.test)
+    tst.score <- base::sort(CNVscore[1, seq1] , decreasing=TRUE)     #MMPCs
+    ctrl.score <- base::sort(CNVscore[1, seq2] , decreasing=TRUE)  #NBCs
     ranked.col <- as.matrix( c(colnames(t(as.matrix(ctrl.score))), colnames(t(as.matrix(tst.score))  )) )
     CNV.mat1 <- as.matrix( CNV.mat2[match(ranked.col, rownames(CNV.mat2)), ])
     rownames(CNV.mat1) <-  ranked.col
 
   } else if ( clustering == TRUE ){
-
+    seq1 <- seq_len(No.test)
+    seq2 <- No.test + seq_len(nrow(CNV.mat2)-No.test)
     if ( is.na(clustering.type) ){
-      CNV.mat.tst <- as.matrix(CNV.mat2[1:No.test, ])
+      CNV.mat.tst <- as.matrix(CNV.mat2[seq1, ])
       hclst <- stats::hclust(stats::as.dist(1-stats::cor( t(CNV.mat.tst), method =  "pearson")), method = "ward.D2")
       hclst.lables <- hclst$labels[hclst$order]
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
 
     } else if ( ! missing(clustering.type) ){
-      CNV.mat.tst <- as.matrix(CNV.mat2[1:No.test, ])
+      CNV.mat.tst <- as.matrix(CNV.mat2[seq1, ])
       hclst <- stats::hclust(stats::as.dist(1-stats::cor( t(CNV.mat.tst), method = clustering.type)), method = "ward.D2")
       hclst.lables <- hclst$labels[hclst$order]
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
     }
 
-    CNV.mat1 <- rbind( as.matrix(CNV.mat2[(No.test+1):nrow(CNV.mat2), ]) ,   as.matrix(CNV.mat.clustered)  )
-    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNV.mat2[(No.test+1):nrow(CNV.mat2), ])), hclst.lables)
+    CNV.mat1 <- rbind( as.matrix(CNV.mat2[seq2, ]) ,   as.matrix(CNV.mat.clustered)  )
+    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNV.mat2[seq2, ])), hclst.lables)
 
   } else if ( (clustering == "FALSE" ) & ( sorting == "FALSE")){
-    CNV.mat1 <- rbind(as.matrix(CNV.mat2[(No.test):nrow(CNV.mat2), ]) , as.matrix(CNV.mat2[1:No.test, ]) )
+    seq1 <- seq_len(No.test)
+    seq2 <- No.test + seq_len(nrow(CNV.mat2)-No.test)
+    CNV.mat1 <- rbind(as.matrix(CNV.mat2[seq2, ]) , as.matrix(CNV.mat2[seq1, ]) )
 
   }
 
@@ -128,8 +133,8 @@ CNV_htmp_gloc <- function(CNV.mat2,
   LL3 <- 2.5
   CNV.mat11 <- matrix(0, ncol = ncol(CNV.mat1), nrow = nrow(CNV.mat1))
 
-  for (w in 1: ncol(CNV.mat1)){
-    for(l in 1: nrow(CNV.mat1)){
+  for (w in seq_len(ncol(CNV.mat1))){
+    for(l in seq_len(nrow(CNV.mat1))){
 
       if( abs(CNV.mat1[ l, w]) <  LL1 ){
         CNV.mat11[ l, w] <- sign(CNV.mat1[ l, w])*( CNV.mat1[ l, w] )^2
@@ -168,7 +173,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
   minn <- matrix(0, ncol=24, nrow=1)
   maxx <- matrix(0, ncol=24, nrow=1)
 
-  for(i in 1: 22){
+  for(i in seq_len(22)){
     chrinfo <- M_origin[which(as.matrix(M_origin[, 2]) == i) , 3]
     minn[1,i] <- as.numeric(min(chrinfo ) )
     maxx[1,i] <- as.numeric(max(chrinfo ) )
@@ -216,9 +221,9 @@ CNV_htmp_gloc <- function(CNV.mat2,
   Minnn <- matrix(0, nrow=1,ncol=24)
   Maxxx <- matrix(0, nrow=1,ncol=24)
 
-  for(i in 1:nrow(CNV.mat4)){
-    for(z in 1:22){
-      for( k in 1:(length(which(POINTS[z, ]>0))-1) ){
+  for(i in seq_len(nrow(CNV.mat4))){
+    for(z in seq_len(22)){
+      for( k in seq_len(length(which(POINTS[z, ]>0))-1) ){
         X <- min(which(as.matrix(M_sample[, 2]) == z)):max(which(as.matrix(M_sample[, 2]) == z))
         ExistExpr <- which( (M_sample[ X ,3] >= POINTS[z, k])
                             & (M_sample[ X ,3] <=  POINTS[z, k+1]) )
@@ -246,7 +251,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
 
     ##########
 
-    for( k in 1:(length(which(POINTS[23, ]>0))-1) ){
+    for( k in seq_len(length(which(POINTS[23, ]>0))-1) ){
       if( length(which(as.matrix(M_sample[, 2]) == "X")) != 0 ){
         X <- min(which(as.matrix(M_sample[, 2]) == "X")):max(which(as.matrix(M_sample[, 2]) == "X"))
         ExistExpr <- which( (M_sample[ X ,3] >= POINTS[23, k])
@@ -264,7 +269,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
 
     ##########
 
-    for( k in 1:(length(which(POINTS[24, ]>0))-1) ){
+    for( k in seq_len(length(which(POINTS[24, ]>0))-1) ){
       if( length(which(as.matrix(M_sample[, 2]) == "Y")) != 0 ){
         X <- min(which(as.matrix(M_sample[, 2]) == "Y")):max(which(as.matrix(M_sample[, 2]) == "Y"))
         ExistExpr <- which( (M_sample[ X ,3] >= POINTS[24, k])
@@ -285,7 +290,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
 
   ######### Interpolations
 
-  for(k in 1:ALL_POINTS){
+  for(k in seq_len(ALL_POINTS)){
 
     if( (k == 1) && is.na(CNV.mat4[1,k])){
       BEF <- 1
@@ -324,18 +329,18 @@ CNV_htmp_gloc <- function(CNV.mat2,
   Orig <- 0.5
   LLength <- c(0, cluster.lines[2:(length(cluster.lines)) ])  # c(0,205,733,834,854)
 
-  for(j in 1:(length(LLength)-1)){
+  for(j in seq_len(length(LLength)-1)){
     NeighborNo <- min(20, floor((LLength[j+1]-LLength[j])/2))
-    for(i in (LLength[j]+1):(LLength[j]+floor(NeighborNo))){
+    for(i in LLength[j]+seq_len(floor(NeighborNo))){
       CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat51[ setdiff(seq(LLength[j]+1,(i+NeighborNo),1),i),  ])
     }
     if( (LLength[j]+NeighborNo+1) <= (LLength[j+1]-(NeighborNo))  ){
-      for(i in (LLength[j]+NeighborNo+1):(LLength[j+1]-(NeighborNo) )){
+      for(i in LLength[j]+NeighborNo+seq_len(LLength[j+1]-2*NeighborNo-LLength[j])){
         CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat51[ setdiff(seq(i-NeighborNo,i+NeighborNo,1),i),  ])
       }
     }
     if( (LLength[j+1]-NeighborNo+1) <= LLength[j+1] ){
-      for(i in (LLength[j+1]-NeighborNo+1):LLength[j+1]){
+      for(i in LLength[j+1]-NeighborNo+seq_len(NeighborNo)){
         CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat51[setdiff(seq(i-NeighborNo,LLength[j+1], 1),i),  ])
       }
     }
@@ -346,7 +351,7 @@ CNV_htmp_gloc <- function(CNV.mat2,
   labels.gloc <- t(as.matrix(c(paste("Chr", 1:22, sep = ""),"ChrX", "ChrY")))
   labels.call.gloc <- rep(NA, ncol(CNV.mat5))
 
-  for(i in 1: 22){
+  for(i in seq_len(22)){
     labels.call.gloc[breakGloc[i]+10 ] <- as.matrix(labels.gloc[i])
   }
   labels.call.gloc[breakGloc[23] ] <- as.matrix(labels.gloc[23])

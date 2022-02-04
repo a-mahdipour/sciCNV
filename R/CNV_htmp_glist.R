@@ -92,30 +92,27 @@ CNV_htmp_glist <- function(CNV.mat2,
     rownames(CNV.mat1) <-  ranked.col
 
   } else if ( clustering == TRUE ){
-
+    seq1 <- seq_len(No.test)
+    seq2 <- No.test + seq_len(nrow(CNV.mat2)-No.test)
     if ( is.na(clustering.type) ){
-      seq1 <- c(1:No.test,1)
-      seq2 <- c((No.test+1):nrow(CNV.mat2))
       CNV.mat.tst <- as.matrix(CNV.mat2[seq1, ])
       hclst <- stats::hclust(stats::as.dist(1-stats::cor( t(CNV.mat.tst), method =  "pearson")), method = "ward.D2")
       hclst.lables <- hclst$labels[hclst$order]
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
 
     } else if ( ! missing(clustering.type) ){
-      seq1 <- c(1:No.test,1)
-      seq2 <- c((No.test+1):nrow(CNV.mat2))
       CNV.mat.tst <- as.matrix(CNV.mat2[seq1, ])
       hclst <- stats::hclust(stats::as.dist(1-stats::cor( t(CNV.mat.tst), method = clustering.type)), method = "ward.D2")
       hclst.lables <- hclst$labels[hclst$order]
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
     }
 
-    CNV.mat1 <- rbind( as.matrix(CNV.mat2[(No.test+1):nrow(CNV.mat2), ]) ,   as.matrix(CNV.mat.clustered)  )
-    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNV.mat2[(No.test+1):nrow(CNV.mat2), ])), hclst.lables)
+    CNV.mat1 <- rbind( as.matrix(CNV.mat2[seq2, ]) ,   as.matrix(CNV.mat.clustered)  )
+    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNV.mat2[seq2, ])), hclst.lables)
     
   } else if ( (clustering == "FALSE" ) & ( sorting == "FALSE")){
-    seq1 <- c(1:No.test,1)
-    seq2 <- c((No.test+1):nrow(CNV.mat2))
+    seq1 <- seq_len(No.test)
+    seq2 <- No.test + seq_len(nrow(CNV.mat2)-No.test)
     CNV.mat1 <- rbind(as.matrix(CNV.mat2[seq2, ]) , as.matrix(CNV.mat2[seq1, ]) )
     rownames(CNV.mat1) <-  c(rownames(as.matrix(CNV.mat2[seq2, ])), rownames(as.matrix(CNV.mat2[seq1, ]))  )
     colnames(CNV.mat1) <- colnames(CNV.mat2)
@@ -131,8 +128,8 @@ CNV_htmp_glist <- function(CNV.mat2,
   LL3 <- 2.5
   CNV.mat11 <- matrix(0, ncol = ncol(CNV.mat1), nrow = nrow(CNV.mat1))
 
-  for (w in 1: ncol(CNV.mat1)){
-    for(l in 1: nrow(CNV.mat1)){
+  for (w in seq_len(ncol(CNV.mat1))){
+    for(l in seq_len(nrow(CNV.mat1))){
 
       if( abs(CNV.mat1[ l, w]) <  LL1 ){
         CNV.mat11[ l, w] <- sign(CNV.mat1[ l, w])*( CNV.mat1[ l, w] )^2
@@ -165,18 +162,18 @@ CNV_htmp_glist <- function(CNV.mat2,
   Orig <- 0.5
   LLength <- c(0, cluster.lines[ 2:( length(cluster.lines) ) ])
 
-  for(j in 1:( length(LLength) - 1 )){
+  for(j in seq_len( length(LLength)-1)){
     NeighborNo <- min(20, floor((LLength[j+1]-LLength[j])/2))
 
-    for(i in (LLength[j]+1):(LLength[j]+floor(NeighborNo))){
+    for(i in LLength[j]+seq_len(LLength[j]+floor(NeighborNo)-LLength[j])){
       CNV.mat3[i, ] <- CNV.mat31[i, ]*Orig + (1-Orig)*robustbase::colMedians(CNV.mat31[ setdiff(seq(LLength[j]+1,(i+NeighborNo),1),i),  ])
     }
     if( (LLength[j]+NeighborNo+1) <= (LLength[j+1]-(NeighborNo) )){
-      for(i in (LLength[j]+NeighborNo+1):(LLength[j+1]-(NeighborNo) )){
+      for(i in LLength[j]+NeighborNo+seq_len(LLength[j+1]-2*NeighborNo -LLength[j])){
         CNV.mat3[i, ] <- CNV.mat31[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat31[ setdiff(seq(i-NeighborNo,i+NeighborNo,1),i),  ])
       }
     }
-    for(i in (LLength[j+1]-NeighborNo+1):LLength[j+1]){
+    for(i in LLength[j+1]-NeighborNo+seq_len(NeighborNo)){
       CNV.mat3[i, ] <- CNV.mat31[i, ]*Orig + (1-Orig)*robustbase::colMedians(CNV.mat31[setdiff(seq(i-NeighborNo,LLength[j+1], 1),i),  ])
     }
 
@@ -190,7 +187,7 @@ CNV_htmp_glist <- function(CNV.mat2,
   label.call.glist <- rep(NA, ncol(CNV.mat2))
   breakGlist <- unlist(as.list(t(breakGlist)))
 
-  for(i in 1: 22){
+  for(i in seq_len(22)){
     if( breakGlist[i] <  ncol(CNV.mat2) - 10){
       label.call.glist[breakGlist[i]+10 ] <- as.matrix(label.glist[i])
     }
