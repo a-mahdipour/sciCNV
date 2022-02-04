@@ -22,8 +22,8 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against genomic location
 #'
 #' @examples
-#' CNVmat <- read.table( "../data/Sample_CNV_matrix.txt", sep = '\t',header = TRUE) 
-#' breakGloc<- read.table( "../data/Sample_breakGloc.txt", sep = '\t',header = TRUE) 
+#' CNVmat <- read.table( "./data/Sample_CNV_matrix.txt", sep = '\t',header = TRUE) 
+#' breakGloc<- read.table( "./data/Sample_breakGloc.txt", sep = '\t',header = TRUE) 
 #' CNV_htmp_gloc(CNVmat, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
 #'
 #' @import stats
@@ -85,7 +85,7 @@ CNV_htmp_gloc <- function(CNVmat,
   }
 
   ##### sorting of cells within clusters, based on tumor CNV scores, from the largest to the smallest (if applicable)
-  nr <- 40 #nrow(CNVmat)
+  nr <- nrow(CNVmat)
   seq1 <- seq_len(No.test)
   seq2 <- No.test + seq_len(nr - No.test)
   if ( sorting == TRUE ){
