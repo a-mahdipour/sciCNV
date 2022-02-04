@@ -22,8 +22,8 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against genomic location
 #'
 #' @examples
-#' CNVmat <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
-#' breakGloc <- system.file("extdata", "Sample_breakGloc.txt", package = "sciCNV")
+#' CNVmat <- read.table( "../data/Sample_CNV_matrix.txt", sep = '\t',header = TRUE) 
+#' breakGloc<- read.table( "../data/Sample_breakGloc.txt", sep = '\t',header = TRUE) 
 #' CNV_htmp_gloc(CNVmat, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
 #'
 #' @import stats
