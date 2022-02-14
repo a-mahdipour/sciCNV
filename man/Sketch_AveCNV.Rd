@@ -16,7 +16,9 @@ Sketches the average sciCNV curve of all test cells; showing all CN gains/losses
 Plots the average pre-sciCNV profile of test cells by genomic location
 }
 \examples{
+\dontrun{
 sketch_mean_sciCNV <- Sketch_AveCNV(Ave.mat=mean_sciCNV_mat)
+}
 
 }
 \author{

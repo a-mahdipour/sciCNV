@@ -18,7 +18,9 @@
 #' @return The output represents damaged cells due to the given  for mitochondrial percentage cutoff
 #'
 #' @examples
+#' \dontrun{
 #' damaged_cells <- Mito_umi_gn(mat=raw_data, percent.mito.G, nUMI, nGene, No.test=100, drop.mads = 3)
+#' }
 #'
 #' @import stats
 #' @import graphics

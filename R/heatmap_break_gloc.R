@@ -11,7 +11,9 @@
 #' @return Calculates the seperation spots among chromosomes to sketch the heatmap of sciCNV matrix using CNV_htmp_gloc function
 #'
 #' @examples
+#' \dontrun{
 #' breakpoints_heatmap <- heatmap_break_gloc()
+#' }
 #'
 #' @export
 

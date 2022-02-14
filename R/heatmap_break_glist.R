@@ -11,7 +11,9 @@
 #' @return Calculates the seperation spots among chromosomes to sketch the heatmap of sciCNV matrix using CNV_htmp_glist function
 #'
 #' @examples
+#' \dontrun{
 #' breakpoints_heatmap <- heatmap_break_glist(CNV.mat2 = normalized_data)
+#' }
 #'
 #' @import utils
 #'

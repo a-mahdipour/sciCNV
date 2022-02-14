@@ -27,7 +27,9 @@ RTAM1/2 normalization designed for but not limited to scRNA-seq data
 Please refer to the reference and supplemental materials described in the README for additional details.
 }
 \examples{
+\dontrun{
 CV_for_RTAM1 <- RTAM_normalization(mat=raw_data, method="RTAM2", Min_nGn=250, Optimizing=FALSE)
+}
 
 }
 \author{

@@ -26,7 +26,9 @@
 #' @return Provides the iCNV profile of all single-cells at higher sinsitivity, eficiency and accuracy
 #'
 #' @examples
+#' \dontrun{
 #' sciCNV_mat <- sciCNV(norm.mat=normlized_data, ave.ctrl=mean_control, gen.Loc, No.test=100)
+#' }
 #'
 #' @import parallel
 #'

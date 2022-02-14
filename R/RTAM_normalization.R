@@ -17,7 +17,9 @@
 #' @return The output is RTAM1 or 2 normalzied data at higher sensitivity, specificity and acuracy for all transcriptions (at loqwe, intermediate and higher levels)
 #'
 #' @examples
+#' \dontrun{
 #' CV_for_RTAM1 <- RTAM_normalization(mat=raw_data, method="RTAM2", Min_nGn=250, Optimizing=FALSE)
+#' }
 #'
 #' @export
 

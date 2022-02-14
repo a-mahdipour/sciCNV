@@ -15,7 +15,9 @@
 #' @return Scales sciCNV results to be matched with benchmark (e.g. WES result of the same test sample)
 #'
 #' @examples
+#' \dontrun{
 #' scaled_sciCNV <- Scaling_CNV(V7Alt=sciCNV_mat, n.TestCells=100, scaling.factor=0.5)
+#' }
 #'
 #' @import utils
 #' @import graphics
