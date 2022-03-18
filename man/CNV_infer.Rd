@@ -43,9 +43,7 @@ To infer copy number variation (sciCNV) at single-cell resolution
 Please see the reference and supplmental materials described in the README file for additional information.
 }
 \examples{
-\dontrun{
 iCNV_percell <- CNV_infer(ss.expr=norm_expr_percell, mean.ctrl, gen.Loc, resolution=50, chr.n, P12, mat.fab)
-}
 
 }
 \author{

@@ -23,9 +23,7 @@ To scale preliminary sciCNV-curves derived from scRNA-seq data
 Please refer to the reference and supplemental materials described in the README for additional details.
 }
 \examples{
-\dontrun{
 scaled_sciCNV <- Scaling_CNV(V7Alt=sciCNV_mat, n.TestCells=100, scaling.factor=0.5)
-}
 
 }
 \author{

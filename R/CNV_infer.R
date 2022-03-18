@@ -21,9 +21,7 @@
 #' @return The output is the sciCNV curve of each single-cell across entire genome
 #'
 #' @examples
-#' \dontrun{
 #' iCNV_percell <- CNV_infer(ss.expr=norm_expr_percell, mean.ctrl, gen.Loc, resolution=50, chr.n, P12, mat.fab)
-#' }
 #'
 #' @import stats
 #'

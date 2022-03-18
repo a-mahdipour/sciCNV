@@ -21,9 +21,7 @@ profile to the mean CNV profile of all suspected tumor cells
 Please see the reference and supplmental materials described in the README file for additional information.
 }
 \examples{
-\dontrun{
 tumor_likeness_score <- CNV_score(M_nf=sciCNV_mat)
-}
 
 }
 \author{

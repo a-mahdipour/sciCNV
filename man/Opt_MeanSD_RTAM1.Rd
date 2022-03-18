@@ -27,9 +27,7 @@ An auxiliary fucntion to detect the optimal number of top-expressed genes for sc
 Please refer to the reference and supplemental materials described in the README for additional details.
 }
 \examples{
-\dontrun{
 CV_for_RTAM1 <- Opt_MeanSD_RTAM1(Normalized_log=normalized_data, Order_Matrix, nGene, Min_nGene=250, gene_cutoff=250)
-}
 
 }
 \author{

@@ -11,9 +11,7 @@
 #' @return Sketches the average sciCNV curve of all test cells; showing all CN gains/losses across entire genome
 #'
 #' @examples
-#' \dontrun{
 #' sketch_mean_sciCNV <- Sketch_AveCNV(Ave.mat=mean_sciCNV_mat)
-#' }
 #'
 #' @import utils
 #' @import graphics

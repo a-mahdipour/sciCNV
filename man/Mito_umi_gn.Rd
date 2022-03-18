@@ -29,9 +29,7 @@ Function to sketch mitochondrial transcript content, nUMI and nGene data at cell
 Please refer to the reference and supplemental materials described in the README for additional details.
 }
 \examples{
-\dontrun{
 damaged_cells <- Mito_umi_gn(mat=raw_data, percent.mito.G, nUMI, nGene, No.test=100, drop.mads = 3)
-}
 
 }
 \author{

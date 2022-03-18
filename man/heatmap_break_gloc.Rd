@@ -16,9 +16,7 @@ Calculates the seperation spots among chromosomes to sketch the heatmap of sciCN
 Finding separating lines among diverse chromosomes to be used in sketching heatmap
 }
 \examples{
-\dontrun{
 breakpoints_heatmap <- heatmap_break_gloc()
-}
 
 }
 \author{

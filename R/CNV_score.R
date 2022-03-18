@@ -15,9 +15,7 @@
 #' @return Calculates the tumor likeness score for each single-cell which is the similarity of sciCNV curve of each cell to average sciCNV of tet cells
 #'
 #' @examples
-#' \dontrun{
 #' tumor_likeness_score <- CNV_score(M_nf=sciCNV_mat)
-#' }
 #'
 #' @export
 

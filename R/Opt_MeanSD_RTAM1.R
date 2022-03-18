@@ -17,9 +17,7 @@
 #' @return The output is the CV (sd/mean) of RTAM1 normalization for given nGene, Min_nGene and gene_cutoff
 #'
 #' @examples
-#' \dontrun{
 #' CV_for_RTAM1 <- Opt_MeanSD_RTAM1(Normalized_log=normalized_data, Order_Matrix, nGene, Min_nGene=250, gene_cutoff=250)
-#' }
 #'
 #' @import stats
 #'
