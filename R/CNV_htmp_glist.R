@@ -83,10 +83,11 @@ CNV_htmp_glist <- function(CNVmat,
   }
 
   ##### sorting of cells within each cluster by CNV-score, from the largest to the smallest (if applicable)
-  nr <- 40 #nrow(CNVmat)
+  nr <- nrow(CNVmat)
   seq1 <- seq_len(No.test)
   seq2 <- No.test + seq_len(nr - No.test)
   if ( sorting == TRUE ){
+    
     tst.score <- base::sort(CNVscore[1, seq1] , decreasing=TRUE)     #MMPCs
     ctrl.score <- base::sort(CNVscore[1, seq2] , decreasing=TRUE)  #NBCs
     ranked.col <- as.matrix( c(colnames(t(as.matrix(ctrl.score))), colnames(t(as.matrix(tst.score))  )) )
@@ -108,13 +109,13 @@ CNV_htmp_glist <- function(CNVmat,
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
     }
 
-    CNVmat.seq2 <- as.matrix(CNVmat[seq2, ])
-    CNV.mat1 <- rbind(CNVmat.seq2,as.matrix(CNV.mat.clustered))
+    CNVmat.seq2 <- CNVmat[seq2, ]
+    CNV.mat1 <- rbind(CNVmat.seq2,CNV.mat.clustered)
     rownames(CNV.mat1) <-  c(rownames(CNVmat.seq2), hclst.lables)
     
   } else if ( (clustering == "FALSE" ) & ( sorting == "FALSE")){
-    CNVmat.seq1 <- as.matrix(CNVmat[seq1, ])
-    CNVmat.seq2 <- as.matrix(CNVmat[seq2, ])
+    CNVmat.seq1 <- CNVmat[seq1, ]
+    CNVmat.seq2 <- CNVmat[seq2, ]
     CNV.mat1 <- rbind(CNVmat.seq2,CNVmat.seq1)
     rownames(CNV.mat1) <-  c(rownames(CNVmat.seq2),rownames(CNVmat.seq1))
     colnames(CNV.mat1) <- colnames(CNVmat)

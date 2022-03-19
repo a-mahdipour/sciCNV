@@ -103,18 +103,18 @@ CNV_htmp_gloc <- function(CNVmat,
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables, ]
 
     } else if ( ! missing(clustering.type) ){
-      CNV.mat.tst <- as.matrix(CNVmat[seq1, ])
+      CNV.mat.tst <- CNVmat[seq1, ]
       hclst <- stats::hclust(stats::as.dist(1-stats::cor( t(CNV.mat.tst), method = clustering.type)), method = "ward.D2")
       hclst.lables <- hclst$labels[hclst$order]
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
     }
-    CNVmat.seq2 <- as.matrix(CNVmat[seq2, ])
+    CNVmat.seq2 <- CNVmat[seq2, ]
     CNV.mat1 <- rbind(CNVmat.seq2,as.matrix(CNV.mat.clustered)  )
     rownames(CNV.mat1) <-  c(rownames(CNVmat.seq2), hclst.lables)
 
   } else if ( (clustering == "FALSE" ) & ( sorting == "FALSE")){
-    CNVmat.seq1 <- as.matrix(CNVmat[seq1, ])
-    CNVmat.seq2 <- as.matrix(CNVmat[seq2, ])
+    CNVmat.seq1 <- CNVmat[seq1, ]
+    CNVmat.seq2 <- CNVmat[seq2, ]
     CNV.mat1 <- rbind(CNVmat.seq2, CNVmat.seq1 )
     rownames(CNV.mat1) <-  c(rownames(CNVmat.seq2),rownames(CNVmat.seq1))
     colnames(CNV.mat1) <- colnames(CNVmat)
