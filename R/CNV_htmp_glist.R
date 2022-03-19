@@ -108,12 +108,15 @@ CNV_htmp_glist <- function(CNVmat,
       CNV.mat.clustered <- CNV.mat.tst[hclst.lables , ]
     }
 
-    CNV.mat1 <- rbind( as.matrix(CNVmat[seq2, ]) ,   as.matrix(CNV.mat.clustered)  )
-    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNVmat[seq2, ])), hclst.lables)
+    CNVmat.seq2 <- as.matrix(CNVmat[seq2, ])
+    CNV.mat1 <- rbind(CNVmat.seq2,as.matrix(CNV.mat.clustered))
+    rownames(CNV.mat1) <-  c(rownames(CNVmat.seq2), hclst.lables)
     
   } else if ( (clustering == "FALSE" ) & ( sorting == "FALSE")){
-    CNV.mat1 <- rbind(as.matrix(CNVmat[seq2, ]) , as.matrix(CNVmat[seq1, ]) )
-    rownames(CNV.mat1) <-  c(rownames(as.matrix(CNVmat[seq2, ])), rownames(as.matrix(CNVmat[seq1, ]))  )
+    CNVmat.seq1 <- as.matrix(CNVmat[seq1, ])
+    CNVmat.seq2 <- as.matrix(CNVmat[seq2, ])
+    CNV.mat1 <- rbind(CNVmat.seq2,CNVmat.seq1)
+    rownames(CNV.mat1) <-  c(rownames(CNVmat.seq2),rownames(CNVmat.seq1))
     colnames(CNV.mat1) <- colnames(CNVmat)
   }
 
