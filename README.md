@@ -468,6 +468,6 @@ A preliminary heatmap of the sciCNV profiles of the test and control cells can b
 genomic rank-order of genes (list of genes) as well as the physical genomic location of the genes). Indeed, CNV-based clustering of cells may be a more effective method for isolating CNV subclones than gene-expression based clustering, as the later must integrate gene expression changes from variable cellular functions such as proliferation. For more information on the comparison of gene expression-based and sciCNV-based cell clustering, please see the reference and supplemental materials. 
 
 
-![Fig9](Fig9.png)
+![Fig9](Fig9.jpg)
 
-![Fig10](Fig10.png)
+![Fig10](Fig10.jpg)
