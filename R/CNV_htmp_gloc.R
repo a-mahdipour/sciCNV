@@ -22,9 +22,12 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against genomic location
 #'
 #' @examples
-#' CNVmat <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
-#' breakGloc <- system.file("extdata", "Sample_breakGloc.txt", package = "sciCNV")
-#' CNV_htmp_gloc(CNVmat, breakGloc=breakGloc, sorting = FALSE,  No.test=20)
+#' 
+#' data(breakGloc)
+#' file.path <-  system.file("extdata", "CNV_matrix.txt", package="sciCNV")
+#' CNVmat <- read.table(file.path, sep="\t", header=TRUE)
+#' 
+#' CNV_htmp_gloc(CNVmat=CNVmat, breakGloc=breakGloc, sorting = FALSE,  No.test=20,No.normal=20)
 #'
 #' @import stats
 #' @import robustbase
@@ -43,9 +46,15 @@ CNV_htmp_gloc <- function(CNVmat,
                           CNVscore = NULL,                # Only exists when sorting = TRUE
                           cluster.lines = NULL,
                           breakGloc,
-                          No.test
+                          No.test,
+                          No.normal
 ){
 
+  
+  genelist <- CNVmat[,1]
+  CNVmat <- as.matrix(CNVmat[,-1])
+  rownames(CNVmat) <- genelist
+  
 
   ## argument validation
   if ( missing(sorting) ){
@@ -85,9 +94,9 @@ CNV_htmp_gloc <- function(CNVmat,
   }
 
   ##### sorting of cells within clusters, based on tumor CNV scores, from the largest to the smallest (if applicable)
-  nr <- 40 #nrow(CNVmat)
+  #nr <- dim(CNVmat)[1]
   seq1 <- seq_len(No.test)
-  seq2 <- No.test + seq_len(nr - No.test)
+  seq2 <- No.test + seq_len(No.normal)
   if ( sorting == TRUE ){
     tst.score <- base::sort(CNVscore[1, seq1] , decreasing=TRUE)     #MMPCs
     ctrl.score <- base::sort(CNVscore[1, seq2] , decreasing=TRUE)  #NBCs
@@ -149,21 +158,23 @@ CNV_htmp_gloc <- function(CNVmat,
   #-------
   LL <- 1
   TT <- 0.2
-  CNV.mat1[which(CNV.mat11 >  LL)] <-  LL
-  CNV.mat1[which( (CNV.mat11 <  TT) & (CNV.mat11 >  -TT) )] <- 0.0
-  CNV.mat1[which(CNV.mat11 <  -LL)] <-  -LL
+  CNV.mat11[which(CNV.mat11 >  LL)] <-  LL
+  CNV.mat11[which( (CNV.mat11 <  TT) & (CNV.mat11 >  -TT) )] <- 0.0
+  CNV.mat11[which(CNV.mat11 <  -LL)] <-  -LL
 
   CNV.mat11 <- as.matrix(CNV.mat11)
-  #rownames(CNV.mat) <- matrix(NA, ncol=1, nrow=nrow(CNV.mat1))
+  rownames(CNV.mat11) <- matrix(NA, ncol=1, nrow=nrow(CNV.mat1))
 
   ##################################################
   ## Heatmap of CNV-curves against genomic locations
   ##################################################
 
   # Uploading the largest list of genes with chr number, start and end
-  Specific_genes <- which( as.matrix(genLoc1)[, 1]   %in% colnames(CNVmat))
-  M_origin <- genLoc1[Specific_genes, ]
-  M_sample <-  genLoc1[Specific_genes, ]
+  path <-  system.file("extdata", "10XGenomics_gen_pos_GRCh38-1.2.0.txt", package="sciCNV")
+  genLoc <- read.table(path, header=TRUE, sep="\t")
+  Specific_genes <- which( as.matrix(genLoc)[, 1]   %in% colnames(CNVmat))
+  M_origin <- genLoc[Specific_genes, ]
+  M_sample <-  genLoc[Specific_genes, ]
 
   ## number of segments on the genome
   No_Intrvl <- 1000
@@ -175,8 +186,10 @@ CNV_htmp_gloc <- function(CNVmat,
 
   for(i in seq_len(22)){
     chrinfo <- M_origin[which(as.matrix(M_origin[, 2]) == i) , 3]
-    minn[1,i] <- as.numeric(min(chrinfo ) )
-    maxx[1,i] <- as.numeric(max(chrinfo ) )
+    if(length(chrinfo) > 0){
+      minn[1,i] <- as.numeric(min(chrinfo ) )
+      maxx[1,i] <- as.numeric(max(chrinfo ) )
+    }
   }
   
   chr23 <- M_origin[which(M_origin[, 2] == "X") , 3]
@@ -250,10 +263,11 @@ CNV_htmp_gloc <- function(CNVmat,
     }
 
     ##########
-
-    for( k in seq_len(length(which(POINTS[23, ]>0))-1) ){
-      if( length(which(as.matrix(M_sample[, 2]) == "X")) != 0 ){
-        X <- min(which(as.matrix(M_sample[, 2]) == "X")):max(which(as.matrix(M_sample[, 2]) == "X"))
+    
+    if( length(which(as.matrix(M_sample[, 2]) == "X")) != 0 ){
+      X <- min(which(as.matrix(M_sample[, 2]) == "X")):max(which(as.matrix(M_sample[, 2]) == "X"))
+      for( k in seq_len(length(which(POINTS[23, ]>0))-1) ){
+        
         ExistExpr <- which( (M_sample[ X ,3] >= POINTS[23, k])
                             & (M_sample[ X ,3] <=  POINTS[23, k+1]) )
         PrePoint_No <- sum(Length_POINTS[1:22])
@@ -268,10 +282,10 @@ CNV_htmp_gloc <- function(CNVmat,
     }
 
     ##########
-
-    for( k in seq_len(length(which(POINTS[24, ]>0))-1) ){
-      if( length(which(as.matrix(M_sample[, 2]) == "Y")) != 0 ){
-        X <- min(which(as.matrix(M_sample[, 2]) == "Y")):max(which(as.matrix(M_sample[, 2]) == "Y"))
+    if( length(which(as.matrix(M_sample[, 2]) == "Y")) != 0 ){
+      X <- min(which(as.matrix(M_sample[, 2]) == "Y")):max(which(as.matrix(M_sample[, 2]) == "Y"))
+      for( k in seq_len(length(which(POINTS[24, ]>0))-1) ){
+        
         ExistExpr <- which( (M_sample[ X ,3] >= POINTS[24, k])
                             & (M_sample[ X ,3] <=  POINTS[24, k+1]) )
         PrePoint_No <- sum(Length_POINTS[1:23])
@@ -330,7 +344,7 @@ CNV_htmp_gloc <- function(CNVmat,
   LLength <- c(0, cluster.lines[2:(length(cluster.lines)) ])  # c(0,205,733,834,854)
 
   for(j in seq_len(length(LLength)-1)){
-    NeighborNo <- min(20, floor((LLength[j+1]-LLength[j])/2))
+    NeighborNo <- min(20,floor((LLength[j+1]-LLength[j])/2))
     for(i in LLength[j]+seq_len(floor(NeighborNo))){
       CNV.mat5[i, ] <- CNV.mat51[i, ]*Orig + (1-Orig)*robustbase::colMedians( CNV.mat51[ setdiff(seq(LLength[j]+1,(i+NeighborNo),1),i),  ])
     }
@@ -350,12 +364,13 @@ CNV_htmp_gloc <- function(CNVmat,
   ########## Defining separating lines
   labels.gloc <- t(as.matrix(c(paste("Chr", 1:22, sep = ""),"ChrX", "ChrY")))
   labels.call.gloc <- rep(NA, ncol(CNV.mat5))
+  breakgloc <- unlist(as.list(t(breakGloc)))
 
   for(i in seq_len(22)){
-    labels.call.gloc[breakGloc[i]+10 ] <- as.matrix(labels.gloc[i])
+    labels.call.gloc[breakgloc[i]+10 ] <- as.matrix(labels.gloc[i])
   }
-  labels.call.gloc[breakGloc[23] ] <- as.matrix(labels.gloc[23])
-  labels.call.gloc[breakGloc[24] ] <- as.matrix(labels.gloc[24])
+  labels.call.gloc[breakgloc[23] ] <- as.matrix(labels.gloc[23])
+  labels.call.gloc[breakgloc[24] ] <- as.matrix(labels.gloc[24])
 
 
   rownames(CNV.mat5) <- ROWlist
@@ -400,7 +415,7 @@ CNV_htmp_gloc <- function(CNVmat,
            denscol = "grey",
            density.info = "density",
            rowsep= Separns,
-           add.expr =  graphics::abline(v=breakGloc)
+           add.expr =  graphics::abline(v= c(breakgloc))
       )
 
     } else {
@@ -409,7 +424,7 @@ CNV_htmp_gloc <- function(CNVmat,
       graphics::par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
       heatmap.3( final.mat ,
              main = paste("Heatmap of sciCNV profiles of test and control cells
-                          Thr 0.5 of 1, ", NeighborNo ," nearst neighbors", sep="" ),
+                          Thr 0.5 of 1 -",NeighborNo," nearst neighbors", sep="" ),
              xlab = "Genomic location of expressed genes",
              ylab= "Cells",
              breaks = seq(-LL, LL, length.out =16),
@@ -432,7 +447,7 @@ CNV_htmp_gloc <- function(CNVmat,
              denscol = "grey",
              density.info = "density",
              rowsep = cluster.lines,
-             add.expr = graphics::abline(v=breakGloc))
+             add.expr = graphics::abline(v= c(breakgloc)))
 
   }
 

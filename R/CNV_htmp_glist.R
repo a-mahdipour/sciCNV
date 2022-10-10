@@ -21,9 +21,12 @@
 #' @return The output is the heatmap of sciCNV matrix for test and control cells against list of genes
 #'
 #' @examples
-#' CNVmat <- system.file("extdata", "Sample_CNV_matrix.txt", package="sciCNV")
-#' breakGlist <- system.file("extdata", "Sample_breakGlist.txt", package ="sciCNV")
-#' CNV_htmp_glist(CNVmat, breakGlist=breakGlist, sorting = FALSE,  No.test=20)
+#' 
+#' data(breakGlist)
+#' file.path <-  system.file("extdata", "CNV_matrix.txt", package="sciCNV")
+#' CNVmat <- read.table(file.path, sep="\t", header=TRUE)
+#' 
+#' CNV_htmp_glist(CNVmat=CNVmat, breakGlist=breakGlist, sorting = FALSE,  No.test=20,  No.normal=20)
 #'
 #' @import stats
 #' @import robustbase
@@ -40,10 +43,13 @@ CNV_htmp_glist <- function(CNVmat,
                            CNVscore = NULL,               # Only used when sorting = TRUE
                            cluster.lines = NULL,
                            breakGlist,     # separation lines for chromosomes
-                           No.test
+                           No.test,
+                           No.normal
 ){
 
-  
+  genelist <- CNVmat[,1]
+  CNVmat <- as.matrix(CNVmat[,-1])
+  rownames(CNVmat) <- genelist
   
   ## argument validation
   if ( missing(sorting) ){
@@ -83,9 +89,9 @@ CNV_htmp_glist <- function(CNVmat,
   }
 
   ##### sorting of cells within each cluster by CNV-score, from the largest to the smallest (if applicable)
-  nr <- nrow(CNVmat)
+  #nr <- dim(CNVmat)[1]
   seq1 <- seq_len(No.test)
-  seq2 <- No.test + seq_len(nr - No.test)
+  seq2 <- No.test + seq_len(No.normal)
   if ( sorting == TRUE ){
     
     tst.score <- base::sort(CNVscore[1, seq1] , decreasing=TRUE)     #MMPCs
@@ -188,19 +194,19 @@ CNV_htmp_glist <- function(CNVmat,
 
   label.glist <- t(as.matrix(c(paste("Chr", 1:22, sep = ""),"ChrX", "ChrY")))
   label.call.glist <- rep(NA, ncol(CNVmat))
-  breakGlist <- unlist(as.list(t(breakGlist)))
+  breakglist <- unlist(as.list(t(breakGlist)))
 
   for(i in seq_len(22)){
-    if( breakGlist[i] <  ncol(CNVmat) - 10){
-      label.call.glist[breakGlist[i]+10 ] <- as.matrix(label.glist[i])
+    if( breakglist[i] <  ncol(CNVmat) - 10){
+      label.call.glist[breakglist[i]+10 ] <- as.matrix(label.glist[i])
     }
   }
 
-  if( breakGlist[23] <  ncol(CNVmat)  ){
-    label.call.glist[breakGlist[23] ] <- as.matrix(label.glist[23])
-    label.call.glist[breakGlist[24] ] <- as.matrix(label.glist[24])
+  if( breakglist[23] <  ncol(CNVmat)  ){
+    label.call.glist[breakglist[23] ] <- as.matrix(label.glist[23])
+    label.call.glist[breakglist[24] ] <- as.matrix(label.glist[24])
   } else {
-    label.call.glist[breakGlist[23] ] <- as.matrix(label.glist[23])
+    label.call.glist[breakglist[23] ] <- as.matrix(label.glist[23])
   }
 
 
@@ -245,7 +251,7 @@ CNV_htmp_glist <- function(CNVmat,
            denscol = "grey",
            density.info = "density",
            rowsep= Separns,
-           add.expr =  graphics::abline(v = breakGlist)
+           add.expr =  graphics::abline(v = c(breakglist))
       )
 
      } else {
@@ -256,7 +262,7 @@ CNV_htmp_glist <- function(CNVmat,
      graphics::par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
      heatmap.3( final.mat ,
              main = paste("Heatmap of sciCNV profiles of test and control cells
-                          Thr 0.5 of 1, ", NeighborNo ," nearst neighbors", sep="" ),
+                          Thr 0.5 of 1 -",NeighborNo," nearst neighbors", sep="" ),
              xlab = "Genomic location of expressed genes",
              ylab= "Cells",
              breaks = seq(-LL, LL, length.out =16),
@@ -279,7 +285,7 @@ CNV_htmp_glist <- function(CNVmat,
              denscol = "grey",
              density.info = "density",
              rowsep = cluster.lines ,
-             add.expr = graphics::abline(v = breakGlist))
+             add.expr = graphics::abline(v = c(breakglist)))
 
   }
 
