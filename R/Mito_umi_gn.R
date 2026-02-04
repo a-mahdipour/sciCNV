@@ -74,8 +74,8 @@ Mito_umi_gn <- function( mat,
   graphics::lines(y=Dnsty$x * SLOPE + (min(BAR) - min(HST$mids) * SLOPE),
         x=Dnsty$y,lwd=2,col=scales::alpha("blue",0.7))
 
-
   #----- Selecting damged cells
+  
   damaged_cells <- NULL
   damaged_cells <- as.matrix(which(percent.mito.G > threshold) )
 
