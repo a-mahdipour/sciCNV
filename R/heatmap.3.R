@@ -8,6 +8,7 @@
 #'
 #' @export
 
+
 heatmap.3 <- function(x,
                       Rowv = TRUE, Colv = if (symm) "Rowv" else TRUE,
                       distfun = dist,
