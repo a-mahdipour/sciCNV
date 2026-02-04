@@ -41,7 +41,7 @@ heatmap.3(
   labRow = NULL,
   labCol = NULL,
   key = TRUE,
-  keysize = 1.5,
+  keysize = 1.5, #Key size
   density.info = c("none", "histogram", "density"),
   denscol = tracecol,
   symkey = max(x < 0, na.rm = TRUE) || symbreaks,
