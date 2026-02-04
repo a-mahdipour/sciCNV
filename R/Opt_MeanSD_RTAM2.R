@@ -93,9 +93,7 @@ Opt_MeanSD_RTAM2 <- function(Normalized_log,
 
   colnames(GG)<- colnames(AA)
 
-
  #############################################
-
 
   Y <- seq(1, gene_cutoff, 1)
   BB <- matrix(0, ncol= ncol(AA) , nrow= gene_cutoff )
