@@ -30,20 +30,20 @@ heatmap_break_glist <- function(CNV.mat2){
   for(i in 1: 22){
     break.glist[i] <- min( which(assoc.chr == i))
   }
+  
   ##
   if( length(which(rownames(assoc.chr) == "X"))  == 0 ){
     break.glist[23] <- ncol(CNV.mat2)
   } else {
     break.glist[23] <- min( which(rownames(assoc.chr) == "X"))
   }
+  
   ##
   if( length(which(  rownames(assoc.chr) == "Y")) == 0 ){
     break.glist[24] <- ncol(CNV.mat2)
   } else {
     break.glist[24] <- min( which(rownames(assoc.chr) == "Y"))
   }
-
-
 
 return(break.glist)
 
