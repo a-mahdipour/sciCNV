@@ -1,11 +1,12 @@
-# sciCNV PIPELINE 
+# sciCNV 
 # _README FILE_ 
 
 ## This file provides an overview of the Tiedemann Lab scRNA-seq normalization and inferred CNV pipeline that includes: 
 - scRNA-seq RTAM data normalization
 - Single-cell Inferred Copy Number Variation (sciCNV)
 - Quality control (QC) 
-- visualization of results
+- Visualization of results
+- Balancing subclones
 
 ### _The pipeline enables profiling of RNA and DNA copy number in the same cells, and thus permits direct examination of the influence of genomic CNV on gene expression and cellular programs. The analysis can be performed on thousands of cells, and thus can capture intra-tumor heterogeneity. It requires only scRNA-seq data._ 
 
@@ -471,3 +472,19 @@ genomic rank-order of genes (list of genes) as well as the physical genomic loca
 ![Fig9](Fig9.jpg)
 
 ![Fig10](Fig10.jpg)
+
+***
+# Balancing single-cell subclones
+
+Transcriptional comparison of diverse subclones of single cells may require certain considerations which their ignorance can tend to misleading outcomes of underlying biological features. Such considerations are associated with several items such as the expression level of genes in cells (number of expressed genes), total transcription of cells (UMIs), morphology of cells in each subclone, cell division states (quiescent cells versus dividing cells) and so on. To address this issue, we offer a new method to prepare subclones (or balancing datasets) priori to undergo analysis of differential gene expressions. This methodology can be performed amongst new compartments of the subclones which are comparable in terms of their size and transcriptional capacities. 
+
+All the required steps for balancing candidate subclones are reflected in the `Balancing_vignette.R` file in the code. In below figure balancing steps are shown, a method to reduce the dissimilarities between subclones. 
+
+![Fig11](Fig11.jpg)
+
+Panels a)-f) represents the balancing procedure that we suggest to modify the selected subpopulations of interest for sake of comparison, a novel mechanism to modify subpopulations based on their number of UMI and/or number of expressed genes (nUMI and nGene resp.). a) represents original nGenes w.r.t the original nUMIs in two subclones of a patient sample. Apply our balancing method, we first balance the subpopulations based on nUMIs as explained in the Method Section, to provide new compartments of cells per subpopulations that have similar probability density functions for nUMIs. In case needed one can continue for further modifications w.r.t. nGenes as well, shown on panel c). Subfigure d) represents the density distribution of differential average expressions per gene of sample 1 and sample 2, for the original datasets, datasets after balancing w.r.t. nUMIs, and nUMIs+nGenes. Subfigures e) and f) show the volcano plots of pre- and post-balancing.
+
+
+
+
+
