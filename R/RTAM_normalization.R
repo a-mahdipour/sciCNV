@@ -133,6 +133,7 @@ RTAM_normalization <- function(mat,           # Raw scRNA-seq data
   }
 
   ############## Ranked matrix of colum-sum normalized data for RTAM2 method
+  
   if ( method == c("RTAM2")){
 
     ## Asigning GG matrix as a ranked matrix of colum-sum normalized data
@@ -148,6 +149,7 @@ RTAM_normalization <- function(mat,           # Raw scRNA-seq data
 
 
     ############# Asigning R_mat to ranked matrix of ordered gene expressions in each cell
+    
   } else if ( method == c("RTAM1")){
 
 
@@ -179,7 +181,10 @@ RTAM_normalization <- function(mat,           # Raw scRNA-seq data
 
   }
 
-  ## Finding the optimal number of genes for RTAM normalization (to yield minimum variance in average geneset expression across the matrix)
+  #############################################################
+  ## Finding the optimal number of genes for RTAM normalization 
+  ## (to yield minimum variance in average geneset expression across the matrix)
+  
   if( Optimizing == "TRUE" ) {
 
       SEQ <- seq(Min_nGene-floor(Min_nGene/2), Min_nGene, 5)
@@ -216,10 +221,10 @@ RTAM_normalization <- function(mat,           # Raw scRNA-seq data
 
   }
 
-
   # --------------------------------------------------------------------
   # RTAM2 - differential normalization main step
   # -------------------------------------------------------------------
+  
   if ( method == c("RTAM2")){
 
     ## Defining top_mat as the sub-matrix of top-expressed genes per cell
@@ -255,7 +260,6 @@ RTAM_normalization <- function(mat,           # Raw scRNA-seq data
       }
     }
 
-
     #------------------------------------------
     ## Normalization limitations to prevent:
     ## (i) changes in the expression-based ranking of expressed genes
@@ -282,6 +286,7 @@ RTAM_normalization <- function(mat,           # Raw scRNA-seq data
   # ----------------------------------------------------------------
   # RTAM1 -differential normalization main step
   # ----------------------------------------------------------------
+  
   else if ( method == c("RTAM1")){
 
     ## Using the optimized or specified number of top-expressed genes
@@ -318,8 +323,9 @@ RTAM_normalization <- function(mat,           # Raw scRNA-seq data
   }
 
   ############################################
-
-  ## Normalizing the data by adding the calculated corrections to each gene expression value
+  ## Normalizing the data by adding the calculated 
+  ## corrections to each gene expression value
+  
   LS <- ranked_mat + h_mtrx
 
   Scaled_Normalized_log <- matrix(0, ncol=ncol(ranked_mat), nrow=nrow(ranked_mat))
