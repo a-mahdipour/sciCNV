@@ -223,7 +223,7 @@ CNV_infer  <- function( ss.expr,
 
 
 
-  #---------------------- AF: maV7-alt x maW-lin curve & AG: maV7-alt x maW-lin curve with Manual Scale
+  #----- AF: maV7-alt x maW-lin curve & AG: maV7-alt x maW-lin curve with Manual Scale
   AF <- rep(0, row_n)
 
   for(i in 1:row_n){
