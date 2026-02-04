@@ -21,7 +21,6 @@
 
 Sketch_AveCNV <- function(Ave.mat, Assoc.Chr){
 
-
   graphics::plot.new()
   graphics::par(mar=c(5,5,4,2)+1,mgp=c(3,1,0))
   graphics::plot( Ave.mat,
