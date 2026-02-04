@@ -92,6 +92,7 @@ sciCNV <- function(norm.mat,
   #####################################
   ## single cell inferred CNV function
   #####################################
+  
   V7Alt <- matrix(0, ncol = (ncol(MSC)-1), nrow = nrow(MSC))
 
   # Average gene expression of control cells
