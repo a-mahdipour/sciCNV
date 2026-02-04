@@ -9,3 +9,5 @@ inst/doc
 .RData
 .RDataTmp
 *.Rproj
+*.txt
+*.csv
