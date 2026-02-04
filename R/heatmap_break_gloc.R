@@ -16,7 +16,6 @@
 #' @export
 
 
-
 heatmap_break_gloc <- function(CNV.mat2 ){
   
   
@@ -52,7 +51,7 @@ heatmap_break_gloc <- function(CNV.mat2 ){
   Total_length <- sum( (maxx[1,1:24]-minn[1,1:24]) + 1 )
   Seg_size <- ceiling( Total_length/No_Intrvl )
   
-  ########
+  ############
   
   MaxNo_intervals <- ceiling(max((maxx[1,1:24]-minn[1,1:24])+ 1)/Seg_size)
   Intrvls <- matrix(0, nrow = 24, ncol = MaxNo_intervals)
@@ -64,7 +63,6 @@ heatmap_break_gloc <- function(CNV.mat2 ){
     Intrvls[i, 1:length(StartEnd) ]  <-  t(as.matrix( StartEnd )) + Min_chr[i]
     Min_chr[i+1]  <-  maxx[1,i]
   }
-  
   
   break.gloc <- rep(0,24)
   break.gloc[1] <- 1
