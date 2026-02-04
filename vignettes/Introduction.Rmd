@@ -83,6 +83,7 @@ Calculation of total transcript count per cell, idnetified by unique molecular i
 Calcuation of mitochondrial transcript content per cell
 
 ```{r}
+
 nUMI <- t(as.numeric(colSums(raw.data2)))
 colnames(nUMI) <- colnames(raw.data2)
 
