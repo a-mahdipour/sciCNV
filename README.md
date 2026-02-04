@@ -484,6 +484,12 @@ All the required steps for balancing candidate subclones are reflected in the `B
 
 Panels a)-f) represents the balancing procedure that we suggest to modify the selected subpopulations of interest for sake of comparison, a novel mechanism to modify subpopulations based on their number of UMI and/or number of expressed genes (nUMI and nGene resp.). a) represents original nGenes w.r.t the original nUMIs in two subclones of a patient sample. Apply our balancing method, we first balance the subpopulations based on nUMIs as explained in the Method Section, to provide new compartments of cells per subpopulations that have similar probability density functions for nUMIs. In case needed one can continue for further modifications w.r.t. nGenes as well, shown on panel c). Subfigure d) represents the density distribution of differential average expressions per gene of sample 1 and sample 2, for the original datasets, datasets after balancing w.r.t. nUMIs, and nUMIs+nGenes. Subfigures e) and f) show the volcano plots of pre- and post-balancing.
 
+The following figure represent how distribition of UMIs changes before and after balancing subclones:
+
+![Fig12](Fig12.jpg)
+
+This methodology is not only designed for single-cells and could be used for any sparse data in which comparing the original subclones may not reflect the underneath pattern of data in which the real face of data could be observed only after some modifications to the data wrt. total number of reads, UMIs, total number of exoressed genes, and so on.
+
 
 
 
