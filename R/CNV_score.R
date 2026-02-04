@@ -48,6 +48,7 @@ CNV_score <-  function( M_nf ){
   M_nf.scaled[ , ncol(M_nf)] <- t(as.matrix(M_nf[ , ncol(M_nf)]))
 
   ##################
+    
   Score <- matrix(0, nrow = nrow(M_nf.scaled), ncol = ncol(M_nf.scaled) )
   TotScore <- matrix(0, nrow = 1, ncol = (ncol(M_nf.scaled)-1) )
   Wr <- ncol(M_nf.scaled)-1
