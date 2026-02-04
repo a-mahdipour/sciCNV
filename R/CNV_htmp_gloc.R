@@ -155,7 +155,9 @@ CNV_htmp_gloc <- function(CNVmat,
 
     }
   }
+    
   #-------
+    
   LL <- 1
   TT <- 0.2
   CNV.mat11[which(CNV.mat11 >  LL)] <-  LL
