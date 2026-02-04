@@ -79,7 +79,6 @@ Scaling_CNV <-  function(V7Alt,
     }
     Chr_begin[1,23] <- min(which(M_sample [,2]=="X"))
     Chr_end[1,23] <- max(which(M_sample [,2]=="X"))
-    ##
     Chr_begin[1,24] <- min(which(M_sample [,2]=="Y"))
     Chr_end[1,24] <- max(which(M_sample [,2]=="Y"))
 
