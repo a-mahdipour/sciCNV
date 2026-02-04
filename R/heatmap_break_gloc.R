@@ -27,6 +27,7 @@ heatmap_break_gloc <- function(CNV.mat2 ){
   No_Intrvl <- 1000
   
   ############
+  
   minn <- matrix(0, ncol=24, nrow=1)
   maxx <- matrix(0, ncol=24, nrow=1)
   
@@ -63,7 +64,6 @@ heatmap_break_gloc <- function(CNV.mat2 ){
     Intrvls[i, 1:length(StartEnd) ]  <-  t(as.matrix( StartEnd )) + Min_chr[i]
     Min_chr[i+1]  <-  maxx[1,i]
   }
-  
   
   
   break.gloc <- rep(0,24)
