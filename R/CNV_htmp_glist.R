@@ -150,7 +150,9 @@ CNV_htmp_glist <- function(CNVmat,
 
     }
   }
+    
   #-------
+    
   CNV.mat1 <- as.matrix(CNV.mat11)
   LL <- 1
   TT <- 0.5
