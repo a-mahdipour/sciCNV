@@ -490,7 +490,7 @@ Panels (a)-(f) represents the balancing procedure that we suggest to modify the 
 
 The following figure represent how distribition of UMIs changes from pre-to-post balancing in a single-cell subpopulation:
 
-![Fig12](Fig12.jpg)
+![Fig12](Fig12.png)
 
 *Note: This methodology is not only designed for single-cells and could be used for any sparse data in which comparing the original subclones may not reflect the underneath pattern of data in which the real face of data could be observed only after some modifications to the data wrt. total number of reads, UMIs, total number of exoressed genes, and so on.*
 
