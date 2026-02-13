@@ -12,7 +12,7 @@
 
 ## Reference
 
-Chromosome copy number variations (CNVs) are a near-universal feature of cancer however their specific effects on cellular function are poorly understood. Single-cell RNA sequencing (scRNA-seq) can reveal cellular gene expression however cannot directly link this to CNVs. Here we report scRNA-seq normalization methods (RTAM1 and RTAM2) that improve gene expression alignment between cells, increasing the sensitivity of scRNA-seq for CNV detection. We also report sciCNV, a tool for inferring CNVs from scRNA-seq. Together, these tools enable dual profiling of DNA and RNA in single cells.
+Ali Mahdipour-Shirayeh, Natalie Erdmann, Chungyee Leung-Hagesteijn, Rodger E Tiedemann. sciCNV: High-throughput paired profiling of transcriptomes and DNA copy number variations at single cell resolution. Brief Bioinform. 2022;23(1):bbab413. doi: 10.1093/bib/bbab413. PMID: 38205967
 
 
 ## Summary
