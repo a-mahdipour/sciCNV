@@ -12,7 +12,7 @@
 
 ## Reference
 
-Ali Mahdipour-Shirayeh, Natalie Erdmann, Chungyee Leung-Hagesteijn, Rodger E Tiedemann. sciCNV: High-throughput paired profiling of transcriptomes and DNA copy number variations at single cell resolution. Brief Bioinform. 2022;23(1):bbab413. doi: 10.1093/bib/bbab413. PMID: 38205967
+Ali Mahdipour-Shirayeh, Ines Tagoug, Natalie Erdmann, Chungyee Leung-Hagesteijn, Rodger E Tiedemann. sciCNV: High-throughput paired profiling of transcriptomes and DNA copy number variations at single cell resolution. Brief Bioinform. 2022;23(1):bbab413. doi: 10.1093/bib/bbab413. PMID: 38205967
 
 
 ## Summary
